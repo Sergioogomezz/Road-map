@@ -2,6 +2,8 @@
 // Uso (desde esta carpeta):
 //   node render.js                    -> reel con efectos de sonido
 //   node render.js --voz voz.m4a      -> reel con tu voz encima de los efectos
+//   añade --musica para sumar la música original (musica.py), y --solo-audio para
+//   rehacer solo el sonido reutilizando los fotogramas ya generados.
 // Los tiempos salen de tiempos.json.
 const fs = require('fs');
 const path = require('path');
@@ -20,10 +22,19 @@ const voz = opt('--voz');
 const final = path.join(OUT, opt('--out') || (voz ? 'reel-whatsapp-con-voz.mp4' : 'reel-whatsapp.mp4'));
 const video = path.join(OUT, 'video-sin-audio.mp4');
 const sfx = path.join(OUT, 'efectos.wav');
+const conMusica = args.includes('--musica');
+const soloAudio = args.includes('--solo-audio') && fs.existsSync(video);
+const musica = path.join(OUT, 'musica.wav');
+const ambiente = path.join(OUT, 'ambiente.wav');
 
 function run(cmd, a) { execFileSync(cmd, a, { stdio: ['ignore', 'ignore', 'inherit'] }); }
 
 (async () => {
+  if (!soloAudio) await fotogramas();
+  sonido();
+})();
+
+async function fotogramas() {
   const browser = await chromium.launch();
   const page = await browser.newPage({ viewport: { width: 1080, height: 1920 }, deviceScaleFactor: 1 });
   await page.goto('file://' + path.join(DIR, 'escena.html'));
@@ -46,10 +57,20 @@ function run(cmd, a) { execFileSync(cmd, a, { stdio: ['ignore', 'ignore', 'inher
   ff.stdin.end();
   await new Promise((r) => ff.on('close', r));
   await browser.close();
+}
 
+function sonido() {
   run('python3', [path.join(DIR, 'sfx.py'), TFILE, sfx]);
+  if (conMusica) run('python3', [path.join(DIR, 'musica.py'), TFILE, musica, ambiente]);
 
-  if (voz) {
+  if (voz && conMusica) {
+    // Voz delante; la música se baja sola cuando hablas (sidechain); efectos y ambiente encima.
+    run('ffmpeg', ['-y', '-loglevel', 'error', '-i', video, '-i', voz, '-i', sfx, '-i', musica, '-i', ambiente, '-filter_complex',
+      '[1:a]aresample=48000,asplit=2[v][vsc];[2:a]volume=0.2[s];[3:a]aresample=48000[m];' +
+      '[m][vsc]sidechaincompress=threshold=0.03:ratio=2.5:attack=30:release=500:makeup=1[md];[4:a]aresample=48000[amb];' +
+      '[v][s][md][amb]amix=inputs=4:duration=first:normalize=0,alimiter=limit=0.89[a]',
+      '-map', '0:v', '-map', '[a]', '-c:v', 'copy', '-c:a', 'aac', '-b:a', '192k', '-t', String(T.end), '-movflags', '+faststart', final]);
+  } else if (voz) {
     // La voz llega ya montada y nivelada (sincronizar.py); los efectos van más bajos debajo.
     run('ffmpeg', ['-y', '-loglevel', 'error', '-i', video, '-i', voz, '-i', sfx, '-filter_complex',
       '[1:a]aresample=48000[v];[2:a]volume=0.2[s];[v][s]amix=inputs=2:duration=longest:normalize=0,alimiter=limit=0.89[a]',
@@ -59,4 +80,4 @@ function run(cmd, a) { execFileSync(cmd, a, { stdio: ['ignore', 'ignore', 'inher
       '-c:a', 'aac', '-b:a', '192k', '-t', String(T.end), '-movflags', '+faststart', final]);
   }
   console.log('Listo:', final);
-})();
+}

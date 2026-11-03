@@ -29,7 +29,9 @@ Con esas pausas ajusto la animación a tu ritmo.
 2. En `frases-voz.json` indica de qué grabación sale cada frase, dónde empieza y acaba, y cuándo se dice cada palabra clave.
 3. `python3 sincronizar.py frases-voz.json salida/voz-montada.wav tiempos-voz.json`
    (quita las pausas largas, iguala volumen y tono entre grabaciones y calcula los tiempos).
-4. `node render.js --voz salida/voz-montada.wav --tiempos tiempos-voz.json`
+4. `node render.js --voz salida/voz-montada.wav --tiempos tiempos-voz.json --musica`
+   (`--musica` añade la música original de `musica.py`, que se baja sola cuando hablas;
+   `--solo-audio` rehace solo el sonido sin volver a generar los fotogramas).
 
 Versión actual: `salida/reel-whatsapp-con-voz.mp4` (35,4 s). Frases 1 y 9 de la primera grabación;
 2 a 8 de la segunda.
