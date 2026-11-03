@@ -62,6 +62,8 @@ async function fotogramas() {
 function sonido() {
   run('python3', [path.join(DIR, 'sfx.py'), TFILE, sfx]);
   if (conMusica) run('python3', [path.join(DIR, 'musica.py'), TFILE, musica, ambiente]);
+  // --cancion archivo --reentrada seg: sustituye la música original por una canción externa
+  if (conMusica && opt('--cancion')) run('python3', [path.join(DIR, 'cancion.py'), TFILE, path.resolve(opt('--cancion')), musica, opt('--reentrada') || '0', opt('--realce-intro') || '0']);
 
   if (voz && conMusica) {
     // Voz delante; la música se baja sola cuando hablas (sidechain); efectos y ambiente encima.
