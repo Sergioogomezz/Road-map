@@ -52,7 +52,7 @@ function run(cmd, a) { execFileSync(cmd, a, { stdio: ['ignore', 'ignore', 'inher
   if (voz) {
     // La voz llega ya montada y nivelada (sincronizar.py); los efectos van más bajos debajo.
     run('ffmpeg', ['-y', '-loglevel', 'error', '-i', video, '-i', voz, '-i', sfx, '-filter_complex',
-      '[1:a]aresample=48000[v];[2:a]volume=0.32[s];[v][s]amix=inputs=2:duration=longest:normalize=0,alimiter=limit=0.89[a]',
+      '[1:a]aresample=48000[v];[2:a]volume=0.2[s];[v][s]amix=inputs=2:duration=longest:normalize=0,alimiter=limit=0.89[a]',
       '-map', '0:v', '-map', '[a]', '-c:v', 'copy', '-c:a', 'aac', '-b:a', '192k', '-t', String(T.end), '-movflags', '+faststart', final]);
   } else {
     run('ffmpeg', ['-y', '-loglevel', 'error', '-i', video, '-i', sfx, '-map', '0:v', '-map', '1:a', '-c:v', 'copy',

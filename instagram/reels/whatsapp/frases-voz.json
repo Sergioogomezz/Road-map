@@ -1,21 +1,89 @@
 {
-  "_ayuda": "Segundos dentro de la grabación original de Sergio. La frase 8 empieza en «El precio va después» (se quita «Solo recibes la conversación»).",
+  "_ayuda": "Segundos dentro de cada grabación. Frases 1 y 9 de la primera grabación; 2 a 8 de la segunda (regrabadas). Las grabaciones están en voz/ y no se suben al repositorio.",
+  "fuentes": {
+    "g1": "voz/grabacion-1.m4a",
+    "g2": "voz/grabacion-2.m4a"
+  },
   "inicio": 0.15,
-  "golpes": [[48.25, 48.75]],
   "frases": [
-    {"n": 1, "desde": 8.3665, "hasta": 11.2054, "pausa_despues": 0.30},
-    {"n": 2, "desde": 15.3517, "hasta": 20.1949, "pausa_despues": 0.35},
-    {"n": 3, "desde": 24.3344, "hasta": 28.3134, "pausa_despues": 0.20},
-    {"n": 4, "desde": 30.873, "hasta": 34.2701, "pausa_despues": 0.35},
-    {"n": 5, "desde": 39.2075, "hasta": 40.8651, "pausa_despues": 0.55},
-    {"n": 6, "desde": 48.3432, "hasta": 51.5804, "pausa_despues": 0.50},
-    {"n": 7, "desde": 58.5074, "hasta": 61.9673, "pausa_despues": 0.35},
-    {"n": 8, "desde": 70.3647, "hasta": 72.9489, "pausa_despues": 0.60},
-    {"n": 9, "desde": 78.0107, "hasta": 81.6378, "pausa_despues": 0.0}
+    {
+      "n": 1,
+      "fuente": "g1",
+      "desde": 8.3665,
+      "hasta": 11.2054,
+      "pausa_despues": 0.3,
+      "eq": "equalizer=f=115:t=o:w=1.2:g=-3.5"
+    },
+    {
+      "n": 2,
+      "fuente": "g2",
+      "desde": 6.0729,
+      "hasta": 10.5189,
+      "pausa_despues": 0.35
+    },
+    {
+      "n": 3,
+      "fuente": "g2",
+      "desde": 13.9862,
+      "hasta": 16.5685,
+      "pausa_despues": 0.2
+    },
+    {
+      "n": 4,
+      "fuente": "g2",
+      "desde": 19.3816,
+      "hasta": 21.6643,
+      "pausa_despues": 0.35
+    },
+    {
+      "n": 5,
+      "fuente": "g2",
+      "desde": 28.1348,
+      "hasta": 30.262,
+      "pausa_despues": 0.55
+    },
+    {
+      "n": 6,
+      "fuente": "g2",
+      "desde": 34.6491,
+      "hasta": 38.1044,
+      "pausa_despues": 0.5
+    },
+    {
+      "n": 7,
+      "fuente": "g2",
+      "desde": 42.0939,
+      "hasta": 45.8892,
+      "pausa_despues": 0.35
+    },
+    {
+      "n": 8,
+      "fuente": "g2",
+      "desde": 51.425,
+      "hasta": 55.8311,
+      "pausa_despues": 1.5
+    },
+    {
+      "n": 9,
+      "fuente": "g1",
+      "desde": 78.0107,
+      "hasta": 81.6378,
+      "pausa_despues": 0.0,
+      "eq": "equalizer=f=115:t=o:w=1.2:g=-3.5"
+    }
   ],
   "palabras": {
-    "esto": 8.996, "50": 17.35, "enlace": 19.802, "visto": 39.778,
-    "esto6": 48.613, "escribele": 49.613, "sin1": 60.417, "sin2": 61.497,
-    "contesta": 72.439, "comenta": 79.3, "y9": 80.461
+    "esto": 8.996,
+    "50": 8.0,
+    "enlace": 10.25,
+    "visto": 29.26,
+    "esto6": 34.85,
+    "escribele": 36.05,
+    "sin1": 44.49,
+    "sin2": 45.3,
+    "precio8": 53.85,
+    "contesta": 55.5,
+    "comenta": 79.3,
+    "y9": 80.461
   }
 }
