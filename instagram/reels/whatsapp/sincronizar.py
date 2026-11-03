@@ -10,6 +10,7 @@ import numpy as np
 
 SR = 48000
 src, cfg_path, out_wav, out_t = sys.argv[1:5]
+CRUDO = "--crudo" in sys.argv   # sin filtros, sin compresor y sin arreglo de la «P»: solo cortes y volumen
 cfg = json.load(open(cfg_path))
 
 
@@ -33,9 +34,9 @@ def ramp(n):
 
 
 # 1) Voz con filtro de graves (quita retumbe) y versión muy filtrada para el golpe de la «P».
-voz = ffmpeg_decode(src, "highpass=f=90")
+voz = ffmpeg_decode(src, None if CRUDO else "highpass=f=90")
 voz_hp = ffmpeg_decode(src, "highpass=f=320,highpass=f=320")
-for a, b in cfg.get("golpes", []):           # zona aproximada de cada golpe
+for a, b in ([] if CRUDO else cfg.get("golpes", [])):           # zona aproximada de cada golpe
     i0, i1 = int(a * SR), int(b * SR)
     pk = i0 + int(np.argmax(np.abs(voz[i0:i1])))
     w0, w1 = pk - int(0.035 * SR), pk + int(0.07 * SR)
@@ -70,7 +71,7 @@ tmp = out_wav + ".tmp.f32"
 pista.astype(np.float32).tofile(tmp)
 # 3) Compresión suave y volumen estándar para redes (-14 LUFS).
 subprocess.run(["ffmpeg", "-nostdin", "-v", "error", "-y", "-f", "f32le", "-ar", str(SR), "-ac", "1", "-i", tmp,
-                "-af", "acompressor=threshold=-24dB:ratio=2.5:attack=8:release=120:makeup=2,loudnorm=I=-14:TP=-1.5:LRA=9,aresample=48000",
+                "-af", ("volume=13dB,alimiter=limit=0.7:attack=1:release=50,aresample=48000" if CRUDO else "acompressor=threshold=-24dB:ratio=2.5:attack=8:release=120:makeup=2,loudnorm=I=-14:TP=-1.5:LRA=9,aresample=48000"),
                 "-ac", "2", "-c:a", "pcm_s16le", out_wav], check=True)
 subprocess.run(["rm", "-f", tmp])
 
