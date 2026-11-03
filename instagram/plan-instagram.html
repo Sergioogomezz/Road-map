@@ -1,0 +1,1181 @@
+<title>Plan Instagram Activonorte</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..800&display=swap">
+<style>
+/* Layout: hoja de plan de entrenamiento. Una columna de lectura; las semanas son microciclos con días L·X·J·S. */
+:root{
+  --bg:#f3f6f6; --surface:#ffffff; --surface-2:#eef5f6;
+  --ink:#0f1f24; --text:#33464b; --muted:#5b6b70; --line:#dce4e6;
+  --brand:#003b46; --brand-text:#003b46; --band:#003b46; --on-band:#ffffff; --on-band-soft:rgba(255,255,255,.72);
+  --accent:#e05e00; --accent-text:#b34a00; --accent-soft:#fdeee4;
+  --ok:#127a3f; --ok-soft:#e4f3ea; --warn-soft:#fdf3e4;
+  --font:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --r:14px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#00161b; --surface:#01232a; --surface-2:#06303a;
+  --ink:#eaf3f4; --text:#c3d3d6; --muted:#8fa5aa; --line:#143f49;
+  --brand:#0a4f5c; --brand-text:#8fd0db; --band:#002a33; --on-band:#ffffff; --on-band-soft:rgba(255,255,255,.7);
+  --accent:#ff7a1a; --accent-text:#ff9a4d; --accent-soft:#3a1e0a;
+  --ok:#4cc38a; --ok-soft:#0d3324; --warn-soft:#33240f; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#00161b; --surface:#01232a; --surface-2:#06303a;
+  --ink:#eaf3f4; --text:#c3d3d6; --muted:#8fa5aa; --line:#143f49;
+  --brand:#0a4f5c; --brand-text:#8fd0db; --band:#002a33; --on-band:#ffffff; --on-band-soft:rgba(255,255,255,.7);
+  --accent:#ff7a1a; --accent-text:#ff9a4d; --accent-soft:#3a1e0a;
+  --ok:#4cc38a; --ok-soft:#0d3324; --warn-soft:#33240f; color-scheme:dark}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:64px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:16px;line-height:1.6;font-optical-sizing:auto;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+.wrap{max-width:780px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3,h4{color:var(--ink);line-height:1.15;text-wrap:balance;margin:0;letter-spacing:-.015em}
+h2{font-size:clamp(1.6rem,4.6vw,2.1rem);font-weight:800}
+h3{font-size:1.15rem;font-weight:700}
+h4{font-size:1rem;font-weight:700}
+p{margin:0}
+a{color:var(--accent-text)}
+strong{color:var(--ink)}
+em{font-style:normal;color:var(--accent-text);font-weight:600}
+code,.kw{font-family:var(--font);font-weight:800;letter-spacing:.04em}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:6px}
+
+/* Cabecera */
+.band{background:var(--band);color:var(--on-band)}
+.band .wrap{padding-block:28px 30px;display:grid;gap:14px}
+.brandrow{display:flex;align-items:center;gap:10px;font-weight:600;font-size:.9rem;color:var(--on-band-soft)}
+.brandrow img{height:22px;width:auto}
+.band h1{color:var(--on-band);font-size:clamp(2rem,7vw,3rem);font-weight:800;letter-spacing:-.03em}
+.band p{color:var(--on-band-soft);max-width:60ch}
+.band .meta{display:flex;flex-wrap:wrap;gap:8px}
+.band .meta span{border:1px solid rgba(255,255,255,.25);border-radius:999px;padding:3px 12px;font-size:.82rem;color:var(--on-band)}
+
+/* Navegación */
+nav.toc{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);border-bottom:1px solid var(--line)}
+nav.toc .wrap{display:flex;gap:6px;overflow-x:auto;padding-block:10px;scrollbar-width:none}
+nav.toc .wrap::-webkit-scrollbar{display:none}
+nav.toc a{flex:none;text-decoration:none;color:var(--text);font-size:.88rem;font-weight:600;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface)}
+nav.toc a:hover{border-color:var(--accent);color:var(--accent-text)}
+
+main section{padding-block:44px 8px}
+.eyebrow{font-size:.74rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-text);margin-bottom:8px}
+.lead{font-size:1.08rem;color:var(--text);margin-top:12px;max-width:62ch}
+.stack{display:grid;gap:14px}
+.mt{margin-top:22px}
+.mt-s{margin-top:12px}
+.muted{color:var(--muted)}
+.small{font-size:.88rem}
+
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:12px}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:12px}
+.grid2>*,.grid3>*{min-width:0}
+
+/* Lista de tareas */
+.todo{list-style:none;margin:16px 0 0;padding:0;display:grid;gap:8px}
+.todo li{display:flex;gap:12px;align-items:flex-start;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.todo input{width:20px;height:20px;margin-top:3px;flex:none;accent-color:var(--accent)}
+.todo label{cursor:pointer;min-width:0}
+.todo li.done label{color:var(--muted);text-decoration:line-through}
+.todo .when{display:block;font-size:.8rem;color:var(--muted);text-decoration:none}
+
+/* Diagnóstico */
+.stat{display:grid;gap:4px}
+.stat .n{font-size:2.1rem;font-weight:800;color:var(--ink);letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums}
+.stat .l{font-size:.86rem;font-weight:600;color:var(--ink)}
+.stat .x{font-size:.86rem;color:var(--muted)}
+.stat.bad .n{color:var(--accent-text)}
+.flow{display:grid;gap:0;margin-top:14px}
+.flow .step{display:grid;grid-template-columns:96px 1fr;gap:14px;align-items:center;padding:12px 0;border-top:1px solid var(--line)}
+.flow .step:last-child{border-bottom:1px solid var(--line)}
+.flow .v{font-size:1.5rem;font-weight:800;color:var(--ink);font-variant-numeric:tabular-nums;text-align:right}
+.flow .rate{display:inline-block;font-size:.78rem;font-weight:700;border-radius:999px;padding:1px 9px;margin-left:6px}
+.rate.good{background:var(--ok-soft);color:var(--ok)}
+.rate.low{background:var(--accent-soft);color:var(--accent-text)}
+ol.fix{margin:14px 0 0;padding-left:1.3em;display:grid;gap:10px}
+ol.fix li::marker{font-weight:800;color:var(--accent-text)}
+ul.clean{margin:10px 0 0;padding-left:1.1em;display:grid;gap:6px}
+
+/* Perfil */
+.ba{display:grid;gap:10px}
+.ba .row{display:grid;gap:6px}
+.tag{justify-self:start;display:inline-block;font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;border-radius:6px;padding:2px 8px}
+.tag.before{background:var(--surface-2);color:var(--muted)}
+.tag.after{background:var(--accent-soft);color:var(--accent-text)}
+.copybox{position:relative;background:var(--surface-2);border:1px solid var(--line);border-radius:12px;padding:14px 14px 14px;white-space:pre-wrap;word-break:break-word;color:var(--ink);font-size:.95rem;line-height:1.55}
+.copybox.old{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--line)}
+.copyrow{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+button.copy{font:inherit;font-size:.82rem;font-weight:700;cursor:pointer;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:5px 12px;display:inline-flex;align-items:center;gap:6px}
+button.copy:hover{border-color:var(--accent);color:var(--accent-text)}
+button.copy.ok{background:var(--ok-soft);color:var(--ok);border-color:transparent}
+.links{display:grid;gap:8px;margin-top:4px}
+.links .l{display:grid;gap:2px;background:var(--surface-2);border:1px solid var(--line);border-radius:12px;padding:10px 12px;min-width:0}
+.links .l b{color:var(--ink);font-size:.95rem}
+.links .l span{font-size:.8rem;color:var(--muted);word-break:break-all}
+.avatarrow{display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+.avatar{width:96px;height:96px;border-radius:50%;object-fit:cover;flex:none;border:1px solid var(--line)}
+.hl{display:flex;gap:14px;flex-wrap:wrap}
+.hl figure{margin:0;display:grid;justify-items:center;gap:6px;width:72px}
+.hl img{width:64px;height:64px;border-radius:50%;object-fit:cover;object-position:center;border:2px solid var(--line)}
+.hl figcaption{font-size:.74rem;color:var(--text);text-align:center;line-height:1.25}
+
+/* Estrategia */
+.diff h3{font-size:1.02rem}
+.diff p{margin-top:6px;font-size:.94rem}
+.pillars{display:grid;gap:12px;margin-top:16px}
+.pillar{display:grid;grid-template-columns:52px 1fr;gap:12px;align-items:start}
+.pillar .pct{font-weight:800;font-size:1.1rem;color:var(--ink);font-variant-numeric:tabular-nums;text-align:right}
+.pillar .bar{height:6px;background:var(--surface-2);border-radius:99px;margin-top:6px;overflow:hidden}
+.pillar .bar i{display:block;height:100%;background:var(--accent);border-radius:99px}
+.pillar p{font-size:.92rem;margin-top:4px}
+table{border-collapse:collapse;width:100%;font-size:.92rem}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700;background:var(--surface-2)}
+tr:last-child td{border-bottom:0}
+td.num{font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:700;color:var(--ink)}
+.kwflow{display:grid;gap:10px;margin-top:14px}
+.kwflow .k{display:grid;grid-template-columns:minmax(0,118px) 1fr;gap:12px;align-items:start;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px}
+.kwchip{display:inline-block;background:var(--accent);color:#fff;border-radius:8px;padding:3px 9px;font-weight:800;letter-spacing:.05em;font-size:.82rem;text-align:center}
+.kwflow ol{margin:0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:.9rem}
+.kwflow ol li+li::before{content:"→";color:var(--muted);margin-right:6px}
+.season{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,160px),1fr));gap:10px;margin-top:14px}
+.season .card{padding:14px}
+.season b{display:block;color:var(--ink)}
+.season span{font-size:.88rem}
+
+/* Calendario */
+.week{margin-top:22px}
+.week header{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:8px}
+.week header h3{font-size:1.05rem}
+.week header span{font-size:.84rem;color:var(--muted)}
+.days{display:grid;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--surface)}
+.day{display:grid;grid-template-columns:52px 1fr;gap:12px;padding:12px 14px;border-top:1px solid var(--line);text-decoration:none;color:inherit;align-items:start}
+.day:first-child{border-top:0}
+a.day:hover{background:var(--surface-2)}
+.dd{display:grid;justify-items:center;line-height:1}
+.dd b{font-size:.72rem;letter-spacing:.1em;color:var(--muted);font-weight:700}
+.dd span{font-size:1.4rem;font-weight:800;color:var(--ink);font-variant-numeric:tabular-nums;margin-top:3px}
+.dt{min-width:0;display:grid;gap:5px}
+.dt .t{color:var(--ink);font-weight:600;line-height:1.35}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-size:.72rem;font-weight:700;border-radius:999px;padding:2px 9px;letter-spacing:.02em}
+.chip.reel{background:var(--accent-soft);color:var(--accent-text)}
+.chip.car{background:var(--surface-2);color:var(--brand-text);border:1px solid var(--line)}
+.chip.sto{background:var(--warn-soft);color:var(--text)}
+.chip.pin{background:var(--brand);color:#fff}
+.chip.ready{background:var(--ok-soft);color:var(--ok)}
+.chip.kwc{background:transparent;border:1px solid var(--accent);color:var(--accent-text)}
+
+/* Guiones */
+details.piece{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+details.piece+details.piece{margin-top:10px}
+details.piece>summary{list-style:none;cursor:pointer;padding:14px 16px;display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center}
+details.piece>summary::-webkit-details-marker{display:none}
+details.piece>summary .s1{display:grid;gap:4px;min-width:0}
+details.piece>summary .s1 b{color:var(--ink);font-size:1rem;line-height:1.3}
+details.piece>summary .s1 small{color:var(--muted);font-size:.8rem}
+details.piece>summary::after{content:"+";font-size:1.4rem;font-weight:500;color:var(--muted);width:28px;text-align:center}
+details.piece[open]>summary::after{content:"–"}
+details.piece[open]>summary{border-bottom:1px solid var(--line)}
+.pbody{padding:16px;display:grid;gap:16px}
+.hook{border-left:4px solid var(--accent);padding:4px 0 4px 14px}
+.hook small{display:block;font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.hook p{font-size:1.2rem;font-weight:800;color:var(--ink);line-height:1.3;margin-top:2px}
+.lbl{font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.script p+p{margin-top:8px}
+.script p{color:var(--ink)}
+.note{background:var(--surface-2);border-radius:10px;padding:12px 14px;font-size:.92rem}
+.slides{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;scroll-snap-type:x mandatory}
+.slides img{width:180px;height:auto;aspect-ratio:4/5;border-radius:8px;flex:none;scroll-snap-align:start;border:1px solid var(--line);background:var(--surface-2)}
+
+/* Captación */
+.steps{counter-reset:s;list-style:none;margin:14px 0 0;padding:0;display:grid;gap:10px}
+.steps>li{counter-increment:s;display:grid;grid-template-columns:34px 1fr;gap:12px;align-items:start}
+.steps>li::before{content:counter(s);display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--brand);color:#fff;font-weight:800;font-size:.9rem}
+.steps>li>div{min-width:0}
+
+.ideas{margin:14px 0 0;padding:0;list-style:none;display:grid;gap:8px}
+.ideas li{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 14px;color:var(--ink);font-weight:600}
+.ideas li small{display:block;font-weight:400;color:var(--muted);font-size:.82rem}
+
+footer{padding-block:40px 56px;color:var(--muted);font-size:.86rem}
+</style>
+
+<header class="band">
+  <div class="wrap">
+    <div class="brandrow"><img src="herramientas/assets/marca-blanca.png" alt="">activonorte.media · Instagram</div>
+    <h1>Plan Instagram Activonorte</h1>
+    <p>Relanzamiento de la cuenta y las 4 primeras semanas: perfil nuevo, 19 publicaciones con guion, 5 carruseles ya diseñados y el sistema para convertir comentarios en clientes.</p>
+    <div class="meta"><span>5 nov – 6 dic 2026</span><span>3 reels + 1 carrusel por semana</span><span>≈ 5 h/semana</span></div>
+  </div>
+</header>
+
+<nav class="toc" aria-label="Secciones">
+  <div class="wrap">
+    <a href="#hoy">Esta semana</a><a href="#diagnostico">Diagnóstico</a><a href="#perfil">Perfil</a><a href="#estrategia">Estrategia</a><a href="#calendario">Calendario</a><a href="#guiones">Guiones</a><a href="#captacion">Captación</a><a href="#metricas">Métricas</a><a href="#datos">Te pido</a><a href="#ideas">Más ideas</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+<!-- ============ ESTA SEMANA ============ -->
+<section id="hoy">
+  <div class="eyebrow">Empieza aquí</div>
+  <h2>Lo que toca esta semana</h2>
+  <p class="lead">La cuenta lleva 93 días sin publicar. Antes de pedirle nada al algoritmo, el perfil tiene que convencer al que llega. Esto se hace en una tarde.</p>
+  <ul class="todo" id="todo">
+    <li><input type="checkbox" id="t1"><label for="t1">Cambia nombre, bio, enlaces y foto de perfil <span class="when">Hoy · 10 min · textos listos en <a href="#perfil">Perfil</a></span></label></li>
+    <li><input type="checkbox" id="t2"><label for="t2">Añade el botón de WhatsApp y muestra la categoría «Agencia de marketing» <span class="when">Hoy · 5 min</span></label></li>
+    <li><input type="checkbox" id="t3"><label for="t3">Crea las 4 destacadas con las portadas nuevas <span class="when">Mañana · 15 min</span></label></li>
+    <li><input type="checkbox" id="t4"><label for="t4">Graba y publica el reel de relanzamiento <span class="when">Jueves 5 · <a href="#g-r1">guion R1</a></span></label></li>
+    <li><input type="checkbox" id="t5"><label for="t5">Sube el carrusel «Cuánto te cuestan las bajas» y fíjalo <span class="when">Sábado 7 · <a href="#g-c1">ya diseñado</a></span></label></li>
+    <li><input type="checkbox" id="t6"><label for="t6">Graba y publica «Busqué gimnasio en Santander» y fíjalo <span class="when">Domingo 8 · <a href="#g-r2">guion R2</a></span></label></li>
+    <li><input type="checkbox" id="t7"><label for="t7">Sigue a 50 gimnasios y centros de Cantabria <span class="when">Esta semana · <a href="#captacion">cómo hacerlo</a></span></label></li>
+    <li><input type="checkbox" id="t8"><label for="t8">Mándame las capturas que te pido <span class="when">Cuando puedas · <a href="#datos">lista</a></span></label></li>
+  </ul>
+</section>
+
+<!-- ============ DIAGNÓSTICO ============ -->
+<section id="diagnostico">
+  <div class="eyebrow">Diagnóstico</div>
+  <h2>Tu único post funcionó. La cuenta no estaba lista para recogerlo.</h2>
+  <p class="lead">Datos del reel del 2 de agosto. Mucha gente sintió curiosidad y fue a tu perfil, pero allí solo había una publicación.</p>
+
+  <div class="grid3 mt">
+    <div class="card stat"><span class="n">2.845</span><span class="l">cuentas lo vieron</span><span class="x">7.102 reproducciones: unas 2,5 por persona.</span></div>
+    <div class="card stat"><span class="n">85 %</span><span class="l">vino del Feed</span><span class="x">Lo vieron sobre todo seguidores tuyos y de tu cuenta personal. No saltó a Reels ni Explorar.</span></div>
+    <div class="card stat bad"><span class="n">0,25 %</span><span class="l">de envíos</span><span class="x">7 envíos entre 2.845 personas. Para llegar a desconocidos hace falta un 1–2 %.</span></div>
+  </div>
+
+  <div class="card mt">
+    <h3>Del vídeo al cliente</h3>
+    <div class="flow">
+      <div class="step"><span class="v">2.845</span><span>vieron el vídeo</span></div>
+      <div class="step"><span class="v">203</span><span>visitaron el perfil <span class="rate good">7,1 % · muy bien</span></span></div>
+      <div class="step"><span class="v">16</span><span>empezaron a seguirte <span class="rate low">7,9 % · bajo</span></span></div>
+      <div class="step"><span class="v">?</span><span>pidieron auditoría o compraron <span class="muted small">(no lo medimos: lo arreglamos en <a href="#perfil">Perfil</a>)</span></span></div>
+    </div>
+  </div>
+
+  <h3 class="mt">Qué falla, por orden de importancia</h3>
+  <ol class="fix">
+    <li><strong>Constancia.</strong> Un post en tres meses y 10 visualizaciones en los últimos 30 días. Instagram necesita publicaciones cada semana para saber a quién enseñarte.</li>
+    <li><strong>El perfil no convierte.</strong> Quien llega ve una publicación, un logo que no se lee en pequeño y «Descarga el Protocolo», que suena gratis y luego cuesta 17 €.</li>
+    <li><strong>El contenido no se comparte.</strong> El post hablaba de ti («Soy Sergio…»). Lo que la gente reenvía es lo que le resuelve algo a quien lo recibe.</li>
+    <li><strong>Audiencia sin confirmar.</strong> Tus 37 seguidores probablemente son amigos y no dueños de gimnasio. Necesito la captura de Audiencia para saberlo.</li>
+  </ol>
+
+  <div class="card mt">
+    <h3>Lo que ya tienes a favor (y la competencia no)</h3>
+    <ul class="clean">
+      <li>Un nicho clarísimo: solo gimnasios y centros deportivos, en Cantabria.</li>
+      <li>Un mensaje con fuerza: «los likes no pagan las nóminas».</li>
+      <li>Ofertas montadas y con precio público: calculadora gratis, auditoría gratis, Protocolo 17 €, Pack Dominio Local 199 €, Growth Partner 349 €/mes.</li>
+      <li>Herramientas que se pueden enseñar en vídeo: la calculadora de bajas, la Sala de Control y el copiloto IA.</li>
+      <li>Te desenvuelves bien delante de la cámara.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ PERFIL ============ -->
+<section id="perfil">
+  <div class="eyebrow">Perfil</div>
+  <h2>Perfil nuevo, listo para copiar</h2>
+  <p class="lead">El perfil es la página de ventas. Quien llega desde un reel decide en 3 segundos si te sigue o te escribe.</p>
+
+  <div class="stack mt">
+    <div class="card ba">
+      <div class="copyrow"><h3>Nombre</h3><button class="copy" data-copy="nombre">Copiar</button></div>
+      <div class="row"><span class="tag before">Ahora</span><div class="copybox old">Activonorte | Mkt Deportivo</div></div>
+      <div class="row"><span class="tag after">Nuevo</span><div class="copybox" id="nombre">Activonorte · Marketing para gimnasios</div></div>
+      <p class="small muted">El nombre sale en el buscador de Instagram. Nadie busca «Mkt»; sí buscan «marketing gimnasios».</p>
+    </div>
+
+    <div class="card ba">
+      <div class="copyrow"><h3>Biografía <span class="muted small">(148 de 150 caracteres)</span></h3><button class="copy" data-copy="bio">Copiar</button></div>
+      <div class="row"><span class="tag before">Ahora</span><div class="copybox old">📍 Santander &amp; Cantabria
+🚀 Llenamos tus clases de socios reales.
+📥 Reactiva ex-clientes sin invertir en Ads.
+👇 Descarga el Protocolo de reactivación:</div></div>
+      <div class="row"><span class="tag after">Nuevo</span><div class="copybox" id="bio">Solo gimnasios y centros deportivos
+📍 Santander · Cantabria
+📈 Más altas, menos bajas. Socios, no likes.
+👇 Recupera ex-socios en 48 h sin anuncios</div></div>
+      <p class="small muted">Primera línea: para quién es. Segunda: dónde. Tercera: qué consigues. Cuarta: lo que hay en el enlace, sin prometer que es gratis.</p>
+      <details class="mt-s"><summary class="small"><strong>Alternativa si prefieres empujar la auditoría gratis</strong> (149 caracteres)</summary>
+        <div class="copyrow mt-s"><span></span><button class="copy" data-copy="bio2">Copiar</button></div>
+        <div class="copybox mt-s" id="bio2">Marketing solo para gimnasios y centros deportivos
+📍 Santander · Cantabria
+📈 Socios, no likes: más altas, menos bajas
+👇 Auditoría gratis de 15 min</div>
+      </details>
+    </div>
+
+    <div class="card">
+      <h3>Enlaces (en este orden)</h3>
+      <p class="small muted mt-s">Instagram enseña el primero y «y 2 más». Las etiquetas utm sirven para ver en tus estadísticas qué visitas vienen de Instagram.</p>
+      <div class="links mt-s">
+        <div class="l"><div class="copyrow"><b>1 · Protocolo de Reactivación · 17 €</b><button class="copy" data-copy="l1">Copiar</button></div><span id="l1">https://activonorte.com/?utm_source=instagram&amp;utm_medium=bio</span></div>
+        <div class="l"><div class="copyrow"><b>2 · Auditoría gratis 15 min</b><button class="copy" data-copy="l2">Copiar</button></div><span id="l2">https://wa.me/34610387276?text=Hola%20Sergio%2C%20vengo%20de%20Instagram%20y%20quiero%20mi%20auditor%C3%ADa%20gratuita</span></div>
+        <div class="l"><div class="copyrow"><b>3 · Calculadora de bajas</b><button class="copy" data-copy="l3">Copiar</button></div><span id="l3">https://app.activonorte.com/?utm_source=instagram&amp;utm_medium=bio#calculadora</span></div>
+      </div>
+      <p class="small mt-s">El enlace de WhatsApp ya escribe «vengo de Instagram», así sabes de dónde llega cada auditoría.</p>
+    </div>
+
+    <div class="grid2">
+      <div class="card">
+        <h3>Foto de perfil</h3>
+        <div class="avatarrow mt-s">
+          <img class="avatar" src="imagenes/perfil/foto-perfil.png" alt="Nueva foto de perfil: marca blanca sobre azul petróleo">
+          <p class="small" style="flex:1;min-width:160px">Solo la marca, grande, sobre el azul de tu web. La actual lleva la palabra ACTIVONORTE y en el círculo pequeño no se lee. Tu cara ya sale en todos los reels.</p>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Destacadas</h3>
+        <div class="hl mt-s">
+          <figure><img src="imagenes/destacadas/empieza-aqui.png" alt=""><figcaption>Empieza aquí</figcaption></figure>
+          <figure><img src="imagenes/destacadas/auditorias.png" alt=""><figcaption>Auditorías</figcaption></figure>
+          <figure><img src="imagenes/destacadas/protocolo.png" alt=""><figcaption>Protocolo</figcaption></figure>
+          <figure><img src="imagenes/destacadas/preguntas.png" alt=""><figcaption>Preguntas</figcaption></figure>
+        </div>
+        <p class="small mt-s"><b>Empieza aquí:</b> quién eres, para quién trabajas y precios. <b>Auditorías:</b> cada una que hagas. <b>Protocolo:</b> qué incluye y resultados. <b>Preguntas:</b> respuestas de la caja de preguntas.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Ajustes rápidos</h3>
+      <ul class="clean small">
+        <li><b>Categoría:</b> «Agencia de marketing», visible en el perfil.</li>
+        <li><b>Botón de contacto:</b> WhatsApp con el +34 610 38 72 76 (Editar perfil → Opciones de contacto).</li>
+        <li><b>Nota</b> (la burbuja sobre la foto): cambia «Simple curiosidad…» por <em>«¿Cuántos socios perdiste en octubre? 👀»</em>. La ven tus seguidores en los mensajes y anima a responder.</li>
+        <li><b>Publicaciones fijadas:</b> R1 (quién eres), C1 (bajas) y R2 (Google). Son la presentación de la cuenta.</li>
+        <li><b>El reel de agosto:</b> no lo borres. Tiene 7.100 reproducciones y da confianza.</li>
+        <li><b>Tu cuenta personal:</b> pon «Fundador de @activonorte.media» en la bio.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ESTRATEGIA ============ -->
+<section id="estrategia">
+  <div class="eyebrow">Estrategia</div>
+  <h2>El especialista en gimnasios que habla en euros</h2>
+  <p class="lead">No buscamos ser virales para todo el mundo. Un vídeo que ven 3.000 dueños de gimnasio vale más que uno que ven 100.000 personas que entrenan.</p>
+
+  <h3 class="mt">Cómo te diferencias de la competencia</h3>
+  <div class="grid2 mt-s">
+    <div class="card diff"><h3>Euros, no likes</h3><p>Las agencias enseñan alcance. Tú enseñas cuentas: cuotas, bajas, cuánto vale un socio. Cada publicación lleva un número.</p></div>
+    <div class="card diff"><h3>Empiezas por los ex-socios</h3><p>Casi todas las agencias de fitness venden anuncios. Tú empiezas por el dinero que el gimnasio ya tiene: su lista de bajas y su ficha de Google.</p></div>
+    <div class="card diff"><h3>Eres de aquí</h3><p>Puedes entrar en un gimnasio de Torrelavega, grabar allí y auditar centros reales de Cantabria. Una agencia de Madrid no puede.</p></div>
+    <div class="card diff"><h3>Enseñas el producto por dentro</h3><p>Precios públicos, calculadora, Sala de Control y copiloto IA en vídeo. Casi nadie lo hace y genera confianza.</p></div>
+  </div>
+
+  <h3 class="mt">Para quién hablas</h3>
+  <div class="grid2 mt-s">
+    <div class="card"><h4>Dueños de centros en Cantabria</h4><p class="small mt-s">Gimnasios, boxes, estudios de entrenamiento, pilates y yoga. Les vendes auditoría → Pack Dominio Local (199 €) → Growth Partner (349 €/mes).</p></div>
+    <div class="card"><h4>Dueños de centros de toda España</h4><p class="small mt-s">El Protocolo (17 €) se vende online a cualquiera. Por eso el 80 % del contenido sirve a cualquier centro de España y el 20 % es local (auditorías y visitas en Cantabria).</p></div>
+  </div>
+
+  <div class="card mt">
+    <h3>Los 5 temas de la cuenta</h3>
+    <div class="pillars">
+      <div class="pillar"><span class="pct">30 %</span><div><b>Números del gimnasio</b><div class="bar"><i style="width:30%"></i></div><p>Bajas, cuotas, cuánto vale un socio, ofertas. Es lo que más se guarda y se reenvía.</p></div></div>
+      <div class="pillar"><span class="pct">25 %</span><div><b>Retención y ex-socios</b><div class="bar"><i style="width:25%"></i></div><p>Mensajes, señales de baja, los primeros 30 días. Vende el Protocolo sin decir «compra».</p></div></div>
+      <div class="pillar"><span class="pct">20 %</span><div><b>Google y reseñas</b><div class="bar"><i style="width:20%"></i></div><p>Auditorías en directo, ficha de Google, reseñas. Vende el Pack Dominio Local.</p></div></div>
+      <div class="pillar"><span class="pct">15 %</span><div><b>Opinión</b><div class="bar"><i style="width:15%"></i></div><p>Low-cost, Black Friday, «tu Instagram no te trae socios». Genera debate y comentarios.</p></div></div>
+      <div class="pillar"><span class="pct">10 %</span><div><b>Detrás de Activonorte</b><div class="bar"><i style="width:10%"></i></div><p>Tu historia, visitas a centros y, cuando los tengas, resultados de clientes.</p></div></div>
+    </div>
+  </div>
+
+  <h3 class="mt">Formatos y ritmo</h3>
+  <div class="tablewrap mt-s">
+    <table>
+      <thead><tr><th>Formato</th><th>Cuándo</th><th>Para qué</th></tr></thead>
+      <tbody>
+        <tr><td><b>Reel</b> 25–45 s</td><td>Lunes, jueves y sábado</td><td>Llegar a gente que no te sigue. Gancho en los 3 primeros segundos y subtítulos siempre.</td></tr>
+        <tr><td><b>Carrusel</b> 8–10 fotos</td><td>Miércoles</td><td>Guardados y autoridad. Los 5 primeros ya están diseñados.</td></tr>
+        <tr><td><b>Stories</b> 3–5 al día</td><td>Todos los días</td><td>Relación con los que ya te siguen y conversaciones por DM.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="small muted mt-s">Hora: prueba a las 14:00 (el hueco de mediodía de un dueño de gimnasio) y a las 21:30. Cuando pases de 100 seguidores, mira «Momentos más activos» en el panel y ajusta.</p>
+
+  <h3 class="mt">Cómo un comentario se convierte en cliente</h3>
+  <p class="small mt-s">Cada publicación termina con una palabra para comentar. Respondes por privado con lo prometido y sigues la conversación.</p>
+  <div class="kwflow">
+    <div class="k"><span class="kwchip">BAJAS</span><ol><li>Calculadora de bajas</li><li>«¿Cuánto te ha salido?»</li><li>Auditoría</li></ol></div>
+    <div class="k"><span class="kwchip">AUDITA</span><ol><li>Pides nombre del centro</li><li>Audio con 2 mejoras</li><li>Auditoría de 15 min</li><li>Pack 199 € o Growth 349 €/mes</li></ol></div>
+    <div class="k"><span class="kwchip">MENSAJE</span><ol><li>Plantilla del primer mensaje</li><li>Protocolo 17 €</li></ol></div>
+    <div class="k"><span class="kwchip">PROTOCOLO</span><ol><li>Enlace al Protocolo</li><li>Compra</li><li>Auditoría</li></ol></div>
+  </div>
+  <p class="small muted mt-s">Al principio, responde tú a mano y en menos de una hora: cada respuesta también cuenta como comentario. Si pasas de unos 20 comentarios por publicación, ManyChat (partner oficial de Meta) lo automatiza. Las respuestas están en <a href="#captacion">Captación</a>.</p>
+
+  <h3 class="mt">El calendario de un gimnasio manda</h3>
+  <div class="season">
+    <div class="card"><b>Noviembre</b><span>Preparar enero, pedir reseñas y no regalar la cuota en Black Friday (27 nov).</span></div>
+    <div class="card"><b>Diciembre</b><span>Escribir a los ex-socios antes de que se apunten en otro sitio. Lista de espera de enero.</span></div>
+    <div class="card"><b>Enero</b><span>Que los nuevos no se vayan: los primeros 30 días.</span></div>
+    <div class="card"><b>Febrero</b><span>La ola de bajas. Señales de baja y Protocolo.</span></div>
+  </div>
+
+  <div class="card mt">
+    <h3>Reglas de grabación</h3>
+    <ul class="clean small">
+      <li><b>Graba en un gimnasio</b> siempre que puedas. Pide permiso a un centro amigo. Instagram y la gente entienden de qué va la cuenta en un segundo.</li>
+      <li><b>La primera frase es el texto en pantalla.</b> Sin «hola, soy Sergio» al principio.</li>
+      <li><b>Subtítulos siempre</b> (app Edits de Instagram o CapCut). Mucha gente ve los vídeos sin sonido.</li>
+      <li><b>Micrófono de solapa</b> (unos 20 €). El sonido importa más que la imagen.</li>
+      <li><b>Portada con el título grande</b> y el texto en el centro, para que se lea en la cuadrícula.</li>
+      <li><b>Sin marcas de agua</b> de TikTok ni de otras apps: Instagram reparte menos esos vídeos.</li>
+      <li><b>3 o 4 hashtags</b> como mucho. Lo que cuenta son las palabras del pie y del vídeo: gimnasio, socios, bajas, Google, Santander, Cantabria.</li>
+      <li><b>Reels de prueba:</b> úsalos para probar dos ganchos distintos del mismo vídeo con gente que no te sigue.</li>
+      <li><b>Colaboración con tu cuenta personal</b> solo en los reels de historia y de opinión (R1, R5, R10).</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ CALENDARIO ============ -->
+<section id="calendario">
+  <div class="eyebrow">Calendario</div>
+  <h2>19 publicaciones en 5 semanas</h2>
+  <p class="lead">Toca cualquier día para abrir su guion. Los carruseles marcados como «Diseñado» ya tienen las imágenes hechas.</p>
+
+  <div class="week">
+    <header><h3>Relanzamiento</h3><span>5–8 nov · se fijan las tres</span></header>
+    <div class="days">
+      <a class="day" href="#g-r1"><span class="dd"><b>J</b><span>5</span></span><span class="dt"><span class="t">Solo trabajo con gimnasios. Esto es por qué.</span><span class="chips"><span class="chip reel">Reel</span><span class="chip pin">Fijar</span><span class="chip kwc">AUDITA</span></span></span></a>
+      <a class="day" href="#g-c1"><span class="dd"><b>S</b><span>7</span></span><span class="dt"><span class="t">Un gimnasio de 300 socios puede perder 86.400 € al año</span><span class="chips"><span class="chip car">Carrusel</span><span class="chip ready">Diseñado</span><span class="chip pin">Fijar</span><span class="chip kwc">BAJAS</span></span></span></a>
+      <a class="day" href="#g-r2"><span class="dd"><b>D</b><span>8</span></span><span class="dt"><span class="t">Busqué «gimnasio en Santander» en Google</span><span class="chips"><span class="chip reel">Reel</span><span class="chip pin">Fijar</span><span class="chip kwc">AUDITA</span></span></span></a>
+    </div>
+  </div>
+
+  <div class="week">
+    <header><h3>Semana 1 · Enero empieza en noviembre</h3><span>9–15 nov</span></header>
+    <div class="days">
+      <a class="day" href="#g-r3"><span class="dd"><b>L</b><span>9</span></span><span class="dt"><span class="t">Si esperas a enero para captar socios, llegas tarde</span><span class="chips"><span class="chip reel">Reel</span><span class="chip kwc">Enviar</span></span></span></a>
+      <a class="day" href="#g-c2"><span class="dd"><b>X</b><span>11</span></span><span class="dt"><span class="t">Enero no se gana en enero: 5 cosas antes del día 1</span><span class="chips"><span class="chip car">Carrusel</span><span class="chip ready">Diseñado</span><span class="chip kwc">AUDITA</span></span></span></a>
+      <a class="day" href="#g-r4"><span class="dd"><b>J</b><span>12</span></span><span class="dt"><span class="t">Si le mandas esto a un ex-socio, no va a volver</span><span class="chips"><span class="chip reel">Reel</span><span class="chip kwc">MENSAJE</span></span></span></a>
+      <a class="day" href="#g-r5"><span class="dd"><b>S</b><span>14</span></span><span class="dt"><span class="t">El low-cost de al lado no te está quitando socios</span><span class="chips"><span class="chip reel">Reel</span><span class="chip kwc">Enviar</span></span></span></a>
+    </div>
+  </div>
+
+  <div class="week">
+    <header><h3>Semana 2 · Reseñas y Black Friday</h3><span>16–22 nov</span></header>
+    <div class="days">
+      <a class="day" href="#g-r6"><span class="dd"><b>L</b><span>16</span></span><span class="dt"><span class="t">Tu competencia tiene 300 reseñas y no es mejor que tú</span><span class="chips"><span class="chip reel">Reel</span><span class="chip kwc">AUDITA</span></span></span></a>
+      <a class="day" href="#g-c3"><span class="dd"><b>X</b><span>18</span></span><span class="dt"><span class="t">Antes de rebajar tu cuota un 50 %, mira esta cuenta</span><span class="chips"><span class="chip car">Carrusel</span><span class="chip ready">Diseñado</span><span class="chip kwc">AUDITA</span></span></span></a>
+      <a class="day" href="#g-r7"><span class="dd"><b>J</b><span>19</span></span><span class="dt"><span class="t">«Es muy caro»: lo que contesta mi copiloto IA</span><span class="chips"><span class="chip reel">Reel</span><span class="chip kwc">PROTOCOLO</span></span></span></a>
+      <a class="day" href="#g-r8"><span class="dd"><b>S</b><span>21</span></span><span class="dt"><span class="t">Auditando gimnasios de Cantabria #1</span><span class="chips"><span class="chip reel">Reel</span><span class="chip kwc">AUDITA</span></span></span></a>
+    </div>
+  </div>
+
+  <div class="week">
+    <header><h3>Semana 3 · Que no se vayan</h3><span>23–29 nov</span></header>
+    <div class="days">
+      <a class="day" href="#g-r9"><span class="dd"><b>L</b><span>23</span></span><span class="dt"><span class="t">Por qué tus socios de enero se van en febrero</span><span class="chips"><span class="chip reel">Reel</span><span class="chip kwc">Enviar</span></span></span></a>
+      <a class="day" href="#g-c4"><span class="dd"><b>X</b><span>25</span></span><span class="dt"><span class="t">7 señales de que un socio se va a dar de baja</span><span class="chips"><span class="chip car">Carrusel</span><span class="chip ready">Diseñado</span><span class="chip kwc">BAJAS</span></span></span></a>
+      <a class="day" href="#g-r10"><span class="dd"><b>J</b><span>26</span></span><span class="dt"><span class="t">Me dijeron que especializarme en gimnasios era una locura</span><span class="chips"><span class="chip reel">Reel</span><span class="chip kwc">Café</span></span></span></a>
+      <a class="day" href="#captacion"><span class="dd"><b>V</b><span>27</span></span><span class="dt"><span class="t">Black Friday: «hoy no rebajes tu cuota» + carrusel del día 18</span><span class="chips"><span class="chip sto">Stories</span></span></span></a>
+      <a class="day" href="#g-r11"><span class="dd"><b>S</b><span>28</span></span><span class="dt"><span class="t">Opinión impopular: tu Instagram no te trae socios</span><span class="chips"><span class="chip reel">Reel</span><span class="chip kwc">AUDITA</span></span></span></a>
+    </div>
+  </div>
+
+  <div class="week">
+    <header><h3>Semana 4 · Ex-socios en diciembre</h3><span>30 nov – 6 dic</span></header>
+    <div class="days">
+      <a class="day" href="#g-r12"><span class="dd"><b>L</b><span>30</span></span><span class="dt"><span class="t">Tu lista de ex-socios vale más en diciembre</span><span class="chips"><span class="chip reel">Reel</span><span class="chip kwc">PROTOCOLO</span></span></span></a>
+      <a class="day" href="#g-c5"><span class="dd"><b>X</b><span>2</span></span><span class="dt"><span class="t">Cómo escribir a un ex-socio para que vuelva</span><span class="chips"><span class="chip car">Carrusel</span><span class="chip ready">Diseñado</span><span class="chip kwc">PROTOCOLO</span></span></span></a>
+      <a class="day" href="#g-r13"><span class="dd"><b>J</b><span>3</span></span><span class="dt"><span class="t">Auditando gimnasios de Cantabria #2</span><span class="chips"><span class="chip reel">Reel</span><span class="chip kwc">AUDITA</span></span></span></a>
+      <a class="day" href="#g-r14"><span class="dd"><b>S</b><span>5</span></span><span class="dt"><span class="t">Un socio no vale 40 €</span><span class="chips"><span class="chip reel">Reel</span><span class="chip kwc">BAJAS</span></span></span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GUIONES ============ -->
+<section id="guiones">
+  <div class="eyebrow">Guiones</div>
+  <h2>Qué decir, cómo grabarlo y qué poner en el pie</h2>
+  <p class="lead">Los guiones son una base: dilo con tus palabras. Lo que no se toca es la primera frase y la palabra del final.</p>
+
+  <h3 class="mt">Reels</h3>
+  <div class="mt-s">
+
+  <details class="piece" id="g-r1"><summary><span class="s1"><b>R1 · Solo trabajo con gimnasios</b><small>Jueves 5 nov · 35–45 s · fijar · colaboración con tu cuenta personal</small></span></summary>
+    <div class="pbody">
+      <div class="hook"><small>Texto en pantalla</small><p>Si tienes un gimnasio, mira esto. Si no, pasa.</p></div>
+      <div class="script"><div class="lbl">Guion</div>
+        <p>Si tienes un gimnasio, este vídeo es para ti. Si no, puedes pasar.</p>
+        <p>Soy Sergio, de Santander, y mi agencia solo trabaja con gimnasios y centros deportivos. Ni restaurantes ni inmobiliarias.</p>
+        <p>¿Por qué? Porque un gimnasio no vive de likes. Vive de tres números: cuántos socios entran, cuántos se van y cuánto paga cada uno.</p>
+        <p>Casi todo el marketing que te venden mira solo el primero.</p>
+        <p>Yo trabajo los tres: que te encuentren en Google cuando buscan «gimnasio cerca de mí», que vuelvan los que se fueron y que los de enero no se den de baja en febrero.</p>
+        <p>Aquí te voy a enseñar cómo. Con números y sin humo.</p>
+        <p>Si tienes un centro en Cantabria, comenta <strong>AUDITA</strong> y te reviso gratis tu ficha de Google.</p>
+      </div>
+      <div class="note"><b>Cómo grabarlo:</b> en un gimnasio o delante de la tele con el logo, como en agosto. Plano medio, móvil a la altura de los ojos. Pon los «tres números» en pantalla mientras los dices.</div>
+      <div><div class="copyrow"><div class="lbl">Pie de foto</div><button class="copy" data-copy="cap-r1">Copiar</button></div>
+<div class="copybox" id="cap-r1">Marketing para gimnasios en Santander y Cantabria. Altas, bajas y cuotas. Nada más.
+
+Un gimnasio vive de 3 números:
+1️⃣ Cuántos socios entran
+2️⃣ Cuántos se van
+3️⃣ Cuánto paga cada uno
+
+En esta cuenta te enseño a mover los tres, con cuentas reales y sin depender de anuncios.
+
+👉 Si tienes un centro en Cantabria, comenta AUDITA y te reviso gratis tu ficha de Google.
+
+#marketingdeportivo #gimnasios #santander #cantabria</div></div>
+    </div>
+  </details>
+
+  <details class="piece" id="g-r2"><summary><span class="s1"><b>R2 · Busqué «gimnasio en Santander» en Google</b><small>Domingo 8 nov · 30–40 s · fijar · pantalla verde</small></span></summary>
+    <div class="pbody">
+      <div class="hook"><small>Texto en pantalla</small><p>Busqué «gimnasio en Santander». Si no sales aquí, no existes.</p></div>
+      <div class="script"><div class="lbl">Guion</div>
+        <p>Busqué «gimnasio en Santander» en Google. Mira.</p>
+        <p>El mapa enseña tres resultados. La mayoría de la gente elige entre estos tres y no baja más.</p>
+        <p>¿Qué tienen en común? Uno: muchas reseñas, y recientes. Dos: fotos reales, con gente entrenando, no de banco de imágenes. Tres: la ficha completa: categoría correcta, horarios y teléfono.</p>
+        <p>El cuarto puede ser mejor gimnasio. Da igual. Si no sales arriba, para quien está buscando no existes.</p>
+        <p>Comenta <strong>AUDITA</strong> con el nombre de tu centro y te digo en qué puesto sales y qué te falta.</p>
+      </div>
+      <div class="note"><b>Cómo grabarlo:</b> graba la pantalla del móvil buscando en Google Maps y ponte encima con pantalla verde (Edits o CapCut). Habla bien de los tres primeros. No critiques a nadie con nombre: si comparas, tapa los nombres.</div>
+      <div><div class="copyrow"><div class="lbl">Pie de foto</div><button class="copy" data-copy="cap-r2">Copiar</button></div>
+<div class="copybox" id="cap-r2">¿Tu gimnasio sale en el top 3 de Google Maps cuando alguien busca «gimnasio en Santander»?
+
+Los que salen arriba tienen 3 cosas en común:
+✅ Muchas reseñas y recientes
+✅ Fotos reales y actualizadas
+✅ Ficha completa: categoría, horarios y teléfono
+
+Si no sales en esos 3 primeros, la mayoría de la gente que busca gimnasio no te va a ver.
+
+👉 Comenta AUDITA con el nombre de tu centro y te digo en qué puesto sales y qué te falta.
+
+#googlemaps #gimnasios #santander #marketingdeportivo</div></div>
+    </div>
+  </details>
+
+  <details class="piece" id="g-r3"><summary><span class="s1"><b>R3 · Si esperas a enero, llegas tarde</b><small>Lunes 9 nov · 30 s · objetivo: envíos</small></span></summary>
+    <div class="pbody">
+      <div class="hook"><small>Texto en pantalla</small><p>Si esperas a enero para captar socios, llegas tarde.</p></div>
+      <div class="script"><div class="lbl">Guion</div>
+        <p>Si esperas a enero para captar socios, llegas tarde.</p>
+        <p>En enero todo el mundo quiere apuntarse… y todos los gimnasios sacan la misma oferta la misma semana. La gente compara y gana el más barato o el que sale primero en Google.</p>
+        <p>Los que llenan en enero hacen tres cosas en noviembre.</p>
+        <p>Uno: piden reseñas ahora, porque tardan semanas en acumularse.</p>
+        <p>Dos: abren una lista de espera: «apúntate antes del 20 de diciembre y no pagas matrícula».</p>
+        <p>Tres: escriben a sus ex-socios en diciembre, antes de que se apunten en otro sitio.</p>
+        <p>Mándaselo a tu socio. En enero me lo agradecéis.</p>
+      </div>
+      <div class="note"><b>Cómo grabarlo:</b> andando por la sala de un gimnasio (un plano en movimiento retiene más). Los tres puntos aparecen en pantalla según los dices.</div>
+      <div><div class="copyrow"><div class="lbl">Pie de foto</div><button class="copy" data-copy="cap-r3">Copiar</button></div>
+<div class="copybox" id="cap-r3">Enero se prepara en noviembre. Si tienes un gimnasio, esto es lo que deberías estar haciendo ya:
+
+1. Pedir reseñas en Google (tardan semanas en acumularse)
+2. Abrir una lista de espera para enero con la matrícula gratis
+3. Escribir a tus ex-socios en diciembre, antes de que se apunten en otro sitio
+
+📌 Guárdalo y mándaselo a quien lleve el gimnasio contigo.
+
+#dueñosdegimnasio #gimnasios #marketingdeportivo #gestiondegimnasios</div></div>
+    </div>
+  </details>
+
+  <details class="piece" id="g-r4"><summary><span class="s1"><b>R4 · Si le mandas esto a un ex-socio, no va a volver</b><small>Jueves 12 nov · 30–35 s · pantalla verde sobre WhatsApp</small></span></summary>
+    <div class="pbody">
+      <div class="hook"><small>Texto en pantalla</small><p>Si le mandas esto a un ex-socio, no va a volver.</p></div>
+      <div class="script"><div class="lbl">Guion</div>
+        <p>Si le mandas esto a un ex-socio, no va a volver.</p>
+        <p><em>[Enseña el mensaje malo]</em> «¡Vuelve al gym con un 50 % de descuento solo esta semana! Link aquí».</p>
+        <p>Esto es un anuncio. Le llega igual que a otras 200 personas y encima le dices que tu cuota vale la mitad.</p>
+        <p>Prueba esto. <em>[Enseña el bueno]</em> «Hola Carlos, soy Sergio de [tu gimnasio]. Me he acordado de ti porque hemos abierto un grupo a las 7, como el que hacías tú. ¿Qué tal estás?».</p>
+        <p>Sin precio. Sin enlace. Solo reabres la conversación. El precio va después, cuando te contesta.</p>
+        <p>Comenta <strong>MENSAJE</strong> y te paso la plantilla.</p>
+      </div>
+      <div class="note"><b>Cómo grabarlo:</b> crea los dos chats en tu móvil con un contacto de prueba y haz captura. Pantalla verde encima. Una ❌ roja en el malo y un ✅ en el bueno.</div>
+      <div><div class="copyrow"><div class="lbl">Pie de foto</div><button class="copy" data-copy="cap-r4">Copiar</button></div>
+<div class="copybox" id="cap-r4">El error más común al escribir a un ex-socio: mandarle un anuncio.
+
+❌ Lista de difusión + descuento + enlace = parece desesperado y le dices que tu cuota vale la mitad.
+✅ Uno a uno, con su nombre, sin precio y sin enlace = reabres la conversación.
+
+El precio va después, cuando te contesta.
+
+👉 Comenta MENSAJE y te paso la plantilla del primer mensaje.
+
+#dueñosdegimnasio #gimnasios #retenciondeclientes #marketingdeportivo</div></div>
+    </div>
+  </details>
+
+  <details class="piece" id="g-r5"><summary><span class="s1"><b>R5 · El low-cost no te está quitando socios</b><small>Sábado 14 nov · 25–30 s · opinión · colaboración con tu cuenta personal</small></span></summary>
+    <div class="pbody">
+      <div class="hook"><small>Texto en pantalla</small><p>El low-cost de al lado no te está quitando socios.</p></div>
+      <div class="script"><div class="lbl">Guion</div>
+        <p>El gimnasio low-cost de al lado no te está quitando socios. Te los está quitando otra cosa.</p>
+        <p>Quien quiere pagar 25 € se va al low-cost, y nunca te iba a pagar 50 €. Ese no es tu cliente.</p>
+        <p>Tu problema es el socio que paga 50 €, se siente un número y se va sin que nadie le pregunte por qué.</p>
+        <p>Un low-cost no puede hacer tres cosas que tú sí: saber cómo se llama, notar cuándo deja de venir y escribirle cuando se va.</p>
+        <p>Si no haces esas tres cosas, sí eres un low-cost. <em>[pausa]</em> Pero caro.</p>
+      </div>
+      <div class="note"><b>Cómo grabarlo:</b> a cámara, serio, en una sala de gimnasio. Corta justo después de «Pero caro»: el final seco hace que la gente lo vuelva a ver y lo mande.</div>
+      <div><div class="copyrow"><div class="lbl">Pie de foto</div><button class="copy" data-copy="cap-r5">Copiar</button></div>
+<div class="copybox" id="cap-r5">Opinión: el low-cost no es tu competencia.
+
+Quien quiere pagar 25 € nunca te iba a pagar 50 €. Tu problema es el socio que paga 50 €, se siente un número y se va sin que nadie le pregunte por qué.
+
+Lo que un low-cost no puede hacer y tú sí:
+→ Saber cómo se llama
+→ Notar cuándo deja de venir
+→ Escribirle cuando se va
+
+📩 Mándaselo a alguien con un centro que esté preocupado por el low-cost.
+
+#gimnasios #dueñosdegimnasio #lowcost #marketingdeportivo</div></div>
+    </div>
+  </details>
+
+  <details class="piece" id="g-r6"><summary><span class="s1"><b>R6 · Tu competencia tiene 300 reseñas</b><small>Lunes 16 nov · 35 s</small></span></summary>
+    <div class="pbody">
+      <div class="hook"><small>Texto en pantalla</small><p>Tu competencia tiene 300 reseñas. No es porque sea mejor.</p></div>
+      <div class="script"><div class="lbl">Guion</div>
+        <p>Tu gimnasio tiene 40 reseñas y el de enfrente 300. Y no es porque sea mejor. Es porque las pide.</p>
+        <p>Tres formas que funcionan.</p>
+        <p>Uno: un QR en recepción y en el espejo del vestuario que abra directamente la pantalla de dejar reseña.</p>
+        <p>Dos: pídela en el buen momento: al acabar una clase dura o cuando alguien consigue un objetivo.</p>
+        <p>Tres: que la pida el monitor, en persona. No un email automático.</p>
+        <p>Y nunca a cambio de descuentos: Google lo prohíbe y te puede quitar las reseñas.</p>
+        <p>Comenta <strong>AUDITA</strong> y te digo cuántas te faltan para entrar en el top 3 de tu zona.</p>
+      </div>
+      <div class="note"><b>Cómo grabarlo:</b> enseña un QR impreso en un mostrador de recepción. Si puedes, graba a un monitor pidiéndola de verdad al acabar una clase.</div>
+      <div><div class="copyrow"><div class="lbl">Pie de foto</div><button class="copy" data-copy="cap-r6">Copiar</button></div>
+<div class="copybox" id="cap-r6">Cómo conseguir más reseñas en Google para tu gimnasio (sin parecer pesado):
+
+1. QR en recepción y en el vestuario que lleve directo a dejar reseña
+2. Pedirla en el momento bueno: al acabar una clase o tras un logro
+3. Que la pida el monitor en persona
+
+⚠️ Nunca a cambio de descuentos o regalos: Google lo prohíbe.
+
+👉 Comenta AUDITA y te digo cuántas reseñas te faltan para entrar en el top 3 de tu zona.
+
+#googlemaps #reseñas #gimnasios #marketingdeportivo</div></div>
+    </div>
+  </details>
+
+  <details class="piece" id="g-r7"><summary><span class="s1"><b>R7 · «Es muy caro»: lo que contesta mi copiloto IA</b><small>Jueves 19 nov · 35–45 s · grabación de pantalla</small></span></summary>
+    <div class="pbody">
+      <div class="hook"><small>Texto en pantalla</small><p>Un ex-socio te dice «es muy caro». ¿Qué le contestas?</p></div>
+      <div class="script"><div class="lbl">Guion</div>
+        <p>Un ex-socio te dice «es muy caro». ¿Qué le contestas?</p>
+        <p>Casi todos contestan con un descuento. Error: le confirmas que era caro.</p>
+        <p>Mira lo que hace el copiloto que uso en el Protocolo. Pego su mensaje… <em>[grabación de pantalla]</em></p>
+        <p>Primero valida: «te entiendo». Luego aísla: ¿es el precio o es que no le estaba sacando partido? Y propone algo pequeño: «ven una semana y lo vemos».</p>
+        <p>No bajas el precio. Cambias la conversación.</p>
+        <p>Comenta <strong>PROTOCOLO</strong> y te cuento cómo funciona.</p>
+      </div>
+      <div class="note"><b>Cómo grabarlo:</b> grabación de pantalla real de la Sala de Control con el copiloto respondiendo. Enseña la respuesta que dé de verdad, sin retocarla. Tu cara en una esquina.</div>
+      <div><div class="copyrow"><div class="lbl">Pie de foto</div><button class="copy" data-copy="cap-r7">Copiar</button></div>
+<div class="copybox" id="cap-r7">«Es muy caro». Lo que te dice un ex-socio cuando le propones volver.
+
+Si contestas con un descuento, le das la razón.
+
+La respuesta que funciona tiene 3 pasos:
+1. Valida: «te entiendo»
+2. Aísla: ¿es el precio o que no le sacaba partido?
+3. Propón algo pequeño: una semana para volver a coger el ritmo
+
+Es lo que hace el copiloto IA del Protocolo de Reactivación con cada respuesta.
+
+👉 Comenta PROTOCOLO y te paso cómo funciona.
+
+#dueñosdegimnasio #gimnasios #ventas #marketingdeportivo</div></div>
+    </div>
+  </details>
+
+  <details class="piece" id="g-r8"><summary><span class="s1"><b>R8 · Auditando gimnasios de Cantabria #1</b><small>Sábado 21 nov · 40–50 s · serie · post colaborativo con el centro</small></span></summary>
+    <div class="pbody">
+      <div class="hook"><small>Texto en pantalla</small><p>Auditando gimnasios de Cantabria · #1</p></div>
+      <div class="script"><div class="lbl">Guion</div>
+        <p>Me habéis pedido que audite vuestro centro. Hoy: [nombre], en [localidad].</p>
+        <p>Busco «gimnasio en [localidad]»… y sale en el puesto [X].</p>
+        <p>Lo bueno: [algo concreto, p. ej. un 4,8 de nota].</p>
+        <p>Lo que le falta: uno, [p. ej. 23 reseñas frente a las 150 del primero]. Dos, [p. ej. las últimas fotos son de 2023].</p>
+        <p>Con esas dos cosas arregladas tiene opciones reales de subir.</p>
+        <p>¿El siguiente es el tuyo? Comenta <strong>AUDITA</strong>.</p>
+      </div>
+      <div class="note"><b>Importante:</b> solo centros que lo hayan pedido (comentario o DM) y siempre en tono constructivo. Invítalos como colaboradores del post para que lo vean también sus seguidores. Si aún no te lo ha pedido nadie, audita tu propia ficha o la de un gimnasio amigo con su permiso.</div>
+      <div><div class="copyrow"><div class="lbl">Pie de foto</div><button class="copy" data-copy="cap-r8">Copiar</button></div>
+<div class="copybox" id="cap-r8">Auditando gimnasios de Cantabria #1: [nombre del centro], [localidad] 📍
+
+Lo que miro siempre:
+→ En qué puesto sale en Google Maps
+→ Reseñas: cuántas, qué nota y cada cuánto llegan
+→ Fotos y ficha: ¿están al día?
+
+Gracias a [@centro] por dejarme enseñarlo.
+
+👉 ¿Quieres que el próximo sea el tuyo? Comenta AUDITA.
+
+#gimnasios #cantabria #googlemaps #marketingdeportivo</div></div>
+    </div>
+  </details>
+
+  <details class="piece" id="g-r9"><summary><span class="s1"><b>R9 · Por qué tus socios de enero se van en febrero</b><small>Lunes 23 nov · 35–40 s · objetivo: envíos</small></span></summary>
+    <div class="pbody">
+      <div class="hook"><small>Texto en pantalla</small><p>Muchos de los que se apunten en enero no estarán en marzo.</p></div>
+      <div class="script"><div class="lbl">Guion</div>
+        <p>Muchos de los que se apunten en enero no estarán en marzo. Y casi nunca es culpa suya.</p>
+        <p>Llegan motivados a una sala llena de máquinas que no saben usar. Nadie sabe su nombre. A la tercera semana dejan de venir. A la sexta, se dan de baja.</p>
+        <p>Se arregla con un plan de 30 días.</p>
+        <p>Día 1: sesión de bienvenida con un monitor. Semana 1: un mensaje personal, «¿qué tal esas agujetas?». Semana 2: si no ha venido dos veces, una llamada. Día 30: cinco minutos para revisar su objetivo.</p>
+        <p>Cuesta poco y puede valer una cuota de un año.</p>
+        <p>Mándaselo a tu equipo.</p>
+      </div>
+      <div class="note"><b>Cómo grabarlo:</b> en sala. El plan de 30 días aparece en pantalla como una lista que se va completando.</div>
+      <div><div class="copyrow"><div class="lbl">Pie de foto</div><button class="copy" data-copy="cap-r9">Copiar</button></div>
+<div class="copybox" id="cap-r9">El socio de enero que no coge rutina en su primer mes es la baja de febrero.
+
+Plan de 30 días para que se quede:
+📅 Día 1: sesión de bienvenida con un monitor
+💬 Semana 1: mensaje personal («¿qué tal esas agujetas?»)
+📞 Semana 2: si no ha venido 2 veces, llamada
+🎯 Día 30: 5 minutos para revisar su objetivo
+
+📩 Mándaselo a tu equipo de sala antes de enero.
+
+#retenciondeclientes #gimnasios #dueñosdegimnasio #marketingdeportivo</div></div>
+    </div>
+  </details>
+
+  <details class="piece" id="g-r10"><summary><span class="s1"><b>R10 · Me dijeron que era una locura</b><small>Jueves 26 nov · 45–60 s · tu historia · colaboración con tu cuenta personal</small></span></summary>
+    <div class="pbody">
+      <div class="hook"><small>Texto en pantalla</small><p>Me dijeron que especializarme solo en gimnasios era una locura.</p></div>
+      <div class="script"><div class="lbl">Guion (rellena los corchetes con tu historia)</div>
+        <p>Me dijeron que montar una agencia solo para gimnasios era una locura. Que me iba a quedar sin clientes.</p>
+        <p>[Tu historia: p. ej. «Llevo X años jugando a [deporte] y estudio/estudié [carrera]».]</p>
+        <p>Entrenando vi siempre lo mismo: gimnasios buenísimos que vivían de meses buenos y meses vacíos. Y agencias que les vendían seguidores.</p>
+        <p>Yo vengo de los números. Si una acción no trae dinero, no se hace. Así que junté las dos cosas: el deporte, que conozco desde dentro, y las cuentas.</p>
+        <p>Por eso aquí no vas a ver trucos para tener más likes. Vas a ver cuotas, bajas y socios.</p>
+        <p>Si tienes un centro en Cantabria, te invito a un café y lo vemos.</p>
+      </div>
+      <div class="note"><b>Cómo grabarlo:</b> más personal que el resto: en tu entreno o un día de partido, con planos tuyos mientras hablas en off. Necesito tu historia para cerrarlo (ver <a href="#datos">Te pido</a>).</div>
+      <div><div class="copyrow"><div class="lbl">Pie de foto</div><button class="copy" data-copy="cap-r10">Copiar</button></div>
+<div class="copybox" id="cap-r10">Me dijeron que especializarme solo en gimnasios era una locura.
+
+[1–2 frases de tu historia: deporte, estudios.]
+
+Vi gimnasios muy buenos que vivían de meses buenos y meses vacíos, y agencias que les vendían seguidores. Yo vengo de los números: si una acción no trae dinero, no se hace.
+
+Por eso Activonorte solo trabaja con gimnasios y centros deportivos.
+
+☕ Si tienes un centro en Cantabria, escríbeme y te invito a un café.
+
+#emprendedores #marketingdeportivo #santander #cantabria</div></div>
+    </div>
+  </details>
+
+  <details class="piece" id="g-r11"><summary><span class="s1"><b>R11 · Opinión impopular: tu Instagram no te trae socios</b><small>Sábado 28 nov · 25–30 s · opinión</small></span></summary>
+    <div class="pbody">
+      <div class="hook"><small>Texto en pantalla</small><p>Opinión impopular: el Instagram de tu gimnasio no te trae socios nuevos.</p></div>
+      <div class="script"><div class="lbl">Guion</div>
+        <p>Opinión impopular: el Instagram de tu gimnasio no te trae socios nuevos. <em>[pausa]</em> Sí, lo dice una cuenta de Instagram.</p>
+        <p>Instagram te ayuda con los que ya te conocen. Pero quien busca gimnasio nuevo suele empezar en Google: «gimnasio cerca de mí».</p>
+        <p>Instagram sirve para que tus socios se queden: comunidad, caras, logros. Google sirve para que te encuentren.</p>
+        <p>Si echas 10 horas al mes en reels y cero en tu ficha de Google, lo tienes al revés.</p>
+        <p>Comenta <strong>AUDITA</strong> y te digo dónde sales en Google.</p>
+      </div>
+      <div class="note"><b>Ojo:</b> va a generar debate. Responde a todos los comentarios, también a los que no estén de acuerdo, con calma y con datos. Cada respuesta le da más alcance.</div>
+      <div><div class="copyrow"><div class="lbl">Pie de foto</div><button class="copy" data-copy="cap-r11">Copiar</button></div>
+<div class="copybox" id="cap-r11">Opinión impopular: el Instagram de tu gimnasio no te trae socios nuevos.
+
+Instagram → que tus socios se queden (comunidad, caras, logros)
+Google → que te encuentren los que buscan «gimnasio cerca de mí»
+
+Si dedicas 10 horas al mes a reels y 0 a tu ficha de Google, lo tienes al revés.
+
+¿Estás de acuerdo? Te leo 👇
+
+👉 Comenta AUDITA y te digo dónde sales en Google.
+
+#gimnasios #googlemaps #dueñosdegimnasio #marketingdeportivo</div></div>
+    </div>
+  </details>
+
+  <details class="piece" id="g-r12"><summary><span class="s1"><b>R12 · Tu lista de ex-socios vale más en diciembre</b><small>Lunes 30 nov · 35 s · vende el Protocolo</small></span></summary>
+    <div class="pbody">
+      <div class="hook"><small>Texto en pantalla</small><p>Tu lista de ex-socios vale más en diciembre que en cualquier otro mes.</p></div>
+      <div class="script"><div class="lbl">Guion</div>
+        <p>Tu lista de ex-socios vale más en diciembre que en cualquier otro mes.</p>
+        <p>En diciembre mucha gente ya está pensando en volver a entrenar en enero. Si les escribes tú primero, vuelven contigo. Si esperas, se apuntan donde vean el primer anuncio.</p>
+        <p>Tres pasos. Uno: filtra. No escribas a todos, solo a quien tiene opciones reales de volver. Dos: primer mensaje uno a uno y sin precio. Tres: cuando conteste, propón algo pequeño, una semana para coger el ritmo.</p>
+        <p>El sistema completo, con los mensajes, el Excel y el copiloto IA, está en el Protocolo. Comenta <strong>PROTOCOLO</strong>.</p>
+      </div>
+      <div class="note"><b>Cómo grabarlo:</b> a cámara, con el Tracker de Reactivación en la pantalla de fondo (sin datos reales de nadie).</div>
+      <div><div class="copyrow"><div class="lbl">Pie de foto</div><button class="copy" data-copy="cap-r12">Copiar</button></div>
+<div class="copybox" id="cap-r12">Diciembre es el mejor mes para recuperar ex-socios.
+
+Mucha gente ya está pensando en volver en enero. Si les escribes tú primero, vuelven contigo. Si esperas, se apuntan donde vean el primer anuncio.
+
+3 pasos:
+1. Filtra: solo a quien tiene opciones reales de volver
+2. Primer mensaje uno a uno y sin precio
+3. Propón algo pequeño: una semana para coger el ritmo
+
+👉 Comenta PROTOCOLO y te paso el sistema completo (mensajes, Excel y copiloto IA).
+
+#dueñosdegimnasio #gimnasios #retenciondeclientes #marketingdeportivo</div></div>
+    </div>
+  </details>
+
+  <details class="piece" id="g-r13"><summary><span class="s1"><b>R13 · Auditando gimnasios de Cantabria #2</b><small>Jueves 3 dic · 40–50 s · serie</small></span></summary>
+    <div class="pbody">
+      <div class="hook"><small>Texto en pantalla</small><p>Auditando gimnasios de Cantabria · #2</p></div>
+      <div class="note">Mismo formato que <a href="#g-r8">R8</a>. Elige otro tipo de centro (un box o un estudio de pilates) y otra localidad: así la serie llega a más dueños distintos. Si R8 funcionó, conviértelo en serie fija cada dos semanas.</div>
+    </div>
+  </details>
+
+  <details class="piece" id="g-r14"><summary><span class="s1"><b>R14 · Un socio no vale 40 €</b><small>Sábado 5 dic · 30–35 s · números</small></span></summary>
+    <div class="pbody">
+      <div class="hook"><small>Texto en pantalla</small><p>Un socio no vale 40 €.</p></div>
+      <div class="script"><div class="lbl">Guion</div>
+        <p>Un socio no vale 40 €. Vale 40 € por todos los meses que se queda.</p>
+        <p>Si se queda 10 meses de media, vale 400 €. Si consigues que se quede 4 meses más, vale 560 €. Sin captar a nadie.</p>
+        <p>Truco rápido: divide 100 entre tu porcentaje de bajas al mes. Si pierdes un 5 % al mes, tu socio medio se queda unos 20 meses.</p>
+        <p>Casi ningún dueño de gimnasio sabe este número. Y es el que te dice cuánto puedes gastar en captar a uno.</p>
+        <p>Comenta <strong>BAJAS</strong> y te paso la calculadora.</p>
+      </div>
+      <div class="note"><b>Cómo grabarlo:</b> plano cenital escribiendo las cuentas en una libreta o pizarra. Las cuentas a mano retienen mucho.</div>
+      <div><div class="copyrow"><div class="lbl">Pie de foto</div><button class="copy" data-copy="cap-r14">Copiar</button></div>
+<div class="copybox" id="cap-r14">Un socio no vale su cuota. Vale su cuota × los meses que se queda.
+
+40 € × 10 meses = 400 €
+40 € × 14 meses = 560 €
+
+Truco: 100 ÷ tu % de bajas mensual = meses que se queda tu socio medio.
+Con un 5 % de bajas → unos 20 meses.
+
+Ese número te dice cuánto puedes gastar en captar a un socio nuevo.
+
+👉 Comenta BAJAS y te paso la calculadora.
+
+#gimnasios #dueñosdegimnasio #finanzas #marketingdeportivo</div></div>
+    </div>
+  </details>
+  </div>
+
+  <h3 class="mt">Carruseles (ya diseñados)</h3>
+  <p class="small muted mt-s">Las imágenes están en 1080 × 1350. Súbelas en orden. Las encontrarás también en el repositorio Road-map, carpeta instagram/imagenes/carruseles.</p>
+  <div class="mt-s">
+
+  <details class="piece" id="g-c1"><summary><span class="s1"><b>C1 · Un gimnasio de 300 socios puede perder 86.400 €</b><small>Sábado 7 nov · 8 imágenes · fijar</small></span></summary>
+    <div class="pbody">
+      <div class="slides" aria-label="Diapositivas C1">
+        <img loading="lazy" src="imagenes/carruseles/c1-bajas/01.jpg" alt="1"><img loading="lazy" src="imagenes/carruseles/c1-bajas/02.jpg" alt="2"><img loading="lazy" src="imagenes/carruseles/c1-bajas/03.jpg" alt="3"><img loading="lazy" src="imagenes/carruseles/c1-bajas/04.jpg" alt="4"><img loading="lazy" src="imagenes/carruseles/c1-bajas/05.jpg" alt="5"><img loading="lazy" src="imagenes/carruseles/c1-bajas/06.jpg" alt="6"><img loading="lazy" src="imagenes/carruseles/c1-bajas/07.jpg" alt="7"><img loading="lazy" src="imagenes/carruseles/c1-bajas/08.jpg" alt="8">
+      </div>
+      <div><div class="copyrow"><div class="lbl">Pie de foto</div><button class="copy" data-copy="cap-c1">Copiar</button></div>
+<div class="copybox" id="cap-c1">¿Cuánto dinero pierde tu gimnasio en bajas? Haz la cuenta conmigo 👉
+
+Un centro de 300 socios, con 40 € de cuota y un 5 % de bajas al mes, pierde 180 socios al año. Si se hubieran quedado un año más, serían 86.400 € en cuotas.
+
+Y para quedarte igual tienes que captar 180 socios nuevos. Solo para no bajar.
+
+La buena noticia: reducir las bajas un 25 % son 21.600 € al año sin captar a nadie nuevo.
+
+👉 Comenta BAJAS y te paso la calculadora para hacerlo con tus números.
+
+#gimnasios #dueñosdegimnasio #marketingdeportivo #cantabria</div></div>
+    </div>
+  </details>
+
+  <details class="piece" id="g-c2"><summary><span class="s1"><b>C2 · Enero no se gana en enero</b><small>Miércoles 11 nov · 8 imágenes</small></span></summary>
+    <div class="pbody">
+      <div class="slides" aria-label="Diapositivas C2">
+        <img loading="lazy" src="imagenes/carruseles/c2-enero/01.jpg" alt="1"><img loading="lazy" src="imagenes/carruseles/c2-enero/02.jpg" alt="2"><img loading="lazy" src="imagenes/carruseles/c2-enero/03.jpg" alt="3"><img loading="lazy" src="imagenes/carruseles/c2-enero/04.jpg" alt="4"><img loading="lazy" src="imagenes/carruseles/c2-enero/05.jpg" alt="5"><img loading="lazy" src="imagenes/carruseles/c2-enero/06.jpg" alt="6"><img loading="lazy" src="imagenes/carruseles/c2-enero/07.jpg" alt="7"><img loading="lazy" src="imagenes/carruseles/c2-enero/08.jpg" alt="8">
+      </div>
+      <div><div class="copyrow"><div class="lbl">Pie de foto</div><button class="copy" data-copy="cap-c2">Copiar</button></div>
+<div class="copybox" id="cap-c2">Checklist para dueños de gimnasio: 5 cosas que hacer antes del 1 de enero ✅
+
+1. Pedir reseñas en Google ahora
+2. Poner al día tu ficha: fotos reales, horarios de Navidad, categoría
+3. Abrir la lista de espera de enero con matrícula gratis
+4. Escribir a tus ex-socios en diciembre, uno a uno
+5. Preparar los primeros 30 días del socio nuevo
+
+📌 Guárdalo para tenerlo a mano.
+👉 ¿Cuál te falta? Comenta AUDITA y te reviso gratis tu ficha de Google.
+
+#dueñosdegimnasio #gimnasios #gestiondegimnasios #marketingdeportivo</div></div>
+    </div>
+  </details>
+
+  <details class="piece" id="g-c3"><summary><span class="s1"><b>C3 · Black Friday: la cuenta que nadie hace</b><small>Miércoles 18 nov · 8 imágenes · compártelo otra vez en stories el día 27</small></span></summary>
+    <div class="pbody">
+      <div class="slides" aria-label="Diapositivas C3">
+        <img loading="lazy" src="imagenes/carruseles/c3-black-friday/01.jpg" alt="1"><img loading="lazy" src="imagenes/carruseles/c3-black-friday/02.jpg" alt="2"><img loading="lazy" src="imagenes/carruseles/c3-black-friday/03.jpg" alt="3"><img loading="lazy" src="imagenes/carruseles/c3-black-friday/04.jpg" alt="4"><img loading="lazy" src="imagenes/carruseles/c3-black-friday/05.jpg" alt="5"><img loading="lazy" src="imagenes/carruseles/c3-black-friday/06.jpg" alt="6"><img loading="lazy" src="imagenes/carruseles/c3-black-friday/07.jpg" alt="7"><img loading="lazy" src="imagenes/carruseles/c3-black-friday/08.jpg" alt="8">
+      </div>
+      <div><div class="copyrow"><div class="lbl">Pie de foto</div><button class="copy" data-copy="cap-c3">Copiar</button></div>
+<div class="copybox" id="cap-c3">Antes de hacer un 50 % en Black Friday en tu gimnasio, haz esta cuenta 👉
+
+20 socios nuevos × 22,50 € de descuento × 12 meses = 5.400 € menos.
+
+Y lo peor no es el dinero: muchos se van cuando acaba la oferta, y los socios que pagan precio completo se sienten tontos.
+
+Lo que funciona mejor: regalar valor, no rebajar la cuota.
+→ Matrícula gratis
+→ Primera semana sin compromiso
+→ Sesión con entrenador o camiseta de regalo
+
+📌 Guárdalo para el 27.
+👉 ¿Quieres que revise tu oferta? Comenta AUDITA.
+
+#blackfriday #gimnasios #dueñosdegimnasio #marketingdeportivo</div></div>
+    </div>
+  </details>
+
+  <details class="piece" id="g-c4"><summary><span class="s1"><b>C4 · 7 señales de que un socio se va a dar de baja</b><small>Miércoles 25 nov · 10 imágenes</small></span></summary>
+    <div class="pbody">
+      <div class="slides" aria-label="Diapositivas C4">
+        <img loading="lazy" src="imagenes/carruseles/c4-senales-baja/01.jpg" alt="1"><img loading="lazy" src="imagenes/carruseles/c4-senales-baja/02.jpg" alt="2"><img loading="lazy" src="imagenes/carruseles/c4-senales-baja/03.jpg" alt="3"><img loading="lazy" src="imagenes/carruseles/c4-senales-baja/04.jpg" alt="4"><img loading="lazy" src="imagenes/carruseles/c4-senales-baja/05.jpg" alt="5"><img loading="lazy" src="imagenes/carruseles/c4-senales-baja/06.jpg" alt="6"><img loading="lazy" src="imagenes/carruseles/c4-senales-baja/07.jpg" alt="7"><img loading="lazy" src="imagenes/carruseles/c4-senales-baja/08.jpg" alt="8"><img loading="lazy" src="imagenes/carruseles/c4-senales-baja/09.jpg" alt="9"><img loading="lazy" src="imagenes/carruseles/c4-senales-baja/10.jpg" alt="10">
+      </div>
+      <div><div class="copyrow"><div class="lbl">Pie de foto</div><button class="copy" data-copy="cap-c4">Copiar</button></div>
+<div class="copybox" id="cap-c4">7 señales de que un socio se va a dar de baja (antes de que lo haga):
+
+1. Viene menos de una vez por semana
+2. Deja de ir a su clase de siempre
+3. Su compañero de entreno se ha ido
+4. Pregunta por congelar la cuota
+5. Cambia de horario de repente
+6. Nadie del equipo sabe su nombre
+7. Lleva meses sin hablar de objetivos
+
+Qué hacer: una lista semanal de socios en riesgo y un mensaje personal del monitor a cada uno.
+
+📩 Mándaselo a tu equipo de sala.
+👉 Comenta BAJAS y te paso la calculadora para ver cuánto te cuestan.
+
+#retenciondeclientes #gimnasios #dueñosdegimnasio #marketingdeportivo</div></div>
+    </div>
+  </details>
+
+  <details class="piece" id="g-c5"><summary><span class="s1"><b>C5 · Cómo escribir a un ex-socio para que vuelva</b><small>Miércoles 2 dic · 8 imágenes</small></span></summary>
+    <div class="pbody">
+      <div class="slides" aria-label="Diapositivas C5">
+        <img loading="lazy" src="imagenes/carruseles/c5-mensajes-ex-socio/01.jpg" alt="1"><img loading="lazy" src="imagenes/carruseles/c5-mensajes-ex-socio/02.jpg" alt="2"><img loading="lazy" src="imagenes/carruseles/c5-mensajes-ex-socio/03.jpg" alt="3"><img loading="lazy" src="imagenes/carruseles/c5-mensajes-ex-socio/04.jpg" alt="4"><img loading="lazy" src="imagenes/carruseles/c5-mensajes-ex-socio/05.jpg" alt="5"><img loading="lazy" src="imagenes/carruseles/c5-mensajes-ex-socio/06.jpg" alt="6"><img loading="lazy" src="imagenes/carruseles/c5-mensajes-ex-socio/07.jpg" alt="7"><img loading="lazy" src="imagenes/carruseles/c5-mensajes-ex-socio/08.jpg" alt="8">
+      </div>
+      <p class="small muted">Los mensajes del carrusel son ejemplos míos, no los del Protocolo. Si prefieres usar los del Protocolo, dímelo y lo cambio.</p>
+      <div><div class="copyrow"><div class="lbl">Pie de foto</div><button class="copy" data-copy="cap-c5">Copiar</button></div>
+<div class="copybox" id="cap-c5">Cómo escribir a un ex-socio para que vuelva: 3 mensajes en 48 horas y 0 € en anuncios.
+
+❌ Error 1: la lista de difusión
+❌ Error 2: el precio en el primer mensaje
+
+✅ Mensaje 1: reconectar (sin precio ni enlace)
+✅ Mensaje 2: proponer algo pequeño (una visita, no una cuota)
+✅ Mensaje 3: cerrar sin presión (la puerta queda abierta)
+
+Diciembre es el mejor mes para hacerlo.
+
+👉 Comenta PROTOCOLO y te paso el sistema completo: a quién escribir, cuándo y qué contestar.
+
+#dueñosdegimnasio #gimnasios #retenciondeclientes #marketingdeportivo</div></div>
+    </div>
+  </details>
+  </div>
+</section>
+
+<!-- ============ CAPTACIÓN ============ -->
+<section id="captacion">
+  <div class="eyebrow">Captación</div>
+  <h2>De comentario a cliente</h2>
+  <p class="lead">Instagram te da la atención. Los clientes salen de las conversaciones: respuestas a palabras clave, stories y mensajes a centros de Cantabria.</p>
+
+  <h3 class="mt">Respuestas por privado a cada palabra</h3>
+  <p class="small muted mt-s">En el comentario público contesta algo corto («¡Te lo mando por privado, Ana! 📩») y manda esto por DM. Cambia [nombre].</p>
+  <div class="stack mt-s">
+    <div class="card"><div class="copyrow"><span class="kwchip">BAJAS</span><button class="copy" data-copy="dm-bajas">Copiar</button></div>
+<div class="copybox mt-s" id="dm-bajas">¡Hola [nombre]! Aquí tienes la calculadora de bajas 👇
+https://app.activonorte.com/?utm_source=instagram&amp;utm_medium=dm#calculadora
+
+Mete tus socios, tu cuota y tu % de bajas y en 10 segundos ves lo que se va por la puerta cada año.
+
+¿Cuánto te ha salido? Si me lo dices, te digo por dónde empezaría yo.</div></div>
+    <div class="card"><div class="copyrow"><span class="kwchip">AUDITA</span><button class="copy" data-copy="dm-audita">Copiar</button></div>
+<div class="copybox mt-s" id="dm-audita">¡Hola [nombre]! Encantado de echarle un ojo 🙌
+
+Pásame el nombre exacto de tu centro y la localidad. Lo busco en Google Maps y te mando un audio con lo que veo y las 2 cosas que cambiaría primero.
+
+Si después quieres verlo entero, lo hacemos en 15 minutos por WhatsApp o videollamada. Sin compromiso.</div></div>
+    <div class="card"><div class="copyrow"><span class="kwchip">MENSAJE</span><button class="copy" data-copy="dm-mensaje">Copiar</button></div>
+<div class="copybox mt-s" id="dm-mensaje">¡Hola [nombre]! Aquí tienes el primer mensaje para un ex-socio 👇
+
+«Hola [nombre del ex-socio], soy [tu nombre] de [tu gimnasio]. Me he acordado de ti porque hemos abierto [algo que le gustaba: un grupo, un horario, una clase]. ¿Qué tal estás?»
+
+Tres reglas: uno a uno (nunca por lista de difusión), sin precio y sin enlace.
+
+Lo difícil viene cuando contestan: «no tengo tiempo», «es caro», «voy a otro gym». Los otros mensajes, el Excel de seguimiento y el copiloto IA que te escribe las respuestas están en el Protocolo de Reactivación (17 €, garantía de 30 días):
+https://activonorte.com/?utm_source=instagram&amp;utm_medium=dm</div></div>
+    <div class="card"><div class="copyrow"><span class="kwchip">PROTOCOLO</span><button class="copy" data-copy="dm-protocolo">Copiar</button></div>
+<div class="copybox mt-s" id="dm-protocolo">¡Hola [nombre]! Aquí lo tienes 👇
+https://activonorte.com/?utm_source=instagram&amp;utm_medium=dm
+
+Es un sistema para recuperar ex-socios en 48 horas por WhatsApp: a quién escribir, los mensajes, qué contestar a cada pega, un Excel para medirlo y un copiloto IA que te redacta las respuestas.
+
+17 €, pago único y con garantía de 30 días. Si tienes cualquier duda antes de comprarlo, pregúntame por aquí.</div></div>
+  </div>
+
+  <h3 class="mt">Stories de la semana</h3>
+  <div class="tablewrap mt-s">
+    <table>
+      <thead><tr><th>Día</th><th>Story</th><th>Para qué</th></tr></thead>
+      <tbody>
+        <tr><td><b>Lun</b></td><td>Encuesta: «¿Cuántas bajas tuviste el mes pasado?» 0–5 · 6–15 · más de 15</td><td>A quien vote, DM: «¿Quieres que veamos cuánto dinero es?»</td></tr>
+        <tr><td><b>Mar</b></td><td>Comparte el reel del lunes con el sticker «Nuevo reel»</td><td>Más visualizaciones en las primeras horas</td></tr>
+        <tr><td><b>Mié</b></td><td>Detrás de cámaras: visita a un centro, grabación o auditoría</td><td>Que se vea que eres de aquí</td></tr>
+        <tr><td><b>Jue</b></td><td>Caja de preguntas: «Pregúntame lo que quieras sobre captar o retener socios»</td><td>Ideas de reels y destacada «Preguntas»</td></tr>
+        <tr><td><b>Vie</b></td><td>Dato de la semana + sticker de enlace a la calculadora</td><td>Visitas a la web</td></tr>
+        <tr><td><b>Fin de semana</b></td><td>Algo tuyo: tu entreno, tu partido</td><td>Cercanía</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="small muted mt-s">Contesta a todas las respuestas a stories. Ahí empiezan las conversaciones que acaban en auditoría.</p>
+
+  <h3 class="mt">Prospección: 15–20 minutos al día</h3>
+  <ol class="steps">
+    <li><div><b>Haz una lista de 100 centros de Cantabria</b> en un Excel: nombre, @, dueño, localidad, puesto en Google, número de reseñas y estado. Busca en Instagram: gimnasio santander, box santander, crossfit cantabria, pilates santander, gimnasio torrelavega, castro urdiales, laredo, camargo, reinosa.</div></li>
+    <li><div><b>Síguelos e interactúa de verdad durante 3–5 días:</b> un comentario con sustancia en un post y una respuesta a una story. Nada de «🔥🔥».</div></li>
+    <li><div><b>Mensaje de apertura</b> (5 al día, cada uno personalizado):
+      <div class="copyrow mt-s"><span></span><button class="copy" data-copy="dm-frio">Copiar</button></div>
+<div class="copybox mt-s" id="dm-frio">Hola [nombre], soy Sergio, de Activonorte (Santander). Me gustó mucho [algo concreto: el reto de noviembre, la clase de las 7].
+
+He buscado «gimnasio en [localidad]» en Google Maps y [centro] sale en el puesto [X]. He visto dos cosas rápidas que te pueden hacer subir. ¿Te las mando en un audio de un minuto?</div></div></li>
+    <li><div><b>Si dice que sí:</b> audio de 60 segundos con las dos mejoras y «si quieres, lo vemos entero en 15 minutos, sin compromiso».</div></li>
+    <li><div><b>Si no contesta:</b> un solo recordatorio a los 4 días. Después, nada.</div></li>
+  </ol>
+  <div class="note mt">Nada de copiar y pegar el mismo mensaje a muchos (Instagram limita esas cuentas), ni seguir y dejar de seguir, ni comprar seguidores. Pocos mensajes y bien hechos.</div>
+
+  <h3 class="mt">Colaboraciones</h3>
+  <ul class="clean">
+    <li>Cada auditoría de la serie, como post colaborativo con el centro (si acepta). Su audiencia local también te ve.</li>
+    <li>Una entrevista corta al mes a un dueño de Cantabria: «¿Cuál es tu peor mes del año?». También colaborativa.</li>
+    <li>En cuanto tengas un cliente con resultados, un caso con números reales y su permiso. Es el contenido que más vende.</li>
+  </ul>
+</section>
+
+<!-- ============ MÉTRICAS ============ -->
+<section id="metricas">
+  <div class="eyebrow">Métricas</div>
+  <h2>Qué mirar cada viernes (10 minutos)</h2>
+  <p class="lead">Los seguidores no son el objetivo. 500 seguidores con gimnasio valen más que 20.000 que entrenan.</p>
+  <div class="tablewrap mt">
+    <table>
+      <thead><tr><th>Qué</th><th>Dónde</th><th>Ahora</th><th>Objetivo a 90 días</th></tr></thead>
+      <tbody>
+        <tr><td>Visualizaciones de no seguidores</td><td>Panel profesional</td><td class="num">sin dato</td><td class="num">más del 60 %</td></tr>
+        <tr><td>Envíos ÷ cuentas alcanzadas</td><td>Estadísticas de cada reel</td><td class="num">0,25 %</td><td class="num">más del 1 %</td></tr>
+        <tr><td>Guardados ÷ alcance</td><td>Estadísticas de cada carrusel</td><td class="num">0,04 %</td><td class="num">más del 2 %</td></tr>
+        <tr><td>Seguidores ÷ visitas al perfil</td><td>Estadísticas de cada post</td><td class="num">7,9 %</td><td class="num">más del 15 %</td></tr>
+        <tr><td>Comentarios con palabra clave</td><td>Comentarios</td><td class="num">0</td><td class="num">10 o más por semana</td></tr>
+        <tr><td>Auditorías agendadas</td><td>WhatsApp («vengo de Instagram»)</td><td class="num">—</td><td class="num">8–10 al mes</td></tr>
+        <tr><td>Ventas del Protocolo desde Instagram</td><td>Lemon Squeezy + respuestas por DM</td><td class="num">—</td><td class="num">contarlas cada semana</td></tr>
+        <tr><td>Clientes nuevos (Pack o Growth)</td><td>Tú</td><td class="num">—</td><td class="num">2–3 a finales de enero</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="small muted mt-s">Los objetivos son orientativos, no una promesa. Los revisamos cuando tengamos 4 semanas de datos.</p>
+  <div class="card mt">
+    <h3>Cómo decidir con los datos</h3>
+    <ul class="clean small">
+      <li>Si un reel pasa del 1 % de envíos, haz otra versión del mismo tema dos semanas después.</li>
+      <li>Si mucha gente se va en los 3 primeros segundos, el problema es el gancho: regraba solo el inicio y súbelo como reel de prueba.</li>
+      <li>Si un carrusel tiene muchos guardados, conviértelo en reel.</li>
+      <li>Si hay visitas al perfil pero no seguidores, el problema está en el perfil, no en el contenido.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ TE PIDO ============ -->
+<section id="datos">
+  <div class="eyebrow">Te pido</div>
+  <h2>Lo que necesito para afinar</h2>
+  <ol class="fix">
+    <li><strong>Captura de Audiencia</strong> del panel profesional y del reel de agosto (edad, ciudades, sexo). Así sé si te siguen dueños de gimnasio o amigos.</li>
+    <li><strong>¿Tienes ya clientes o pruebas con algún centro?</strong> Cualquier número real (socios recuperados, reseñas ganadas, puestos subidos en Google) vale oro para el contenido.</li>
+    <li><strong>Tu historia</strong> para el reel R10: qué estudias o estudiaste, qué deporte practicas y desde cuándo, y si quieres contar tu edad.</li>
+    <li><strong>¿Tienes un gimnasio donde grabar?</strong> Uno donde entrenes, de un amigo o de un cliente.</li>
+    <li><strong>Horas reales a la semana</strong> que le puedes dedicar. Si son menos de 5, ajusto a 2 reels y 1 carrusel.</li>
+    <li><strong>3–5 cuentas que veas como competencia</strong> (agencias de marketing para gimnasios). Las analizo y te digo qué hacen bien y dónde tienen huecos.</li>
+    <li><strong>Ventas del Protocolo</strong> hasta ahora y de dónde vinieron.</li>
+    <li><strong>Cada viernes:</strong> capturas de las estadísticas de los posts de la semana. Con eso ajusto la semana siguiente.</li>
+  </ol>
+</section>
+
+<!-- ============ IDEAS ============ -->
+<section id="ideas">
+  <div class="eyebrow">Banco de ideas</div>
+  <h2>15 ganchos para las próximas semanas</h2>
+  <ul class="ideas">
+    <li>El socio más rentable de tu gimnasio es el que ya se fue.<small>Ex-socios · Protocolo</small></li>
+    <li>Cuota de 29 € o de 59 €: cuál gana más dinero al año.<small>Números</small></li>
+    <li>La pregunta que tienes que hacer a cada socio que se da de baja.<small>Retención</small></li>
+    <li>No necesitas más seguidores. Necesitas más reseñas.<small>Opinión · Google</small></li>
+    <li>El error de 0 € que te está costando socios: tu horario en Google.<small>Google</small></li>
+    <li>Cómo responder a una reseña de 1 estrella y ganar socios con ella.<small>Google</small></li>
+    <li>Por qué publico mis precios (y casi ninguna agencia lo hace).<small>Detrás de Activonorte</small></li>
+    <li>Le he preguntado a 10 dueños de gimnasio de Cantabria cuál es su peor mes.<small>Local · colaboración</small></li>
+    <li>Si tu gimnasio fuera una empresa del IBEX, esto es lo que miraría un analista.<small>Números</small></li>
+    <li>Si tu monitor no sabe el nombre de un socio nuevo en su primera semana, ya lo estás perdiendo.<small>Retención</small></li>
+    <li>Lo que hace un box de CrossFit para que su gente no se vaya.<small>Retención · comunidad</small></li>
+    <li>Septiembre y enero llenan. ¿Y qué haces en julio?<small>Temporada · verano</small></li>
+    <li>3 cosas que hace el gimnasio que sale primero en Google en Torrelavega.<small>Local · Google</small></li>
+    <li>Este es el mensaje que hace que un ex-socio vuelva. Y no es un descuento.<small>Ex-socios</small></li>
+    <li>Lo que aprendí visitando 10 gimnasios de Cantabria en un mes.<small>Detrás de Activonorte</small></li>
+  </ul>
+</section>
+
+</main>
+
+<footer class="wrap">
+  Plan preparado el 3 de noviembre de 2026. Próxima revisión: viernes 13 de noviembre, con tus capturas de la primera semana.
+</footer>
+
+<script>
+(function(){
+  // Copiar textos
+  document.addEventListener('click', function(e){
+    var b = e.target.closest('button.copy'); if(!b) return;
+    var el = document.getElementById(b.getAttribute('data-copy')); if(!el) return;
+    var text = el.innerText.trim();
+    var done = function(){ var t=b.textContent; b.textContent='Copiado'; b.classList.add('ok'); setTimeout(function(){ b.textContent=t; b.classList.remove('ok'); }, 1600); };
+    var fallback = function(){ try{ var r=document.createRange(); r.selectNodeContents(el); var s=window.getSelection(); s.removeAllRanges(); s.addRange(r); b.textContent='Seleccionado: copia a mano'; setTimeout(function(){ b.textContent='Copiar'; }, 2200);}catch(_){} };
+    try{ navigator.clipboard.writeText(text).then(done, fallback); }catch(_){ fallback(); }
+  });
+  // Abrir el guion al llegar desde el calendario
+  function openTarget(){
+    var id = location.hash.slice(1); if(!id) return;
+    var el = document.getElementById(id);
+    if(el && el.tagName === 'DETAILS'){ el.open = true; }
+  }
+  window.addEventListener('hashchange', openTarget); openTarget();
+  document.addEventListener('click', function(e){
+    var a = e.target.closest('a[href^="#g-"]'); if(!a) return;
+    var el = document.getElementById(a.getAttribute('href').slice(1));
+    if(el){ el.open = true; }
+  });
+  // Lista de tareas (se recuerda en este navegador)
+  var KEY='an-ig-todo-v1', state={};
+  try{ state = JSON.parse(localStorage.getItem(KEY)||'{}')||{}; }catch(_){ state={}; }
+  document.querySelectorAll('#todo input[type=checkbox]').forEach(function(c){
+    if(state[c.id]){ c.checked=true; c.closest('li').classList.add('done'); }
+    c.addEventListener('change', function(){
+      state[c.id]=c.checked; c.closest('li').classList.toggle('done', c.checked);
+      try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(_){}
+    });
+  });
+})();
+</script>

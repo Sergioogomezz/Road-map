@@ -1,0 +1,77 @@
+{
+  "_ayuda": "Texto entre *asteriscos* sale en naranja. \\n = salto de línea. Tipos: hook, data, math, text, item, chat, cta. Ejecuta: node instagram/herramientas/generar.js",
+  "carruseles": [
+    {
+      "id": "c1-bajas",
+      "fecha": "Sáb 7 nov",
+      "slides": [
+        { "tipo": "hook", "kicker": "Para dueños de gimnasio", "titulo": "Un gimnasio de 300 socios puede perder *86.400 €* al año sin darse cuenta", "sub": "Haz la cuenta conmigo" },
+        { "tipo": "data", "kicker": "El punto de partida", "titulo": "Un centro normal", "stats": [["300", "socios activos"], ["40 €", "de cuota media al mes"], ["5 %", "de bajas cada mes"]] },
+        { "tipo": "math", "kicker": "Paso 1", "formula": "5 % de 300 socios", "resultado": "15", "unidad": "bajas al mes", "nota": "Son *180 socios al año* que salen por la puerta." },
+        { "tipo": "math", "kicker": "Paso 2", "formula": "180 socios × 40 € × 12 meses", "resultado": "86.400 €", "unidad": "al año", "nota": "Cuotas que dejas de cobrar si esos socios se hubieran quedado un año más." },
+        { "tipo": "text", "kicker": "Y hay algo peor", "titulo": "Para quedarte igual, tienes que captar *180 socios nuevos* al año", "cuerpo": "Solo para no bajar. Es correr en una cinta: mucho esfuerzo y no avanzas." },
+        { "tipo": "math", "kicker": "La buena noticia", "formula": "Reduce las bajas un 25 %", "resultado": "+21.600 €", "unidad": "al año", "nota": "*45 socios* que se quedan contigo. Sin captar a nadie nuevo y sin pagar anuncios." },
+        { "tipo": "text", "kicker": "Por eso", "titulo": "Lo primero que miro en un gimnasio no es su Instagram", "cuerpo": "Es su lista de bajas. Ahí está el dinero más fácil de recuperar." },
+        { "tipo": "cta", "titulo": "¿Cuánto pierde *tu* centro?", "palabra": "BAJAS", "sub": "y te paso la calculadora. 10 segundos, con tus números." }
+      ]
+    },
+    {
+      "id": "c2-enero",
+      "fecha": "Mié 11 nov",
+      "slides": [
+        { "tipo": "hook", "kicker": "Checklist · Noviembre", "titulo": "Enero *no se gana* en enero", "sub": "5 cosas que tu gimnasio tiene que hacer antes del 1 de enero" },
+        { "tipo": "item", "n": "1", "titulo": "Pide reseñas ahora", "cuerpo": "Google valora las reseñas recientes y tardan semanas en acumularse. QR en recepción y pídela en persona al acabar la clase.\n*Nunca a cambio de descuentos: Google lo prohíbe.*" },
+        { "tipo": "item", "n": "2", "titulo": "Pon al día tu ficha de Google", "cuerpo": "10 fotos reales y nuevas: sala con gente, monitores, vestuarios. Revisa los horarios de Navidad y la categoría. Es gratis y es lo primero que ve quien te busca." },
+        { "tipo": "item", "n": "3", "titulo": "Abre la lista de espera de enero", "cuerpo": "«Matrícula gratis si te apuntas antes del 20 de diciembre». Captas ahora, cobras en enero y llegas al día 1 con altas hechas." },
+        { "tipo": "item", "n": "4", "titulo": "Escribe a tus ex-socios en diciembre", "cuerpo": "Uno a uno, nunca por lista de difusión. Primer mensaje sin precio ni enlace: solo reabres la conversación." },
+        { "tipo": "item", "n": "5", "titulo": "Prepara los primeros 30 días", "cuerpo": "El socio de enero que no coge rutina en su primer mes es la baja de febrero. Sesión de bienvenida, mensaje en la primera semana y llamada si no viene." },
+        { "tipo": "text", "kicker": "Resumen", "titulo": "Hazlo en noviembre y en enero *solo tendrás que abrir la puerta*", "cuerpo": "Guárdalo para tenerlo a mano." },
+        { "tipo": "cta", "titulo": "¿Cuál de las 5 *te falta*?", "palabra": "AUDITA", "sub": "y te reviso gratis tu ficha de Google. 15 minutos." }
+      ]
+    },
+    {
+      "id": "c3-black-friday",
+      "fecha": "Mié 18 nov",
+      "slides": [
+        { "tipo": "hook", "kicker": "Black Friday · 27 de noviembre", "titulo": "Antes de rebajar tu cuota *un 50 %*, mira esta cuenta", "sub": "Desliza" },
+        { "tipo": "data", "kicker": "La oferta típica", "titulo": "Lo que hacen casi todos", "stats": [["45 €", "cuota normal al mes"], ["22,50 €", "al mes durante un año"], ["20", "socios nuevos captados"]] },
+        { "tipo": "math", "kicker": "La cuenta", "formula": "20 socios × 22,50 € × 12 meses", "resultado": "5.400 €", "unidad": "menos", "nota": "Lo que dejas de cobrar frente a tu precio normal." },
+        { "tipo": "text", "kicker": "El problema de verdad", "titulo": "Muchos vienen *por el precio*, no por ti", "cuerpo": "Cuando acaba la oferta, se van. Y tus socios de siempre aprenden a esperar al próximo descuento." },
+        { "tipo": "text", "kicker": "Y además", "titulo": "Enfadas a los que pagan *45 €*", "cuerpo": "El socio fiel ve que el nuevo paga la mitad por lo mismo. Así se pierden los buenos." },
+        { "tipo": "text", "kicker": "Lo que sí funciona", "titulo": "Regala valor, *no rebajes la cuota*", "cuerpo": "· Matrícula gratis\n· Primera semana sin compromiso\n· Sesión con entrenador o camiseta de regalo" },
+        { "tipo": "text", "kicker": "La regla", "titulo": "Tu cuota paga el alquiler *cada mes*", "cuerpo": "Protégela. Una rebaja dura 12 meses. Una matrícula gratis, un día." },
+        { "tipo": "cta", "titulo": "¿Quieres que revise *tu oferta*?", "palabra": "AUDITA", "sub": "y te digo qué cambiaría antes del día 27." }
+      ]
+    },
+    {
+      "id": "c4-senales-baja",
+      "fecha": "Mié 25 nov",
+      "slides": [
+        { "tipo": "hook", "kicker": "Retención", "titulo": "7 señales de que un socio *se va a dar de baja*", "sub": "Antes de que lo haga" },
+        { "tipo": "item", "n": "1", "titulo": "Viene menos de una vez por semana", "cuerpo": "Tres semanas seguidas. Es la señal más clara y ya la tienes en tu control de accesos." },
+        { "tipo": "item", "n": "2", "titulo": "Deja de ir a su clase de siempre", "cuerpo": "Si el de las 7:00 de los martes desaparece, algo ha cambiado." },
+        { "tipo": "item", "n": "3", "titulo": "Su compañero de entreno se ha ido", "cuerpo": "Mucha gente viene por una persona. Si esa persona se da de baja, la otra suele ir detrás." },
+        { "tipo": "item", "n": "4", "titulo": "Pregunta por congelar la cuota", "cuerpo": "Casi nunca es una pausa. Es una baja con calma." },
+        { "tipo": "item", "n": "5", "titulo": "Cambia de horario de repente", "cuerpo": "Trabajo nuevo, niños, turnos. Si no le ofreces una alternativa, lo dejará." },
+        { "tipo": "item", "n": "6", "titulo": "Nadie del equipo sabe su nombre", "cuerpo": "Si en un mes nadie le ha llamado por su nombre, para él eres un sitio, no su gimnasio." },
+        { "tipo": "item", "n": "7", "titulo": "Lleva meses sin hablar de objetivos", "cuerpo": "Sin un objetivo nuevo, entrenar se vuelve rutina. Y la rutina se cancela." },
+        { "tipo": "text", "kicker": "Qué hacer", "titulo": "Una lista semanal de *socios en riesgo*", "cuerpo": "Y un mensaje personal del monitor a cada uno. 10 minutos a la semana que valen cuotas de un año." },
+        { "tipo": "cta", "titulo": "Mándaselo a *tu equipo de sala*", "palabra": "BAJAS", "sub": "y te paso la calculadora para ver cuánto te cuestan." }
+      ]
+    },
+    {
+      "id": "c5-mensajes-ex-socio",
+      "fecha": "Mié 2 dic",
+      "slides": [
+        { "tipo": "hook", "kicker": "Reactivación", "titulo": "Cómo escribir a un ex-socio *para que vuelva*", "sub": "3 mensajes · 48 h · 0 € en anuncios" },
+        { "tipo": "text", "kicker": "Error 1", "titulo": "La lista de difusión", "cuerpo": "Si le llega el mismo mensaje que a otras 200 personas, lo nota. *Uno a uno y con su nombre.*" },
+        { "tipo": "text", "kicker": "Error 2", "titulo": "El precio en el primer mensaje", "cuerpo": "Si lo primero que lee es «50 % de descuento», le estás vendiendo. *Nadie contesta a un anuncio.*" },
+        { "tipo": "chat", "kicker": "Mensaje 1 · Reconectar", "mensaje": "Hola Carlos, soy Sergio de [tu gimnasio] 👋 Me he acordado de ti porque hemos abierto un grupo a las 7:00, como el que hacías tú. ¿Qué tal estás?", "nota": "Sin precio. Sin enlace." },
+        { "tipo": "chat", "kicker": "Mensaje 2 · Algo pequeño", "mensaje": "Si te apetece volver a coger el ritmo, el jueves tengo un hueco con Laura a las 19:00. ¿Te lo guardo?", "nota": "Una visita, no una cuota." },
+        { "tipo": "chat", "kicker": "Mensaje 3 · Sin presión", "mensaje": "No te molesto más 🙂 Si en enero te apetece volver, escríbeme y te lo dejo todo preparado.", "nota": "La puerta queda abierta." },
+        { "tipo": "chat", "kicker": "Si te dice «no tengo tiempo»", "mensaje": "Te entiendo. No hace falta venir cinco días: con dos sesiones cortas a la semana ya se nota. ¿Te enseño en 5 minutos cómo encajarlo?", "nota": "Valida, aísla y propón." },
+        { "tipo": "cta", "titulo": "A quién escribir, cuándo y *qué contestar*", "palabra": "PROTOCOLO", "sub": "Mensajes, Excel de seguimiento y copiloto IA. 17 €." }
+      ]
+    }
+  ]
+}
