@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<!-- Escena del reel «El chat de WhatsApp». 1080x1920. render(t) dibuja el fotograma del segundo t. -->
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden}
+body{font-family:Inter,"Noto Color Emoji",sans-serif;background:linear-gradient(180deg,#003b46 0%,#00262e 55%,#001a20 100%);color:#fff;-webkit-font-smoothing:antialiased;position:relative}
+em{font-style:normal;color:#ff7a1a}
+
+/* Texto superior */
+.caps{position:absolute;left:70px;right:70px;top:190px;height:320px}
+.cap{position:absolute;inset:0;display:grid;place-items:center;text-align:center;font-family:"Inter Display",Inter,sans-serif;font-weight:800;font-size:76px;line-height:1.08;letter-spacing:-.02em;text-wrap:balance;opacity:0}
+
+/* Móvil */
+.phone{position:absolute;left:135px;top:530px;width:810px;height:1030px;background:#0d1214;border-radius:66px;padding:16px;box-shadow:0 40px 90px -20px rgba(0,0,0,.6);transform-origin:50% 40%}
+.screen{position:relative;width:100%;height:100%;border-radius:52px;overflow:hidden;background:#efeae2}
+.head{position:absolute;left:0;right:0;top:0;height:150px;background:#003b46;display:flex;align-items:flex-end;gap:18px;padding:0 28px 22px;z-index:3}
+.av{width:78px;height:78px;border-radius:50%;background:#c9d6d9;color:#003b46;display:grid;place-items:center;font-weight:800;font-size:36px;flex:none}
+.nm{font-size:38px;font-weight:700;line-height:1.15}
+.sub{position:relative;height:32px;font-size:26px}
+.sub span{position:absolute;left:0;top:0;white-space:nowrap}
+.sub .s1{color:rgba(255,255,255,.78)}
+.sub .s2{color:#9fe3c6;font-weight:600}
+
+.chat{position:absolute;left:0;right:0;top:150px;padding:0 26px 18px;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden}
+.g{overflow:hidden;flex:none}
+.g>*{transform-origin:100% 100%}
+.g.l>*{transform-origin:0 100%}
+.gap{height:16px}
+.date{display:flex;justify-content:center;padding-top:20px}
+.date span{background:#fff;color:#5b6b70;font-size:24px;font-weight:600;border-radius:12px;padding:6px 18px}
+.tagrow{display:flex;justify-content:flex-end;font-size:24px;color:#5b6b70;font-weight:600;padding-bottom:8px}
+.row{display:flex}
+.row.r{justify-content:flex-end}
+.b{max-width:88%;color:#0f1f24;font-size:38px;line-height:1.36;padding:18px 24px 12px;box-shadow:0 1px 0 rgba(0,0,0,.08)}
+.out{background:#d9fdd3;border-radius:26px 26px 6px 26px}
+.in{background:#fff;border-radius:26px 26px 26px 6px}
+.meta{display:flex;justify-content:flex-end;align-items:center;gap:6px;font-size:22px;color:#667781;margin-top:4px}
+.labels{display:flex;flex-wrap:wrap;gap:12px;padding-top:14px}
+.pill{display:inline-flex;align-items:center;gap:12px;font-size:33px;font-weight:700;color:#fff;border-radius:999px;padding:9px 24px 9px 10px;white-space:nowrap}
+.pill.bad{background:#b42318}
+.pill.good{background:#127a3f}
+.pill.grey{background:#5b6b70}
+.pill i{width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.22);display:grid;place-items:center;font-style:normal}
+.dots{display:flex;gap:10px;padding:26px 30px}
+.dots b{width:16px;height:16px;border-radius:50%;background:#8696a0;display:block}
+
+.inputbar{position:absolute;left:18px;right:18px;bottom:22px;display:flex;align-items:flex-end;gap:14px;z-index:3}
+.field{flex:1;background:#fff;border-radius:40px;padding:22px 30px;font-size:33px;line-height:1.36;color:#0f1f24;min-height:88px}
+.field .ph{color:#8696a0}
+.caret{display:inline-block;width:3px;height:40px;background:#003b46;vertical-align:-8px;margin-left:2px}
+.send{width:88px;height:88px;border-radius:50%;background:#003b46;display:grid;place-items:center;flex:none}
+
+/* Cierre */
+.cta{position:absolute;left:0;right:0;top:540px;display:flex;flex-direction:column;align-items:center;gap:52px;padding:0 80px;opacity:0;text-align:center}
+.cta h2{font-family:"Inter Display",Inter,sans-serif;font-weight:800;font-size:92px;line-height:1.05;letter-spacing:-.025em}
+.cbox{background:#fff;color:#0f1f24;border-radius:44px;padding:44px 52px;display:flex;gap:34px;align-items:center;width:900px;box-shadow:0 40px 80px -30px rgba(0,0,0,.6)}
+.cav{width:132px;height:132px;border-radius:50%;background:#003b46;display:grid;place-items:center;flex:none}
+.cav img{width:80px}
+.cbox small{display:block;font-size:40px;color:#5b6b70;font-weight:600;text-align:left}
+.cbox strong{display:block;font-family:"Inter Display",Inter,sans-serif;font-weight:800;font-size:122px;line-height:.95;color:#e05e00;letter-spacing:.01em;text-align:left}
+.cta p{font-size:46px;color:rgba(255,255,255,.85);font-weight:500}
+.handle{position:absolute;left:0;right:0;top:1250px;display:flex;justify-content:center;align-items:center;gap:16px;font-size:38px;font-weight:600;color:rgba(255,255,255,.75);opacity:0}
+.handle img{height:44px}
+</style>
+</head>
+<body>
+
+<div class="caps" id="caps">
+  <div class="cap" data-from="-1" data-to="cap2">Si le mandas esto a un ex-socio, <em>no va a volver</em>.</div>
+  <div class="cap" data-from="cap2" data-to="cap3">Le llega igual que a <em>otras 200 personas</em>…</div>
+  <div class="cap" data-from="cap3" data-to="seen">…y le dices que tu cuota <em>vale la mitad</em>.</div>
+  <div class="cap" data-from="seen" data-to="reset">Resultado: <em>visto</em>. Y nada.</div>
+  <div class="cap" data-from="reset" data-to="typing">Prueba <em>esto</em> 👇</div>
+  <div class="cap" data-from="typing" data-to="cta">El precio va <em>después</em>, cuando te contesta.</div>
+</div>
+
+<div class="phone" id="phone">
+  <div class="screen">
+    <div class="head">
+      <svg width="34" height="54" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:12px"><path d="M15 5l-7 7 7 7"/></svg>
+      <div class="av">C</div>
+      <div><div class="nm">Carlos</div><div class="sub"><span class="s1" id="sub1">Ex-socio · baja hace 5 meses</span><span class="s2" id="sub2" style="opacity:0">escribiendo…</span></div></div>
+    </div>
+
+    <!-- Escena 1: el mensaje malo -->
+    <div class="chat" id="chatA">
+      <div class="g" data-k="a-date"><div class="date"><span>Hoy</span></div></div>
+      <div class="g" data-k="a-msg">
+        <div><div class="tagrow">📢 Difusión · 214 destinatarios</div>
+        <div class="row r"><div class="b out">🔥 ¡VUELVE AL GYM! 🔥<br>50&nbsp;% de descuento solo esta semana 💪<br>Apúntate aquí 👉 bit.ly/oferta-gym50<div class="meta">19:02 <svg class="tk" width="34" height="22" viewBox="0 0 34 22" fill="none" stroke="#8696a0" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12l5 5L18 5"/><path d="M14 15l2 2L27 5"/></svg></div></div></div></div>
+      </div>
+      <div class="g" data-k="a-l1"><div class="labels"><span class="pill bad"><i>✕</i>Lista de difusión</span></div></div>
+      <div class="g" data-k="a-l2"><div class="labels" style="padding-top:12px"><span class="pill bad"><i>✕</i>Descuento del 50&nbsp;%</span></div></div>
+      <div class="g" data-k="a-l3"><div class="labels" style="padding-top:12px"><span class="pill bad"><i>✕</i>Enlace en el primer mensaje</span></div></div>
+      <div class="g" data-k="a-seen"><div class="labels" style="padding-top:12px"><span class="pill grey"><i>👀</i>Visto · sin respuesta</span></div></div>
+    </div>
+
+    <!-- Escena 2: el mensaje bueno -->
+    <div class="chat" id="chatB" style="opacity:0">
+      <div class="g" data-k="b-date"><div class="date"><span>Hoy</span></div></div>
+      <div class="g" data-k="b-msg"><div style="padding-top:16px"><div class="row r"><div class="b out">Hola Carlos 👋 Soy Laura, del gimnasio. Hemos abierto un grupo a las 7:00 como el que hacías tú y me he acordado de ti. ¿Qué tal estás?<div class="meta">19:02 <svg class="tk" id="tkB" width="34" height="22" viewBox="0 0 34 22" fill="none" stroke="#8696a0" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12l5 5L18 5"/><path d="M14 15l2 2L27 5"/></svg></div></div></div></div></div>
+      <div class="g l" data-k="b-labels"><div class="labels"><span class="pill good" data-k="b-l1"><i>✓</i>Uno a uno, con su nombre</span><span class="pill good" data-k="b-l2"><i>✓</i>Sin precio</span><span class="pill good" data-k="b-l3"><i>✓</i>Sin enlace</span></div></div>
+      <div class="g l" data-k="b-dots"><div style="padding-top:16px"><div class="row"><div class="b in dots" style="padding:26px 30px"><b></b><b></b><b></b></div></div></div></div>
+      <div class="g l" data-k="b-reply"><div style="padding-top:16px"><div class="row"><div class="b in">¡Hola Laura! Qué ilusión 😊 Justo estaba pensando en volver en enero…<div class="meta">19:06</div></div></div></div></div>
+    </div>
+
+    <div class="inputbar" id="inputbar">
+      <div class="field" id="field"><span class="ph">Mensaje</span></div>
+      <div class="send"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></div>
+    </div>
+  </div>
+</div>
+
+<div class="cta" id="cta">
+  <h2 id="ctaT">¿Quieres la <em>plantilla</em>?</h2>
+  <div class="cbox" id="ctaB"><div class="cav"><img src="../../herramientas/assets/marca-blanca.png" alt=""></div><div><small>Comenta</small><strong>MENSAJE</strong></div></div>
+  <p id="ctaS">y te la mando por privado</p>
+</div>
+<div class="handle" id="handle"><img src="../../herramientas/assets/marca-blanca.png" alt="">@activonorte.media</div>
+
+<script>
+window.T = window.T || {"badIn":0.35,"lab1":2.8,"lab2":3.9,"lab3":5.0,"cap2":6.6,"cap3":9.6,"seen":12.3,"reset":14.4,"typeStart":15.2,"typeEnd":18.0,"send":18.3,"good1":18.9,"good2":19.6,"good3":20.3,"typing":21.0,"reply":22.6,"cta":24.6,"end":28.6};
+const GOOD = "Hola Carlos 👋 Soy Laura, del gimnasio. Hemos abierto un grupo a las 7:00 como el que hacías tú y me he acordado de ti. ¿Qué tal estás?";
+const clamp=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
+const p=(t,a,d)=>clamp((t-a)/d);
+const eo=x=>1-Math.pow(1-x,3);
+const eb=x=>{const c1=1.5,c3=c1+1;return 1+c3*Math.pow(x-1,3)+c1*Math.pow(x-1,2);};
+const $=s=>document.querySelector(s);
+const G={};
+function init(){
+  document.querySelectorAll('.cap').forEach(c=>{c.innerHTML='<span>'+c.innerHTML+'</span>';});
+  document.querySelectorAll('.g').forEach(el=>{el.style.height='auto';G[el.dataset.k]={el,h:el.offsetHeight};});
+  window._ready=true;
+}
+function grow(k,x){
+  const g=G[k]; if(!g) return;
+  g.el.style.height=(g.h*eo(x))+'px';
+  const c=g.el.firstElementChild; c.style.opacity=clamp(x*1.6);
+  c.style.transform=`scale(${0.86+0.14*eb(x)})`;
+}
+function capOpacity(t,from,to){
+  const a = from<0 ? 1 : p(t,from,0.25);
+  const b = 1-p(t,to-0.2,0.2);
+  return Math.min(a,b);
+}
+function render(t){
+  if(!window._ready) init();
+  const T=window.T;
+  // Texto superior
+  document.querySelectorAll('.cap').forEach(c=>{
+    const from=c.dataset.from==='-1'?-1:T[c.dataset.from], to=T[c.dataset.to];
+    const o=capOpacity(t,from,to);
+    c.style.opacity=o;
+    const y = from<0?0:(1-eo(p(t,from,0.3)))*24;
+    c.style.transform=`translateY(${y}px)`;
+  });
+  // Móvil: acercamiento suave y salida al cierre
+  const out=p(t,T.cta,0.4);
+  const zoom = t<T.reset ? 1+0.03*eo(p(t,0,T.reset)) : 1+0.03*(1-eo(p(t,T.reset,0.5)));
+  $('#phone').style.transform=`scale(${zoom*(1-0.06*out)}) translateY(${out*60}px)`;
+  $('#phone').style.opacity=1-out;
+  // Escena 1
+  grow('a-date',1);
+  grow('a-msg',p(t,T.badIn,0.3));
+  grow('a-l1',p(t,T.lab1,0.3));
+  grow('a-l2',p(t,T.lab2,0.3));
+  grow('a-l3',p(t,T.lab3,0.3));
+  grow('a-seen',p(t,T.seen+0.35,0.3));
+  document.querySelectorAll('#chatA .tk').forEach(s=>s.setAttribute('stroke', t>=T.seen?'#53bdeb':'#8696a0'));
+  const r=p(t,T.reset,0.35);
+  $('#chatA').style.opacity=1-r; $('#chatA').style.transform=`translateY(${-50*eo(r)}px)`;
+  $('#chatB').style.opacity=p(t,T.reset+0.2,0.3);
+  // Escritura en la caja de texto
+  const chars=Array.from(GOOD);
+  let html='<span class="ph">Mensaje</span>';
+  if(t>=T.typeStart && t<T.send){
+    const n=Math.round(chars.length*p(t,T.typeStart,T.typeEnd-T.typeStart));
+    const caret = (t<T.typeEnd || Math.floor(t*2.5)%2===0) ? '<span class="caret"></span>' : '';
+    html = n>0 ? chars.slice(0,n).join('')+caret : '<span class="ph">Mensaje</span>';
+  }
+  const f=$('#field'); if(f._h!==html){f.innerHTML=html;f._h=html;}
+  // Escena 2
+  grow('b-date',1);
+  grow('b-msg',p(t,T.send,0.3));
+  const anyLabel=t>=T.good1;
+  grow('b-labels',anyLabel?1:0);
+  ['b-l1','b-l2','b-l3'].forEach((k,i)=>{
+    const x=p(t,[T.good1,T.good2,T.good3][i],0.3);
+    const el=document.querySelector(`[data-k="${k}"]`);
+    el.style.opacity=clamp(x*1.6); el.style.transform=`scale(${0.7+0.3*eb(x)})`;
+  });
+  if(anyLabel){ G['b-labels'].el.style.height=G['b-labels'].h+'px'; G['b-labels'].el.firstElementChild.style.opacity=1; G['b-labels'].el.firstElementChild.style.transform='none'; }
+  const dotsIn=p(t,T.typing,0.3), dotsOut=p(t,T.reply,0.25);
+  grow('b-dots',dotsIn*(1-dotsOut));
+  document.querySelectorAll('.dots b').forEach((d,i)=>{d.style.transform=`translateY(${-9*Math.max(0,Math.sin(t*7-i*0.9))}px)`;});
+  grow('b-reply',p(t,T.reply,0.3));
+  $('#tkB').setAttribute('stroke', t>=T.typing-0.4?'#53bdeb':'#8696a0');
+  const typing = t>=T.typing && t<T.reply;
+  $('#sub1').style.opacity=typing?0:1; $('#sub2').style.opacity=typing?1:0;
+  // La conversación sube cuando crece la caja de texto
+  const ib=$('#inputbar').offsetHeight;
+  ['#chatA','#chatB'].forEach(s=>{$(s).style.bottom=(ib+22)+'px';});
+  // Cierre
+  const c0=T.cta+0.3;
+  $('#cta').style.opacity=p(t,c0,0.2);
+  const tt=p(t,c0,0.4); $('#ctaT').style.transform=`translateY(${(1-eo(tt))*40}px)`; $('#ctaT').style.opacity=tt;
+  const bb=p(t,c0+0.35,0.4); $('#ctaB').style.transform=`scale(${0.8+0.2*eb(bb)})`; $('#ctaB').style.opacity=clamp(bb*1.5);
+  const pulse = t>c0+1.6 ? 1+0.025*Math.sin((t-c0-1.6)*5.5)*Math.exp(-(t-c0-1.6)*0.6) : 1;
+  if(bb>=1) $('#ctaB').style.transform=`scale(${pulse})`;
+  const ss=p(t,c0+0.8,0.4); $('#ctaS').style.opacity=ss; $('#ctaS').style.transform=`translateY(${(1-eo(ss))*20}px)`;
+  $('#handle').style.opacity=p(t,c0+1.1,0.4);
+}
+window.render=render;
+</script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+{
+  "_ayuda": "Segundos desde el inicio. Cada clave marca cuándo empieza algo. Cuando tengamos tu voz, se ajustan a tus frases.",
+  "badIn": 0.35,
+  "lab1": 2.8,
+  "lab2": 3.9,
+  "lab3": 5.0,
+  "cap2": 6.6,
+  "cap3": 9.6,
+  "seen": 12.3,
+  "reset": 14.4,
+  "typeStart": 15.2,
+  "typeEnd": 18.0,
+  "send": 18.3,
+  "good1": 18.9,
+  "good2": 19.6,
+  "good3": 20.3,
+  "typing": 21.0,
+  "reply": 22.6,
+  "cta": 24.6,
+  "end": 28.6,
+  "cover": 6.0
+}
