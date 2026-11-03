@@ -73,7 +73,9 @@ em{font-style:normal;color:#ff7a1a}
   <div class="cap" data-from="cap2" data-to="cap3">Le llega igual que a <em>otras 200 personas</em>…</div>
   <div class="cap" data-from="cap3" data-to="seen">…y le dices que tu cuota <em>vale la mitad</em>.</div>
   <div class="cap" data-from="seen" data-to="reset">Resultado: <em>visto</em>. Y nada.</div>
-  <div class="cap" data-from="reset" data-to="typing">Prueba <em>esto</em> 👇</div>
+  <div class="cap" data-from="reset" data-to="cap6b">Prueba <em>esto</em> 👇</div>
+  <div class="cap" data-from="cap6b" data-to="good1">Escríbele como le escribirías <em>a un amigo</em>.</div>
+  <div class="cap" data-from="good1" data-to="typing">Uno a uno. <em>Sin precio. Sin enlace.</em></div>
   <div class="cap" data-from="typing" data-to="cta">El precio va <em>después</em>, cuando te contesta.</div>
 </div>
 
@@ -122,7 +124,7 @@ em{font-style:normal;color:#ff7a1a}
 <div class="handle" id="handle"><img src="../../herramientas/assets/marca-blanca.png" alt="">@activonorte.media</div>
 
 <script>
-window.T = window.T || {"badIn":0.35,"lab1":2.8,"lab2":3.9,"lab3":5.0,"cap2":6.6,"cap3":9.6,"seen":12.3,"reset":14.4,"typeStart":15.2,"typeEnd":18.0,"send":18.3,"good1":18.9,"good2":19.6,"good3":20.3,"typing":21.0,"reply":22.6,"cta":24.6,"end":28.6};
+window.T = window.T || {"badIn":0.35,"lab1":2.8,"lab2":3.9,"lab3":5.0,"cap2":6.6,"cap3":9.6,"seen":12.3,"reset":14.4,"typeStart":15.2,"typeEnd":18.0,"send":18.3,"good1":18.9,"good2":19.6,"good3":20.3,"typing":21.0,"reply":22.6,"cta":24.6,"end":28.6,"cap6b":16.6};
 const GOOD = "Hola Carlos 👋 Soy Laura, del gimnasio. Hemos abierto un grupo a las 7:00 como el que hacías tú y me he acordado de ti. ¿Qué tal estás?";
 const clamp=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
 const p=(t,a,d)=>clamp((t-a)/d);
@@ -168,7 +170,7 @@ function render(t){
   grow('a-l1',p(t,T.lab1,0.3));
   grow('a-l2',p(t,T.lab2,0.3));
   grow('a-l3',p(t,T.lab3,0.3));
-  grow('a-seen',p(t,T.seen+0.35,0.3));
+  grow('a-seen',p(t,(T.seenPill??T.seen+0.35),0.3));
   document.querySelectorAll('#chatA .tk').forEach(s=>s.setAttribute('stroke', t>=T.seen?'#53bdeb':'#8696a0'));
   const r=p(t,T.reset,0.35);
   $('#chatA').style.opacity=1-r; $('#chatA').style.transform=`translateY(${-50*eo(r)}px)`;
@@ -207,11 +209,11 @@ function render(t){
   const c0=T.cta+0.3;
   $('#cta').style.opacity=p(t,c0,0.2);
   const tt=p(t,c0,0.4); $('#ctaT').style.transform=`translateY(${(1-eo(tt))*40}px)`; $('#ctaT').style.opacity=tt;
-  const bb=p(t,c0+0.35,0.4); $('#ctaB').style.transform=`scale(${0.8+0.2*eb(bb)})`; $('#ctaB').style.opacity=clamp(bb*1.5);
-  const pulse = t>c0+1.6 ? 1+0.025*Math.sin((t-c0-1.6)*5.5)*Math.exp(-(t-c0-1.6)*0.6) : 1;
+  const bb=p(t,(T.ctaBox??c0+0.35),0.4); $('#ctaB').style.transform=`scale(${0.8+0.2*eb(bb)})`; $('#ctaB').style.opacity=clamp(bb*1.5);
+  const pb=(T.ctaBox??c0+0.35)+1.25; const pulse = t>pb ? 1+0.025*Math.sin((t-pb)*5.5)*Math.exp(-(t-pb)*0.6) : 1;
   if(bb>=1) $('#ctaB').style.transform=`scale(${pulse})`;
-  const ss=p(t,c0+0.8,0.4); $('#ctaS').style.opacity=ss; $('#ctaS').style.transform=`translateY(${(1-eo(ss))*20}px)`;
-  $('#handle').style.opacity=p(t,c0+1.1,0.4);
+  const ss=p(t,(T.ctaSub??c0+0.8),0.4); $('#ctaS').style.opacity=ss; $('#ctaS').style.transform=`translateY(${(1-eo(ss))*20}px)`;
+  $('#handle').style.opacity=p(t,(T.ctaSub??c0+0.8)+0.3,0.4);
 }
 window.render=render;
 </script>

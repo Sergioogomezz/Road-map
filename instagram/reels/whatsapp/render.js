@@ -11,7 +11,8 @@ const { chromium } = require('playwright');
 const DIR = __dirname;
 const args = process.argv.slice(2);
 const opt = (k) => { const i = args.indexOf(k); return i >= 0 ? args[i + 1] : null; };
-const T = JSON.parse(fs.readFileSync(path.join(DIR, 'tiempos.json'), 'utf8'));
+const TFILE = path.resolve(opt('--tiempos') || path.join(DIR, 'tiempos.json'));
+const T = JSON.parse(fs.readFileSync(TFILE, 'utf8'));
 const FPS = 30;
 const OUT = path.join(DIR, 'salida');
 fs.mkdirSync(OUT, { recursive: true });
@@ -46,12 +47,12 @@ function run(cmd, a) { execFileSync(cmd, a, { stdio: ['ignore', 'ignore', 'inher
   await new Promise((r) => ff.on('close', r));
   await browser.close();
 
-  run('python3', [path.join(DIR, 'sfx.py'), path.join(DIR, 'tiempos.json'), sfx]);
+  run('python3', [path.join(DIR, 'sfx.py'), TFILE, sfx]);
 
   if (voz) {
-    // Voz limpia y a volumen estándar; efectos más bajos debajo.
+    // La voz llega ya montada y nivelada (sincronizar.py); los efectos van más bajos debajo.
     run('ffmpeg', ['-y', '-loglevel', 'error', '-i', video, '-i', voz, '-i', sfx, '-filter_complex',
-      '[1:a]highpass=f=80,afftdn=nf=-25,loudnorm=I=-16:TP=-1.5:LRA=11,aresample=48000[v];[2:a]volume=0.45[s];[v][s]amix=inputs=2:duration=longest:normalize=0[a]',
+      '[1:a]aresample=48000[v];[2:a]volume=0.32[s];[v][s]amix=inputs=2:duration=longest:normalize=0,alimiter=limit=0.89[a]',
       '-map', '0:v', '-map', '[a]', '-c:v', 'copy', '-c:a', 'aac', '-b:a', '192k', '-t', String(T.end), '-movflags', '+faststart', final]);
   } else {
     run('ffmpeg', ['-y', '-loglevel', 'error', '-i', video, '-i', sfx, '-map', '0:v', '-map', '1:a', '-c:v', 'copy',

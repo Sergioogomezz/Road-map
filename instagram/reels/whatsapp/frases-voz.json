@@ -1,0 +1,21 @@
+{
+  "_ayuda": "Segundos dentro de la grabación original de Sergio. La frase 8 empieza en «El precio va después» (se quita «Solo recibes la conversación»).",
+  "inicio": 0.15,
+  "golpes": [[48.25, 48.75]],
+  "frases": [
+    {"n": 1, "desde": 8.3665, "hasta": 11.2054, "pausa_despues": 0.30},
+    {"n": 2, "desde": 15.3517, "hasta": 20.1949, "pausa_despues": 0.35},
+    {"n": 3, "desde": 24.3344, "hasta": 28.3134, "pausa_despues": 0.20},
+    {"n": 4, "desde": 30.873, "hasta": 34.2701, "pausa_despues": 0.35},
+    {"n": 5, "desde": 39.2075, "hasta": 40.8651, "pausa_despues": 0.55},
+    {"n": 6, "desde": 48.3432, "hasta": 51.5804, "pausa_despues": 0.50},
+    {"n": 7, "desde": 58.5074, "hasta": 61.9673, "pausa_despues": 0.35},
+    {"n": 8, "desde": 70.3647, "hasta": 72.9489, "pausa_despues": 0.60},
+    {"n": 9, "desde": 78.0107, "hasta": 81.6378, "pausa_despues": 0.0}
+  ],
+  "palabras": {
+    "esto": 8.996, "50": 17.35, "enlace": 19.802, "visto": 39.778,
+    "esto6": 48.613, "escribele": 49.613, "sin1": 60.417, "sin2": 61.497,
+    "contesta": 72.439, "comenta": 79.3, "y9": 80.461
+  }
+}

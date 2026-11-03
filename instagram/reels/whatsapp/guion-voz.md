@@ -25,7 +25,10 @@ Con esas pausas ajusto la animación a tu ritmo.
 
 ## Montarlo con la voz
 
-```
-node render.js --voz voz.m4a
-```
-Antes, ajusta los tiempos de `tiempos.json` al inicio de cada frase.
+1. `frases-voz.json`: dónde empieza y acaba cada frase en la grabación y cuándo se dice cada palabra clave.
+2. `python3 sincronizar.py grabacion.m4a frases-voz.json salida/voz-montada.wav tiempos-voz.json`
+   (quita las pausas largas, corrige golpes de «P», iguala el volumen y calcula los tiempos).
+3. `node render.js --voz salida/voz-montada.m4a --tiempos tiempos-voz.json`
+
+Versión con voz actual: `salida/reel-whatsapp-con-voz.mp4` (34,6 s). La frase 8 empieza en
+«El precio va después…» porque en la grabación se dijo «Solo recibes la conversación».

@@ -71,8 +71,9 @@ for k in ("good1", "good2", "good3"):
 incoming(T["reply"])
 c0 = T["cta"] + 0.3
 whoosh(T["cta"], 0.45, 0.08)
-pop(c0 + 0.35, 0.28)
-ding(c0 + 0.45, 0.1)
+box = T.get("ctaBox", c0 + 0.35)
+pop(box, 0.28)
+ding(box + 0.1, 0.1)
 
 peak = np.max(np.abs(buf)) or 1
 buf = buf / peak * 0.5
