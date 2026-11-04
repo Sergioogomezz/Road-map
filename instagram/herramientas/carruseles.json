@@ -67,7 +67,7 @@
         { "tipo": "text", "kicker": "Error 1", "titulo": "La lista de difusión", "cuerpo": "Si le llega el mismo mensaje que a otras 200 personas, lo nota. *Uno a uno y con su nombre.*" },
         { "tipo": "text", "kicker": "Error 2", "titulo": "El precio en el primer mensaje", "cuerpo": "Si lo primero que lee es «50 % de descuento», le estás vendiendo. *Nadie contesta a un anuncio.*" },
         { "tipo": "chat", "kicker": "Mensaje 1 · Reconectar", "mensaje": "Hola Carlos, soy Sergio de [tu gimnasio] 👋 Me he acordado de ti porque hemos abierto un grupo a las 7:00, como el que hacías tú. ¿Qué tal estás?", "nota": "Sin precio. Sin enlace." },
-        { "tipo": "chat", "kicker": "Mensaje 2 · Algo pequeño", "mensaje": "Si te apetece volver a coger el ritmo, el jueves tengo un hueco con Laura a las 19:00. ¿Te lo guardo?", "nota": "Una visita, no una cuota." },
+        { "tipo": "chat", "kicker": "Mensaje 2 · Algo pequeño", "mensaje": "Si te apetece volver a coger el ritmo, el jueves tengo un hueco con Álex a las 19:00. ¿Te lo guardo?", "nota": "Una visita, no una cuota." },
         { "tipo": "chat", "kicker": "Mensaje 3 · Sin presión", "mensaje": "No te molesto más 🙂 Si en enero te apetece volver, escríbeme y te lo dejo todo preparado.", "nota": "La puerta queda abierta." },
         { "tipo": "chat", "kicker": "Si te dice «no tengo tiempo»", "mensaje": "Te entiendo. No hace falta venir cinco días: con dos sesiones cortas a la semana ya se nota. ¿Te enseño en 5 minutos cómo encajarlo?", "nota": "Valida, aísla y propón." },
         { "tipo": "cta", "titulo": "A quién escribir, cuándo y *qué contestar*", "palabra": "PROTOCOLO", "sub": "Mensajes, Excel de seguimiento y copiloto IA. 17 €." }

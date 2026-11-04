@@ -33,5 +33,10 @@ Con esas pausas ajusto la animación a tu ritmo.
    (`--musica` añade la música original de `musica.py`, que se baja sola cuando hablas;
    `--solo-audio` rehace solo el sonido sin volver a generar los fotogramas).
 
-Versión actual: `salida/reel-whatsapp-con-voz.mp4` (35,4 s). Frases 1 y 9 de la primera grabación;
-2 a 8 de la segunda.
+Versiones en `salida/` (35,4 s; frases 1 y 9 de la primera grabación, 2 a 8 de la segunda):
+- `reel-whatsapp-con-voz.mp4`: voz y efectos, sin música (la elegida).
+- `reel-whatsapp-con-voz-y-musica.mp4`: con la música original de `musica.py`.
+- `reel-whatsapp-cancion-gemini.mp4`: con la canción de Gemini.
+- `reel-whatsapp.mp4`: primera versión, solo efectos y sin voz.
+
+En el chat, quien escribe al ex-socio se llama Álex.
