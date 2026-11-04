@@ -43,6 +43,11 @@ def whoosh(t0, length=0.4, g=0.1):
     put(t0, np.convolve(x, np.ones(40) / 40, mode="same"), g)
 
 
+def transicion(t0, g=0.13):  # paso al cierre: barrido con tono que sube + «tin» (sin ruido, no suena a respiración)
+    put(t0, tone(480, 1080, 0.22, 0.09) + 0.25 * tone(960, 2160, 0.22, 0.05), g)
+    put(t0 + 0.16, tone(1318, 1318, 0.3, 0.08) + 0.3 * tone(2637, 2637, 0.3, 0.04), g * 0.7)
+
+
 def exito(t0, g=0.14):                                                           # arpegio de Do mayor
     for k, f in enumerate((523, 659, 784, 1046)):
         put(t0 + k * 0.07, tone(f, f, 0.4, 0.12) + 0.3 * tone(2 * f, 2 * f, 0.4, 0.06), g)
@@ -65,7 +70,7 @@ for i in range(28):
 pop(T["arreglo"] + 0.8, 0.2); ding(T["arreglo"] + 1.3, 0.1)
 whoosh(T["climb"], 0.5, 0.1); exito(T["climb"] + 0.65)
 c0 = T["cta"] + 0.3
-whoosh(T["cta"], 0.45, 0.08)
+transicion(T["cta"])
 box = T.get("ctaBox", c0 + 0.35)
 pop(box, 0.28); ding(box + 0.1, 0.1)
 
