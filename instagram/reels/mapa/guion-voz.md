@@ -41,4 +41,9 @@ El cuarto puede ser mejor gimnasio, pero casi nadie baja hasta ahí. Y las tres 
 ## Notas
 
 - El mapa es dibujado y los gimnasios tienen nombres inventados (lo indica la etiqueta «Ejemplo · nombres ficticios»).
-- `node render.js` genera `salida/reel-mapa.mp4` (efectos, sin voz). Con voz: `node render.js --voz ... --tiempos ...`.
+- `salida/reel-mapa-con-voz.mp4`: versión final con voz y efectos, sin música (32,8 s).
+- `salida/reel-mapa.mp4`: versión con efectos y sin voz.
+- En la grabación, la frase 8 se dijo «pero si nadie baja hasta aquí» (en pantalla se mantiene «casi nadie»),
+  la frase 7 se acorta en el montaje y la 10 es la segunda toma.
+- Rehacer con voz: `python3 sincronizar.py frases-voz.json salida/voz-montada.wav tiempos-voz.json`
+  y luego `node render.js --voz salida/voz-montada.wav --tiempos tiempos-voz.json`.

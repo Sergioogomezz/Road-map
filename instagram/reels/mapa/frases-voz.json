@@ -1,0 +1,93 @@
+{
+  "_ayuda": "Segundos dentro de la grabación. La frase 7 se parte en dos para acortar la pausa larga; la 10 es la segunda toma (la primera tenía un titubeo). Las grabaciones están en voz/ y no se suben al repositorio.",
+  "fuentes": {
+    "g1": "voz/grabacion-1.m4a"
+  },
+  "inicio": 0.15,
+  "frases": [
+    {
+      "id": "1",
+      "fuente": "g1",
+      "desde": 4.8338,
+      "hasta": 7.1256,
+      "pausa_despues": 0.35
+    },
+    {
+      "id": "2",
+      "fuente": "g1",
+      "desde": 11.0421,
+      "hasta": 15.2046,
+      "pausa_despues": 0.35
+    },
+    {
+      "id": "3",
+      "fuente": "g1",
+      "desde": 20.0265,
+      "hasta": 21.8971,
+      "pausa_despues": 0.25
+    },
+    {
+      "id": "4",
+      "fuente": "g1",
+      "desde": 26.7895,
+      "hasta": 29.0101,
+      "pausa_despues": 0.35
+    },
+    {
+      "id": "5",
+      "fuente": "g1",
+      "desde": 33.2022,
+      "hasta": 35.5634,
+      "pausa_despues": 0.35
+    },
+    {
+      "id": "6",
+      "fuente": "g1",
+      "desde": 42.7921,
+      "hasta": 46.3391,
+      "pausa_despues": 0.5
+    },
+    {
+      "id": "7a",
+      "fuente": "g1",
+      "desde": 54.0028,
+      "hasta": 54.5166,
+      "pausa_despues": 0.4
+    },
+    {
+      "id": "7b",
+      "fuente": "g1",
+      "desde": 56.3125,
+      "hasta": 57.4584,
+      "pausa_despues": 0.3
+    },
+    {
+      "id": "8",
+      "fuente": "g1",
+      "desde": 62.1654,
+      "hasta": 63.209,
+      "pausa_despues": 0.5
+    },
+    {
+      "id": "9",
+      "fuente": "g1",
+      "desde": 75.7246,
+      "hasta": 78.9447,
+      "pausa_despues": 1.5
+    },
+    {
+      "id": "10",
+      "fuente": "g1",
+      "desde": 89.2505,
+      "hasta": 93.0775,
+      "pausa_despues": 0.0
+    }
+  ],
+  "palabras": {
+    "aqui": 6.15,
+    "tres": 14.8,
+    "sin_pagar": 77.8,
+    "comenta": 89.3,
+    "y_te_digo": 90.65
+  }
+}
