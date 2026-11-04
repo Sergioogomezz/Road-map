@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<!-- Escena del reel «El mapa». 1080x1920. render(t) dibuja el fotograma del segundo t.
+     Mapa dibujado y gimnasios con nombres inventados: no es una captura de ninguna app real. -->
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden}
+body{font-family:Inter,"Noto Color Emoji",sans-serif;background:linear-gradient(180deg,#003b46 0%,#00262e 55%,#001a20 100%);color:#fff;-webkit-font-smoothing:antialiased;position:relative}
+em{font-style:normal;color:#ff7a1a}
+
+.caps{position:absolute;left:70px;right:70px;top:190px;height:320px}
+.cap{position:absolute;inset:0;display:grid;place-items:center;text-align:center;font-family:"Inter Display",Inter,sans-serif;font-weight:800;font-size:76px;line-height:1.08;letter-spacing:-.02em;text-wrap:balance;opacity:0}
+
+.phone{position:absolute;left:135px;top:530px;width:810px;height:1030px;background:#0d1214;border-radius:66px;padding:16px;box-shadow:0 40px 90px -20px rgba(0,0,0,.6);transform-origin:50% 40%}
+.screen{position:relative;width:100%;height:100%;border-radius:52px;overflow:hidden;background:#e8edef}
+
+/* Mapa */
+.map{position:absolute;left:0;top:0;width:778px;height:470px;transform-origin:50% 60%}
+.pin{position:absolute;width:64px;height:80px;margin-left:-32px;margin-top:-78px;transform-origin:50% 100%}
+.pin .n{position:absolute;left:0;right:0;top:13px;text-align:center;font-weight:800;font-size:26px;color:#fff}
+.dot{position:absolute;width:20px;height:20px;margin:-10px 0 0 -10px;border-radius:50%;background:#9aa9ad;border:3px solid #fff}
+.ficticio{position:absolute;right:22px;top:132px;background:rgba(255,255,255,.85);color:#5b6b70;font-size:20px;font-weight:600;border-radius:10px;padding:4px 12px}
+
+.search{position:absolute;left:22px;right:22px;top:24px;height:92px;background:#fff;border-radius:46px;box-shadow:0 6px 20px rgba(0,0,0,.16);display:flex;align-items:center;gap:18px;padding:0 30px;color:#0f1f24;font-size:34px;z-index:4}
+.search .ph{color:#8696a0}
+.caret{display:inline-block;width:3px;height:40px;background:#003b46;vertical-align:-8px;margin-left:2px}
+
+/* Lista de resultados */
+.sheet{position:absolute;left:0;right:0;top:998px;height:560px;background:#fff;border-radius:34px 34px 0 0;box-shadow:0 -8px 24px rgba(0,0,0,.14);overflow:hidden;z-index:3}
+.handle{position:absolute;left:50%;top:13px;width:70px;height:8px;margin-left:-35px;border-radius:4px;background:#d0d8db}
+.card{position:absolute;left:0;right:0;height:175px;padding:20px 26px;display:flex;gap:18px;border-bottom:2px solid #eef2f3;color:#0f1f24}
+.card .txt{flex:1;min-width:0;display:flex;flex-direction:column;gap:5px}
+.name{display:flex;align-items:center;gap:14px;font-size:32px;font-weight:700;line-height:1.15;white-space:nowrap}
+.badge{width:38px;height:38px;border-radius:50%;background:#e05e00;color:#fff;font-size:22px;font-weight:800;display:grid;place-items:center;flex:none}
+.badge.grey{background:#9aa9ad}
+.rate{align-self:flex-start;display:flex;align-items:center;gap:6px;font-size:27px;font-weight:600;border-radius:10px}
+.rate .cnt{color:#5b6b70;font-weight:500;font-variant-numeric:tabular-nums}
+.meta{font-size:25px;color:#5b6b70}
+.st{align-self:flex-start;font-size:25px;color:#5b6b70;border-radius:10px;white-space:nowrap}
+.st b{color:#127a3f;font-weight:600}
+.tile{width:128px;height:128px;border-radius:16px;flex:none;position:relative;overflow:hidden}
+.tile .ph2{position:absolute;inset:0;display:grid;place-items:center}
+.nadie{position:absolute;left:50%;top:0;transform:translateX(-50%);background:#33464b;color:#fff;font-size:28px;font-weight:700;border-radius:999px;padding:12px 26px;white-space:nowrap;opacity:0;z-index:5}
+.top3{position:absolute;right:20px;top:14px;background:#127a3f;color:#fff;font-size:26px;font-weight:800;border-radius:999px;padding:8px 18px;opacity:0;z-index:5;white-space:nowrap}
+
+/* Cierre */
+.cta{position:absolute;left:0;right:0;top:540px;display:flex;flex-direction:column;align-items:center;gap:52px;padding:0 80px;opacity:0;text-align:center}
+.cta h2{font-family:"Inter Display",Inter,sans-serif;font-weight:800;font-size:88px;line-height:1.05;letter-spacing:-.025em}
+.cbox{background:#fff;color:#0f1f24;border-radius:44px;padding:44px 52px;display:flex;gap:34px;align-items:center;width:900px;box-shadow:0 40px 80px -30px rgba(0,0,0,.6)}
+.cav{width:132px;height:132px;border-radius:50%;background:#003b46;display:grid;place-items:center;flex:none}
+.cav img{width:80px}
+.cbox small{display:block;font-size:40px;color:#5b6b70;font-weight:600;text-align:left}
+.cbox strong{display:block;font-family:"Inter Display",Inter,sans-serif;font-weight:800;font-size:132px;line-height:.95;color:#e05e00;letter-spacing:.01em;text-align:left}
+.cta p{font-size:46px;color:rgba(255,255,255,.85);font-weight:500}
+.handlex{position:absolute;left:0;right:0;top:1250px;display:flex;justify-content:center;align-items:center;gap:16px;font-size:38px;font-weight:600;color:rgba(255,255,255,.75);opacity:0}
+.handlex img{height:44px}
+</style>
+</head>
+<body>
+
+<div class="caps">
+  <div class="cap" data-from="-1" data-to="cap2">Si tu gimnasio no sale aquí, <em>no existe</em>.</div>
+  <div class="cap" data-from="cap2" data-to="cap3">Alguien busca «gimnasio cerca de mí»… y le salen <em>tres</em>.</div>
+  <div class="cap" data-from="cap3" data-to="f1">Los tres de arriba tienen <em>3 cosas</em> en común.</div>
+  <div class="cap" data-from="f1" data-to="f2">1 · Muchas reseñas, <em>y recientes</em>.</div>
+  <div class="cap" data-from="f2" data-to="f3">2 · Fotos <em>reales</em>, con gente entrenando.</div>
+  <div class="cap" data-from="f3" data-to="cuarto">3 · La ficha <em>completa</em>: horario, teléfono y categoría.</div>
+  <div class="cap" data-from="cuarto" data-to="nadie">¿Y el cuarto? Puede ser <em>mejor gimnasio</em>…</div>
+  <div class="cap" data-from="nadie" data-to="arreglo">…pero casi nadie <em>baja hasta aquí</em>.</div>
+  <div class="cap" data-from="arreglo" data-to="cta">Las tres cosas se arreglan <em>sin pagar anuncios</em>.</div>
+</div>
+
+<div class="phone" id="phone">
+  <div class="screen">
+    <div class="map" id="map">
+      <svg width="778" height="470" viewBox="0 0 778 470">
+        <rect width="778" height="470" fill="#e8edef"/>
+        <path d="M500,0 L778,0 L778,330 C730,300 700,250 655,215 C610,180 570,120 548,60 C540,35 520,15 500,0 Z" fill="#b8d9e8"/>
+        <ellipse cx="135" cy="170" rx="95" ry="58" fill="#d3e8c8"/>
+        <rect x="300" y="350" width="140" height="80" rx="22" fill="#d3e8c8"/>
+        <g fill="none" stroke-linecap="round">
+          <g stroke="#d0d8db" stroke-width="16">
+            <path d="M0,250 L520,232"/><path d="M90,0 L130,470"/><path d="M0,60 C150,70 300,40 470,95"/><path d="M380,0 C390,140 420,300 470,470"/><path d="M0,410 L300,395"/><path d="M560,470 C580,420 600,390 640,370"/>
+          </g>
+          <g stroke="#ffffff" stroke-width="10">
+            <path d="M0,250 L520,232"/><path d="M90,0 L130,470"/><path d="M0,60 C150,70 300,40 470,95"/><path d="M380,0 C390,140 420,300 470,470"/><path d="M0,410 L300,395"/><path d="M560,470 C580,420 600,390 640,370"/>
+          </g>
+          <g stroke="#cfd8db" stroke-width="30"><path d="M0,140 C180,130 330,180 470,260 S700,420 778,470"/><path d="M250,0 C265,120 245,300 290,470"/></g>
+          <g stroke="#fbe7c6" stroke-width="22"><path d="M0,140 C180,130 330,180 470,260 S700,420 778,470"/><path d="M250,0 C265,120 245,300 290,470"/></g>
+        </g>
+      </svg>
+      <div class="dot" style="left:60px;top:300px"></div><div class="dot" style="left:330px;top:120px"></div><div class="dot" style="left:470px;top:330px"></div>
+      <div class="dot" style="left:180px;top:345px"></div><div class="dot" style="left:610px;top:430px"></div><div class="dot" style="left:350px;top:285px"></div>
+      <div class="pin" id="p1" style="left:190px;top:255px"></div>
+      <div class="pin" id="p2" style="left:415px;top:228px"></div>
+      <div class="pin" id="p3" style="left:555px;top:345px"></div>
+      <div class="pin" id="p4" style="left:115px;top:420px"></div>
+      <div class="ficticio">Ejemplo · nombres ficticios</div>
+    </div>
+
+    <div class="search"><svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#5b6b70" stroke-width="2.4" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M20 20l-4.6-4.6"/></svg><span id="q"></span></div>
+
+    <div class="sheet" id="sheet">
+      <div class="handle"></div>
+      <div id="cards"></div>
+    </div>
+  </div>
+</div>
+
+<div class="cta" id="cta">
+  <h2 id="ctaT">¿En qué puesto sale <em>tu</em> gimnasio?</h2>
+  <div class="cbox" id="ctaB"><div class="cav"><img src="../../herramientas/assets/marca-blanca.png" alt=""></div><div><small>Comenta</small><strong>AUDITA</strong></div></div>
+  <p id="ctaS">y te digo qué le falta. Gratis.</p>
+</div>
+<div class="handlex" id="handle"><img src="../../herramientas/assets/marca-blanca.png" alt="">@activonorte.media</div>
+
+<script>
+window.T = window.T || {"typeStart":0.15,"typeEnd":0.85,"results":1.05,"cap2":3.0,"tres":4.6,"cap3":6.4,"f1":8.8,"f2":11.2,"f3":13.6,"cuarto":16.6,"nadie":19.4,"arreglo":22.2,"climb":24.4,"cta":27.0,"end":31.2};
+const QUERY = "gimnasio cerca de mí";
+const CARD_H = 175, LIST_TOP = 34, SHEET_TOP = 440;
+const GYMS = [
+  {name:"Gimnasio Ola",  rate:"4,7", cnt:312, meta:"Gimnasio · 450 m",              st:"Cierra a las 22:00", tile:["#0a4f5c","#1d7a8a"]},
+  {name:"Centro Cumbre", rate:"4,6", cnt:268, meta:"Centro deportivo · 800 m",      st:"Cierra a las 23:00", tile:["#b34a00","#e8892f"]},
+  {name:"Studio Brío",   rate:"4,8", cnt:194, meta:"Entrenamiento personal · 1,1 km",st:"Cierra a las 21:30", tile:["#3d5a40","#6f9a6c"]},
+  {name:"Tu gimnasio",   rate:"4,9", cnt:23,  meta:"Gimnasio · 600 m",              st:"Cierra a las 22:00", tile:["#003b46","#e05e00"], tuyo:true},
+];
+const clamp=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
+const p=(t,a,d)=>clamp((t-a)/d);
+const eo=x=>1-Math.pow(1-x,3);
+const eio=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
+const eb=x=>{const c1=1.6,c3=c1+1;return 1+c3*Math.pow(x-1,3)+c1*Math.pow(x-1,2);};
+const $=s=>document.querySelector(s);
+const STAR='<svg width="22" height="22" viewBox="0 0 24 24"><path fill="#e8892f" d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3 6.1 20.6l1.3-6.6L2.5 9.4l6.6-.8z"/></svg>';
+const DUMBBELL='<svg width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.85)" stroke-width="2" stroke-linecap="round"><path d="M6.5 6.5v11M3.5 9v6M17.5 6.5v11M20.5 9v6M6.5 12h11"/></svg>';
+const NOPHOTO='<div style="display:grid;justify-items:center;gap:4px;color:#8a999d;font-size:18px;font-weight:600"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#8a999d" stroke-width="2" stroke-linecap="round"><path d="M3 7h3l2-3h8l2 3h3v12H3z"/><circle cx="12" cy="13" r="3.5"/><path d="M3 3l18 18"/></svg>Sin fotos</div>';
+function pinSVG(color){return `<svg width="64" height="80" viewBox="0 0 64 80"><path d="M32 78C32 78 6 48 6 30a26 26 0 0 1 52 0c0 18-26 48-26 48z" fill="${color}" stroke="#fff" stroke-width="4"/></svg><div class="n"></div>`;}
+
+function init(){
+  document.querySelectorAll('.cap').forEach(c=>{c.innerHTML='<span>'+c.innerHTML+'</span>';});
+  ['p1','p2','p3','p4'].forEach((id,i)=>{$('#'+id).innerHTML=pinSVG(i<3?'#e05e00':'#9aa9ad'); $('#'+id+' .n').textContent=i<3?String(i+1):'';});
+  $('#cards').innerHTML = GYMS.map((g,i)=>`
+    <div class="card" id="c${i}">
+      <div class="txt">
+        <div class="name"><span class="badge${g.tuyo?' grey':''}">${i+1}</span>${g.name}</div>
+        <div class="rate">${g.rate} ${STAR.repeat(5)} <span class="cnt">(${g.cnt})</span></div>
+        <div class="meta">${g.meta}</div>
+        <div class="st">${g.tuyo?'Horario no disponible':'<b>Abierto</b> · '+g.st}</div>
+      </div>
+      <div class="tile"><div class="ph2" style="background:linear-gradient(135deg,${g.tile[0]},${g.tile[1]})">${DUMBBELL}</div>${g.tuyo?'<div class="ph2 np" style="background:#e3e9ea">'+NOPHOTO+'</div>':''}</div>
+      ${g.tuyo?'<div class="nadie" id="nadie">👀 Casi nadie baja hasta aquí</div><div class="top3" id="top3">¡Top 3! ✓</div>':''}
+    </div>`).join('');
+  window._ready=true;
+}
+function capOpacity(t,from,to){const a=from<0?1:p(t,from,0.25);const b=1-p(t,to-0.2,0.2);return Math.min(a,b);}
+function hl(t,a,b){return Math.min(p(t,a,0.25),1-0.7*p(t,b,0.4));}   // resaltado que se suaviza al pasar al siguiente punto
+
+function render(t){
+  if(!window._ready) init();
+  const T=window.T;
+  document.querySelectorAll('.cap').forEach(c=>{
+    const from=c.dataset.from==='-1'?-1:T[c.dataset.from], to=T[c.dataset.to];
+    c.style.opacity=capOpacity(t,from,to);
+    c.style.transform=`translateY(${from<0?0:(1-eo(p(t,from,0.3)))*24}px)`;
+  });
+  // Búsqueda
+  const chars=Array.from(QUERY);
+  const n=Math.round(chars.length*p(t,T.typeStart,T.typeEnd-T.typeStart));
+  const caret=(t<T.results && Math.floor(t*2.5)%2===0)?'<span class="caret"></span>':'';
+  const qh = n>0 ? chars.slice(0,n).join('')+caret : '<span class="ph">Busca un sitio</span>'+caret;
+  if($('#q')._h!==qh){$('#q').innerHTML=qh;$('#q')._h=qh;}
+  // Mapa y chinchetas
+  const r=p(t,T.results,0.5);
+  $('#map').style.transform=`scale(${1.12-0.12*eo(r)})`;
+  ['p1','p2','p3'].forEach((id,i)=>{
+    const x=p(t,T.results+0.1+i*0.12,0.35);
+    const pul=1+0.18*Math.max(0,Math.sin(Math.PI*p(t,T.tres+i*0.3,0.35)));
+    $('#'+id).style.opacity=clamp(x*2);
+    $('#'+id).style.transform=`translateY(${-60*(1-eo(x))}px) scale(${pul*(x<1?0.8+0.2*eb(x):1)})`;
+  });
+  const x4=p(t,T.cuarto,0.35);
+  const climb=p(t,T.climb,0.7), swapped=t>=T.climb+0.35;
+  $('#p4').style.opacity=clamp(x4*2);
+  $('#p4').style.transform=`translateY(${-40*(1-eo(x4))}px) scale(${0.8+0.2*(x4<1?eb(x4):1)+(swapped?0.08*Math.sin(Math.PI*p(t,T.climb+0.35,0.4)):0)})`;
+  document.querySelectorAll('.dot').forEach((d,i)=>{d.style.opacity=clamp(p(t,T.results+0.05*i,0.3));});
+  // Al subir al top 3: la chincheta de «Tu gimnasio» pasa a naranja con el 3, y la del tercero a gris
+  $('#p4 path').setAttribute('fill', swapped?'#e05e00':'#9aa9ad'); $('#p4 .n').textContent=swapped?'3':'';
+  $('#p3 path').setAttribute('fill', swapped?'#9aa9ad':'#e05e00'); $('#p3 .n').textContent=swapped?'':'3';
+  // Lista
+  $('#sheet').style.top=(998-(998-SHEET_TOP)*eo(r))+'px';
+  const scrollDown=eio(p(t,T.cuarto,0.6))*CARD_H, scrollUp=eio(climb)*CARD_H;
+  const scroll=scrollDown-scrollUp;
+  const pos=[0,1,2+eio(climb),3-eio(climb)];
+  GYMS.forEach((g,i)=>{
+    const c=$('#c'+i);
+    c.style.top=(LIST_TOP+pos[i]*CARD_H-scroll)+'px';
+    c.style.zIndex = i===3?2:1;
+    // resaltados de los 3 puntos (solo en los tres primeros)
+    if(i<3){
+      const a1=hl(t,T.f1,T.f2), a2=hl(t,T.f2,T.f3), a3=hl(t,T.f3,T.cuarto);
+      c.querySelector('.rate').style.background=`rgba(253,226,205,${a1})`; c.querySelector('.rate').style.boxShadow=`0 0 0 6px rgba(253,226,205,${a1})`;
+      c.querySelector('.tile').style.boxShadow=`0 0 0 6px rgba(224,94,0,${a2})`;
+      c.querySelector('.tile').style.transform=`scale(${1+0.06*Math.sin(Math.PI*p(t,T.f2+i*0.12,0.4))})`;
+      c.querySelector('.st').style.background=`rgba(214,240,223,${a3})`; c.querySelector('.st').style.boxShadow=`0 0 0 6px rgba(214,240,223,${a3})`;
+      c.querySelector('.rate').style.transform=`scale(${1+0.05*Math.sin(Math.PI*p(t,T.f1+i*0.12,0.4))})`;
+    }
+    const b=c.querySelector('.badge');
+    if(i===2){ b.textContent=swapped?'4':'3'; b.classList.toggle('grey',swapped); }
+  });
+  // «Tu gimnasio»
+  const c4=$('#c3');
+  const weak = p(t,T.cuarto+0.3,0.3)*(1-p(t,T.arreglo,0.3));
+  c4.style.background=`rgba(253,236,234,${weak})`;
+  const cnt=Math.round(23+(215-23)*eio(p(t,T.arreglo+0.2,1.6)));
+  c4.querySelector('.cnt').textContent=`(${cnt})`;
+  c4.querySelector('.cnt').style.color = t>=T.arreglo+0.2 && t<T.climb+1 ? '#127a3f' : (weak>0.5?'#b42318':'#5b6b70');
+  c4.querySelector('.cnt').style.fontWeight = t>=T.arreglo+0.2 ? '700':'500';
+  c4.querySelector('.np').style.opacity=1-p(t,T.arreglo+0.8,0.35);
+  const stOk=t>=T.arreglo+1.3;
+  const sth=stOk?'<b>Abierto</b> · Cierra a las 22:00':'Horario no disponible';
+  if(c4.querySelector('.st')._h!==sth){c4.querySelector('.st').innerHTML=sth;c4.querySelector('.st')._h=sth;}
+  c4.querySelector('.st').style.background=`rgba(214,240,223,${stOk?1-p(t,T.arreglo+1.9,0.5):0})`;
+  c4.querySelector('.st').style.boxShadow=`0 0 0 6px rgba(214,240,223,${stOk?1-p(t,T.arreglo+1.9,0.5):0})`;
+  const b4=c4.querySelector('.badge'); b4.textContent=swapped?'3':'4'; b4.classList.toggle('grey',!swapped);
+  const nd=p(t,T.nadie,0.3)*(1-p(t,T.arreglo-0.1,0.25));
+  $('#nadie').style.opacity=nd; $('#nadie').style.transform=`translate(-50%,${58+(1-eb(clamp(nd)))*20}px) scale(${0.9+0.1*nd})`;
+  const tp=p(t,T.climb+0.7,0.3)*(1-p(t,T.cta,0.2));
+  $('#top3').style.opacity=tp; $('#top3').style.transform=`scale(${0.7+0.3*eb(clamp(tp))})`;
+  // Salida del móvil y cierre
+  const out=p(t,T.cta,0.4);
+  $('#phone').style.transform=`scale(${1-0.06*out}) translateY(${out*60}px)`;
+  $('#phone').style.opacity=1-out;
+  const c0=T.cta+0.3;
+  $('#cta').style.opacity=p(t,c0,0.2);
+  const tt=p(t,c0,0.4); $('#ctaT').style.transform=`translateY(${(1-eo(tt))*40}px)`; $('#ctaT').style.opacity=tt;
+  const bx=(T.ctaBox??c0+0.35), bb=p(t,bx,0.4);
+  $('#ctaB').style.opacity=clamp(bb*1.5);
+  const pb=bx+1.25, pulse=t>pb?1+0.025*Math.sin((t-pb)*5.5)*Math.exp(-(t-pb)*0.6):1;
+  $('#ctaB').style.transform=bb<1?`scale(${0.8+0.2*eb(bb)})`:`scale(${pulse})`;
+  const ss=p(t,(T.ctaSub??c0+0.8),0.4); $('#ctaS').style.opacity=ss; $('#ctaS').style.transform=`translateY(${(1-eo(ss))*20}px)`;
+  $('#handle').style.opacity=p(t,(T.ctaSub??c0+0.8)+0.3,0.4);
+}
+window.render=render;
+</script>
+</body>
+</html>

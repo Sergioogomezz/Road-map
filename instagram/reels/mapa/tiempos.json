@@ -1,0 +1,19 @@
+{
+  "_ayuda": "Segundos desde el inicio. Cada clave marca cuándo empieza algo. Con tu voz se ajustan a tus frases.",
+  "typeStart": 0.15,
+  "typeEnd": 0.85,
+  "results": 1.05,
+  "cap2": 3.0,
+  "tres": 4.6,
+  "cap3": 6.4,
+  "f1": 8.8,
+  "f2": 11.2,
+  "f3": 13.6,
+  "cuarto": 16.6,
+  "nadie": 19.4,
+  "arreglo": 22.2,
+  "climb": 24.4,
+  "cta": 27.0,
+  "end": 31.2,
+  "cover": 2.4
+}
