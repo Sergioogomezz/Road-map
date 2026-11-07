@@ -15,9 +15,9 @@
 <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png">
 <link rel="icon" type="image/png" sizes="64x64" href="img/favicon-64.png">
 <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=DM+Sans:opsz,wght@9..40,400..700&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&display=swap">
+<link rel="preload" href="fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/dm-sans.woff2" as="font" type="font/woff2" crossorigin>
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <script>document.documentElement.classList.replace('no-js','js')</script>
 <script type="application/ld+json">
 {
@@ -51,6 +51,11 @@
 }
 </script>
 <style>
+/* Tipografías alojadas en la propia web (no se conecta con Google) */
+@font-face{font-family:'Fraunces';font-style:normal;font-weight:100 900;font-display:swap;src:url(fonts/fraunces.woff2) format('woff2')}
+@font-face{font-family:'Fraunces';font-style:italic;font-weight:100 900;font-display:swap;src:url(fonts/fraunces-italic.woff2) format('woff2')}
+@font-face{font-family:'DM Sans';font-style:normal;font-weight:100 1000;font-display:swap;src:url(fonts/dm-sans.woff2) format('woff2')}
+@font-face{font-family:'Caveat';font-style:normal;font-weight:400 700;font-display:swap;src:url(fonts/caveat.woff2) format('woff2')}
 :root{
   --paper:#FBF6EE; --cream:#F4EBDD; --sand:#EADCC6; --sand-2:#DCC9AC;
   --ink:#221B15; --ink-2:#4B3F35; --muted:#7D6F62;
@@ -65,6 +70,7 @@
   --ease:cubic-bezier(.2,.8,.2,1);
 }
 *,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none!important}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;scroll-padding-top:84px}
 body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.6;overflow-x:clip;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
 body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:200;opacity:.16;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .3 0 0 0 0 .2 0 0 0 0 .1 0 0 0 .5 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
@@ -99,11 +105,12 @@ h1,h2,h3,h4{margin:0}
 .status-dot{width:8px;height:8px;border-radius:50%;background:currentColor;flex:none;animation:pulse 2s infinite}
 @keyframes pulse{0%{box-shadow:0 0 0 0 color-mix(in srgb,currentColor 55%,transparent)}70%{box-shadow:0 0 0 8px transparent}100%{box-shadow:0 0 0 0 transparent}}
 .burger{width:46px;height:46px;border-radius:50%;border:1.5px solid var(--line);background:var(--paper);display:grid;place-items:center;cursor:pointer;padding:0;flex:none}
-.burger span{display:block;width:18px;height:2px;background:currentColor;border-radius:2px;transition:transform .35s var(--ease),opacity .2s}
-.burger span+span{margin-top:5px}
-.nav.menu-open .burger span:nth-child(1){transform:translateY(7px) rotate(45deg)}
-.nav.menu-open .burger span:nth-child(2){opacity:0}
-.nav.menu-open .burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.burger>span{display:block;width:18px}
+.burger span span{display:block;width:18px;height:2px;background:currentColor;border-radius:2px;transition:transform .35s var(--ease),opacity .2s}
+.burger span span+span{margin-top:5px}
+.nav.menu-open .burger span span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.nav.menu-open .burger span span:nth-child(2){opacity:0}
+.nav.menu-open .burger span span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
 .nav.menu-open{background:transparent;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none;color:var(--paper)}
 .nav.menu-open .burger{background:transparent;border-color:rgba(255,255,255,.3)}
 .nav.menu-open .nav-cta,.nav.menu-open .status-pill{visibility:hidden}
@@ -154,7 +161,7 @@ h1,h2,h3,h4{margin:0}
 .dark .lead,.pane .lead{color:rgba(251,246,238,.78)}
 
 /* ---------- hero ---------- */
-.hero{position:relative;min-height:100svh;padding:112px 0 90px;overflow:hidden;background:radial-gradient(900px 520px at 78% 38%,#F7E1BE 0%,rgba(247,225,190,0) 70%),var(--paper);display:flex;align-items:center}
+.hero{position:relative;min-height:100vh;min-height:100svh;padding:112px 0 90px;overflow:hidden;background:radial-gradient(900px 520px at 78% 38%,#F7E1BE 0%,rgba(247,225,190,0) 70%),var(--paper);display:flex;align-items:center}
 .flour{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
 .hero-bg-word{position:absolute;left:-1vw;bottom:-3.2vw;z-index:1;font-family:var(--f-display);font-style:italic;font-weight:300;font-size:clamp(120px,23vw,380px);line-height:.8;color:transparent;-webkit-text-stroke:1.5px rgba(194,58,34,.14);white-space:nowrap;pointer-events:none;user-select:none}
 .hero-grid{position:relative;z-index:2;display:grid;gap:28px;align-items:center}
@@ -255,7 +262,8 @@ h1,h2,h3,h4{margin:0}
 .ribbon-row{overflow:hidden;padding:14px 0;-webkit-mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent)}
 .ribbon-track{display:flex;width:max-content;animation:marq 80s linear infinite}
 .ribbon-row.rev .ribbon-track{animation-direction:reverse;animation-duration:92s}
-.ribbon-row:hover .ribbon-track,.ribbon-row:focus-within .ribbon-track{animation-play-state:paused}
+@media(hover:hover){.ribbon-row:hover .ribbon-track{animation-play-state:paused}}
+.ribbon-row:has(.rb:focus-visible) .ribbon-track{animation-play-state:paused}
 .rb{position:relative;flex:none;width:clamp(150px,17vw,230px);aspect-ratio:1;margin-right:18px;border-radius:26px;overflow:hidden;border:0;padding:0;cursor:zoom-in;background:#fff;box-shadow:0 16px 30px -18px rgba(60,30,10,.55);transform:rotate(var(--rot,0deg));transition:transform .5s var(--ease)}
 .rb:nth-child(odd){--rot:-2deg}.rb:nth-child(even){--rot:2deg}.rb:nth-child(3n){--rot:-1deg}
 .rb:hover,.rb:focus-visible{transform:rotate(0) scale(1.06);z-index:2}
@@ -322,7 +330,7 @@ h1,h2,h3,h4{margin:0}
 .chip[aria-pressed="true"]{border-style:solid;background:var(--basil);border-color:var(--basil);color:#fff}
 .chip[data-f="hot"][aria-pressed="true"]{background:var(--tomato);border-color:var(--tomato)}
 .search{position:relative;flex:1 1 200px;min-width:180px}
-.search input{width:100%;min-height:44px;border-radius:999px;border:1.5px solid var(--line);background:#fff;padding:0 16px 0 42px;font:inherit;font-size:15px;color:var(--ink)}
+.search input{width:100%;min-height:44px;border-radius:999px;border:1.5px solid var(--line);background:#fff;padding:0 16px 0 42px;font:inherit;font-size:16px;color:var(--ink);-webkit-appearance:none;appearance:none}
 .search input:focus{outline:none;border-color:var(--ink)}
 .search svg{position:absolute;left:14px;top:50%;width:18px;height:18px;transform:translateY(-50%);color:var(--muted)}
 .cat-banner{position:relative;height:clamp(170px,24vw,300px);border-radius:28px;overflow:hidden;margin:24px 0 26px;background:var(--espresso);isolation:isolate;transition:height .5s var(--ease),margin .5s,opacity .4s}
@@ -375,19 +383,21 @@ h1,h2,h3,h4{margin:0}
 .carta-note svg{width:18px;height:18px;flex:none;margin-top:2px}
 
 /* ---------- quick view ---------- */
-.qv{border:0;padding:0;border-radius:30px;width:min(940px,calc(100% - 24px));max-height:calc(100dvh - 32px);background:var(--paper);color:var(--ink);overflow:hidden;box-shadow:0 40px 80px -30px rgba(0,0,0,.6)}
+.qv{border:0;padding:0;border-radius:30px;width:min(940px,calc(100% - 24px));max-height:calc(100vh - 32px);max-height:calc(100dvh - 32px);background:var(--paper);color:var(--ink);overflow:hidden;box-shadow:0 40px 80px -30px rgba(0,0,0,.6)}
 .qv::backdrop{background:rgba(20,14,10,.62);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
 .qv[open]{animation:qvIn .45s var(--ease)}
 @keyframes qvIn{from{opacity:0;transform:translateY(24px) scale(.96)}to{opacity:1;transform:none}}
-.qv-inner{display:grid;max-height:calc(100dvh - 32px);overflow:auto}
-@media(min-width:760px){.qv-inner{grid-template-columns:1.05fr 1fr}}
-.qv-photo{background:#fff;aspect-ratio:4/3;position:relative;overflow:hidden}
+.qv-inner{display:block;max-height:calc(100vh - 32px);max-height:calc(100dvh - 32px);overflow:auto;overscroll-behavior:contain}
+@media(min-width:760px){.qv-inner{display:grid;grid-template-columns:1.05fr 1fr}}
+.qv-photo{background:#fff;aspect-ratio:3/2;position:relative;overflow:hidden;touch-action:pan-y}
 @media(min-width:760px){.qv-photo{aspect-ratio:auto;min-height:480px}}
 .qv-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;animation:qvImg .6s var(--ease)}
 .qv-photo.contain img{object-fit:contain;padding:8%}
+.qv-credit{position:absolute;left:10px;bottom:10px;z-index:2;font-size:11px;line-height:1.3;color:#fff;background:rgba(27,21,17,.55);padding:3px 8px;border-radius:999px;pointer-events:none}
 @keyframes qvImg{from{opacity:0;transform:scale(1.06)}to{opacity:1;transform:none}}
 .qv-body{padding:clamp(22px,3vw,38px);display:flex;flex-direction:column;gap:12px;position:relative}
-.qv-close{position:absolute;right:16px;top:16px;background:var(--paper)}
+.qv .qv-close{position:absolute;right:14px;top:14px;z-index:3;background:var(--paper);border-color:transparent;box-shadow:0 6px 16px -8px rgba(0,0,0,.45)}
+.qv .qv-close:hover{background:var(--ink);color:var(--paper)}
 .qv-cat{font-family:var(--f-hand);font-size:24px;color:var(--tomato);font-weight:700;line-height:1}
 .qv h3{font-family:var(--f-display);font-size:clamp(30px,3.6vw,44px);font-weight:400;line-height:1.05;letter-spacing:-.02em;padding-right:44px}
 .qv-desc{margin:0;color:var(--ink-2);font-size:17px}
@@ -395,6 +405,7 @@ h1,h2,h3,h4{margin:0}
 .qv-buy{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:auto;padding-top:16px}
 .qv-nav{display:flex;gap:8px;justify-content:space-between;align-items:center;font-size:13px;color:var(--muted);border-top:1px dashed rgba(34,27,21,.2);padding-top:14px;margin-top:6px}
 .qv-nav div{display:flex;gap:8px}
+@media(max-width:480px){.qv-body{gap:9px;padding:18px 20px 20px}.qv h3{font-size:28px}.qv-desc{font-size:16px}.qv .price{font-size:28px}.qv-buy{flex-wrap:nowrap;gap:8px;padding-top:8px}.qv-buy .btn{flex:1;min-width:0;padding:0 12px}.qv-buy .btn svg{display:none}.qv-buy .stepper button{width:36px;height:36px}.qv-nav{padding-top:10px;margin-top:2px}}
 
 /* ---------- steppers (shared) ---------- */
 .stepper{display:inline-flex;align-items:center;gap:4px;background:var(--cream);border-radius:999px;padding:4px}
@@ -419,7 +430,8 @@ h1,h2,h3,h4{margin:0}
 .week li.today::after{content:"hoy";position:absolute;bottom:-20px;left:50%;transform:translateX(-50%);font-size:11px;font-weight:600;color:var(--gold);letter-spacing:.06em}
 .noches-ctas{display:flex;flex-wrap:wrap;gap:12px}
 .plates{position:relative;aspect-ratio:1;width:min(100%,560px);justify-self:center}
-.plate{position:absolute;margin:0;width:var(--w);left:var(--x);top:var(--y);animation:floaty var(--t,7s) ease-in-out infinite alternate;cursor:zoom-in}
+.plate{position:absolute;margin:0;width:var(--w);left:var(--x);top:var(--y);animation:floaty var(--t,7s) ease-in-out infinite alternate;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.plate:focus-visible .disc{outline:3px solid var(--crust);outline-offset:4px}
 .plate .disc{border-radius:50%;overflow:hidden;border:8px solid #FBF6EE;box-shadow:0 34px 50px -24px rgba(0,0,0,.75);aspect-ratio:1;background:#fff}
 .plate img{width:100%;height:100%;object-fit:cover;transition:transform 1s var(--ease)}
 .plate.spin img{animation:spin 60s linear infinite}
@@ -490,7 +502,8 @@ h1,h2,h3,h4{margin:0}
 .quote figcaption{margin-top:20px;color:var(--muted);font-size:15px}
 .quote figcaption b{color:var(--ink);font-weight:600}
 .q-nav{display:flex;align-items:center;gap:10px;margin-top:10px}
-.q-dot{width:12px;height:12px;border-radius:999px;border:0;background:rgba(34,27,21,.2);cursor:pointer;padding:0;transition:width .4s var(--ease),background .3s}
+.q-dot{position:relative;width:12px;height:12px;border-radius:999px;border:0;background:rgba(34,27,21,.2);cursor:pointer;padding:0;transition:width .4s var(--ease),background .3s}
+.q-dot::after{content:"";position:absolute;inset:-16px -4px}
 .q-dot[aria-current="true"]{width:34px;background:var(--tomato)}
 .q-arrows{margin-left:auto;display:flex;gap:8px}
 .q-arrows button{width:46px;height:46px;border-radius:50%;border:1.5px solid var(--line);background:var(--paper);cursor:pointer;display:grid;place-items:center;transition:background .25s,color .25s}
@@ -644,7 +657,7 @@ textarea.input{min-height:92px;resize:vertical}
 .line-item b{font-family:var(--f-display);font-size:18px;font-weight:500;line-height:1.2}
 .line-item .lp{font-weight:700;text-align:right}
 .line-item .qty{justify-self:start;display:inline-flex;align-items:center;gap:2px;background:var(--cream);border-radius:999px;padding:3px}
-.line-item .qty button{width:30px;height:30px;border-radius:50%;border:0;background:transparent;cursor:pointer;display:grid;place-items:center}
+.line-item .qty button{width:36px;height:36px;border-radius:50%;border:0;background:transparent;cursor:pointer;display:grid;place-items:center}
 .line-item .qty button:hover{background:var(--sand)}
 .line-item .qty svg{width:15px;height:15px}
 .line-item .qty span{min-width:24px;text-align:center;font-weight:700}
@@ -654,13 +667,51 @@ textarea.input{min-height:92px;resize:vertical}
 .cart-empty b{display:block;font-family:var(--f-display);font-size:24px;color:var(--ink);font-weight:500}
 .drawer-foot{border-top:1px solid var(--line);padding:16px 22px calc(18px + env(safe-area-inset-bottom));display:grid;gap:12px;background:var(--paper)}
 .drawer-foot .row2{grid-template-columns:1fr 1fr;gap:10px}
-.drawer-foot .input{min-height:46px;border-radius:12px;font-size:15px;padding:8px 12px}
+.drawer-foot .input{min-height:46px;border-radius:12px;font-size:16px;padding:8px 12px}
 .total-row{display:flex;justify-content:space-between;align-items:baseline;font-family:var(--f-display);font-size:26px}
 .total-row small{font-family:var(--f-body);font-size:14px;color:var(--muted)}
 .toast{position:fixed;left:50%;bottom:100px;z-index:160;background:var(--ink);color:var(--paper);padding:12px 18px;border-radius:999px;font-weight:600;font-size:15px;display:flex;align-items:center;gap:10px;transform:translate(-50%,30px);opacity:0;pointer-events:none;transition:all .45s var(--ease);max-width:calc(100% - 32px)}
 .toast.show{transform:translate(-50%,0);opacity:1}
 .toast svg{width:18px;height:18px;color:#9BD18A;flex:none}
 @media(min-width:760px){.toast{bottom:36px}}
+
+/* ---------- legal ---------- */
+.consent{display:flex;gap:12px;align-items:flex-start;font-size:14.5px;line-height:1.45;color:var(--ink-2);cursor:pointer}
+.consent input{flex:none;width:22px;height:22px;margin:1px 0 0;accent-color:var(--tomato);cursor:pointer}
+.consent a,.legal-note a{color:var(--ink);font-weight:600}
+.consent.err{color:var(--tomato)}
+.consent.err input{outline:2px solid var(--tomato);outline-offset:2px}
+.legal-note{font-size:12.5px;line-height:1.45;color:var(--muted);margin:0}
+.legal-links{display:flex;flex-wrap:wrap;gap:6px 16px}
+.legal-links a{display:inline-block;padding:9px 0;text-decoration:underline;text-decoration-color:rgba(251,246,238,.3);text-underline-offset:3px}
+.legal{border:0;padding:0;border-radius:28px;width:min(820px,calc(100% - 24px));height:min(860px,calc(100vh - 32px));height:min(860px,calc(100dvh - 32px));max-height:none;background:var(--paper);color:var(--ink);overflow:hidden;box-shadow:0 40px 80px -30px rgba(0,0,0,.6)}
+.legal[open]{display:flex;flex-direction:column;animation:qvIn .45s var(--ease)}
+.legal::backdrop{background:rgba(20,14,10,.62);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+.lg-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px 20px 12px clamp(20px,3vw,32px)}
+.lg-head small{display:block;font-family:var(--f-hand);font-size:22px;font-weight:700;color:var(--tomato);line-height:1}
+.lg-head h2{font-family:var(--f-display);font-size:clamp(24px,3vw,32px);font-weight:500;letter-spacing:-.015em;line-height:1.1}
+.lg-tabs{position:relative;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding:2px clamp(20px,3vw,32px) 12px;border-bottom:1px solid var(--line);flex:none}
+.lg-tabs::-webkit-scrollbar{display:none}
+.lg-tab{flex:none;min-height:42px;padding:0 16px;border-radius:999px;border:1.5px solid var(--line);background:transparent;font-weight:600;font-size:14px;cursor:pointer}
+.lg-tab[aria-selected="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.lg-body{flex:1;overflow-y:auto;overscroll-behavior:contain;padding:8px clamp(20px,3vw,32px) calc(28px + env(safe-area-inset-bottom));font-size:15.5px;line-height:1.6;color:var(--ink-2)}
+.lg-body:focus{outline:none}
+.lg-panel h3{font-family:var(--f-display);font-size:clamp(26px,3vw,34px);font-weight:400;letter-spacing:-.02em;color:var(--ink);margin:14px 0 2px}
+.lg-panel h4{font-family:var(--f-display);font-size:19px;font-weight:600;color:var(--ink);margin:24px 0 6px}
+.lg-panel p{margin:0 0 10px}
+.lg-panel ul{margin:0 0 10px;padding-left:20px;display:grid;gap:6px}
+.lg-panel a{color:var(--tomato-2);font-weight:600}
+.lg-date{font-size:13.5px;color:var(--muted)}
+.lg-data{list-style:none;padding:14px 16px!important;background:var(--cream);border-radius:16px}
+.lg-table{width:100%;border-collapse:collapse;font-size:14px;margin:6px 0 14px}
+.lg-table th,.lg-table td{text-align:left;padding:8px 10px 8px 0;border-bottom:1px dashed rgba(34,27,21,.18);vertical-align:top}
+.lg-table th{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.lg-table code{font-size:13px;background:var(--cream);padding:1px 6px;border-radius:6px}
+.lg-clear{min-height:42px;padding:0 16px;border-radius:999px;border:1.5px solid var(--ink);background:transparent;font-weight:600;font-size:14px;cursor:pointer;margin-top:4px}
+.lg-clear:hover{background:var(--ink);color:var(--paper)}
+.todo{background:#FFF1BF;border-bottom:1.5px dashed #C9A227;border-radius:4px;padding:0 4px;color:#6B5208;font-weight:600}
+@media(max-width:600px){.legal{width:100%;height:100%;max-width:100%;max-height:100%;border-radius:0;margin:0}.legal[open]{animation:sheetIn .4s var(--ease)}.lg-head{padding-top:calc(14px + env(safe-area-inset-top))}}
+@keyframes sheetIn{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
 
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
@@ -1202,9 +1253,11 @@ textarea.input{min-height:92px;resize:vertical}
           <div class="fld"><label for="r-phone">Teléfono</label><input class="input" id="r-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="600 000 000" required></div>
         </div>
         <div class="fld"><label for="r-notes">Comentarios <small>Opcional</small></label><textarea class="input" id="r-notes" name="notes" placeholder="Alergias, trona, una celebración…"></textarea></div>
+        <label class="consent" id="r-ok-wrap"><input type="checkbox" id="r-ok" name="privacy"><span>He leído la <a href="#privacidad">política de privacidad</a> y acepto que il boccone use estos datos para gestionar mi reserva, incluidas las alergias que indique.</span></label>
         <p class="form-err" id="form-err" role="alert"></p>
         <button class="btn btn-primary btn-block" type="submit"><svg><use href="#i-wa"/></svg>Solicitar reserva por WhatsApp</button>
         <p class="res-foot">¿Prefieres email? <a href="#" id="r-mail">Envíala por correo</a> · ¿Hablamos? <a href="tel:+34942102768">Llámanos</a></p>
+        <p class="legal-note">Tus datos solo se usan para gestionar la reserva. Se envían por WhatsApp o email y no se guardan en esta web. Puedes ejercer tus derechos escribiendo a ilboccone@ilboccone.es. <a href="#privacidad">Más información</a>.</p>
       </form>
       <div class="success" id="res-success" aria-live="polite">
         <div class="tick"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
@@ -1303,6 +1356,7 @@ textarea.input{min-height:92px;resize:vertical}
     </div>
     <div class="footer-bottom">
       <span>© <span id="year">2026</span> il boccone · Santander</span>
+      <nav class="legal-links" aria-label="Información legal"><a href="#aviso-legal">Aviso legal</a><a href="#privacidad">Privacidad</a><a href="#cookies">Cookies</a><a href="#condiciones">Condiciones</a></nav>
       <span>Fatto con <svg style="display:inline;width:14px;height:14px;vertical-align:-2px;color:var(--tomato)"><use href="#i-heart"/></svg> e tanta pasta</span>
     </div>
   </div>
@@ -1310,10 +1364,10 @@ textarea.input{min-height:92px;resize:vertical}
 
 <!-- ========== QUICK VIEW ========== -->
 <dialog class="qv" id="qv" aria-labelledby="qv-name">
+  <button class="icon-btn qv-close" type="button" id="qv-close" aria-label="Cerrar"><svg><use href="#i-close"/></svg></button>
   <div class="qv-inner">
-    <div class="qv-photo" id="qv-photo"><img id="qv-img" alt=""></div>
+    <div class="qv-photo" id="qv-photo"><img id="qv-img" alt=""><small class="qv-credit" id="qv-credit" hidden></small></div>
     <div class="qv-body">
-      <button class="icon-btn qv-close" type="button" id="qv-close" aria-label="Cerrar"><svg><use href="#i-close"/></svg></button>
       <span class="qv-cat" id="qv-cat"></span>
       <h3 id="qv-name"></h3>
       <p class="qv-desc" id="qv-desc"></p>
@@ -1326,6 +1380,196 @@ textarea.input{min-height:92px;resize:vertical}
       </div>
       <div class="qv-nav"><span id="qv-pos"></span><div><button class="icon-btn" type="button" id="qv-prev" aria-label="Plato anterior"><svg><use href="#i-arrow-l"/></svg></button><button class="icon-btn" type="button" id="qv-next" aria-label="Plato siguiente"><svg><use href="#i-arrow"/></svg></button></div></div>
     </div>
+  </div>
+</dialog>
+
+<!-- ========== LEGAL: aviso legal, privacidad, cookies y condiciones ========== -->
+<dialog class="legal" id="legal" aria-labelledby="legal-title">
+  <div class="lg-head">
+    <div><small>il boccone</small><h2 id="legal-title">Información legal</h2></div>
+    <button class="icon-btn" type="button" id="legal-close" aria-label="Cerrar"><svg><use href="#i-close"/></svg></button>
+  </div>
+  <div class="lg-tabs" role="tablist" aria-label="Documentos legales">
+    <button class="lg-tab" role="tab" type="button" data-lg="aviso-legal" aria-controls="lg-aviso-legal" aria-selected="false">Aviso legal</button>
+    <button class="lg-tab" role="tab" type="button" data-lg="privacidad" aria-controls="lg-privacidad" aria-selected="true">Privacidad</button>
+    <button class="lg-tab" role="tab" type="button" data-lg="cookies" aria-controls="lg-cookies" aria-selected="false">Cookies</button>
+    <button class="lg-tab" role="tab" type="button" data-lg="condiciones" aria-controls="lg-condiciones" aria-selected="false">Condiciones</button>
+  </div>
+  <div class="lg-body" id="lg-body" tabindex="-1">
+
+    <article class="lg-panel" id="lg-aviso-legal" role="tabpanel" aria-label="Aviso legal" hidden>
+      <h3>Aviso legal</h3>
+      <p class="lg-date">Última actualización: noviembre de 2026</p>
+      <h4>1. Quiénes somos</h4>
+      <p>En cumplimiento del artículo 10 de la Ley 34/2002, de servicios de la sociedad de la información y de comercio electrónico (LSSI-CE), estos son los datos del titular de esta web:</p>
+      <ul class="lg-data">
+        <li><b>Titular:</b> <span class="todo" title="Pendiente de completar">[nombre o razón social]</span></li>
+        <li><b>NIF/CIF:</b> <span class="todo" title="Pendiente de completar">[pendiente]</span></li>
+        <li><b>Nombre comercial:</b> il boccone</li>
+        <li><b>Domicilio:</b> Calle San Luis, 22, bajo · 39010 Santander (Cantabria)</li>
+        <li><b>Email:</b> <a href="mailto:ilboccone@ilboccone.es">ilboccone@ilboccone.es</a></li>
+        <li><b>Teléfono:</b> <a href="tel:+34942102768">942 10 27 68</a></li>
+        <li><b>Datos registrales:</b> <span class="todo" title="Pendiente de completar">[solo si es una sociedad: Registro Mercantil de Cantabria, tomo, folio y hoja]</span></li>
+      </ul>
+      <h4>2. Para qué sirve esta web</h4>
+      <p>Esta web da a conocer el restaurante il boccone: su carta, sus horarios, los menús para grupos y productos como el panettone. Desde ella puedes preparar una solicitud de reserva o un pedido para recoger, que tú mismo envías por WhatsApp o por email. En esta web no se realizan pagos.</p>
+      <h4>3. Condiciones de uso</h4>
+      <p>Al navegar por la web te comprometes a usarla de forma lícita y respetuosa. Además:</p>
+      <ul>
+        <li>Las solicitudes de reserva o de pedido no son firmes hasta que el restaurante te las confirma.</li>
+        <li>Los precios, la carta y los alérgenos pueden cambiar. La información de alérgenos es orientativa: si tienes alguna alergia o intolerancia, avísanos siempre antes de pedir.</li>
+        <li>Las valoraciones y opiniones que mostramos proceden de Google y Tripadvisor y pertenecen a sus autores.</li>
+      </ul>
+      <h4>4. Propiedad intelectual</h4>
+      <p>Los textos, el logotipo, el diseño y las fotografías propias de esta web pertenecen a il boccone o a sus autores y no pueden reproducirse sin permiso. Las marcas de los productos que servimos (por ejemplo Illy, Fraccaro, Menabrea, Raffo o Amarcord) son de sus respectivos titulares. Algunas fotos son de terceros y se usan según su licencia: tienes los créditos al final de este aviso.</p>
+      <h4>5. Enlaces a otras webs</h4>
+      <p>La web enlaza con servicios externos como WhatsApp, Google Maps, Instagram, Facebook o Tripadvisor. Cuando los usas, se aplican sus propias condiciones y políticas de privacidad, y no somos responsables de sus contenidos.</p>
+      <h4>6. Responsabilidad</h4>
+      <p>Procuramos que la información esté siempre al día, pero puede contener errores o cambiar sin aviso previo. No respondemos de los daños derivados de un mal uso de la web ni de interrupciones técnicas ajenas a nosotros.</p>
+      <h4>7. Ley aplicable</h4>
+      <p>Este aviso se rige por la legislación española. Cualquier controversia se resolverá ante los juzgados y tribunales que correspondan según la ley; si eres consumidor, los de tu domicilio.</p>
+      <h4>8. Créditos de las fotografías</h4>
+      <p>Las fotos de la carta son de il boccone y de su web (ilboccone.es). Estas fotos proceden de Wikimedia Commons y se usan con su licencia, recortadas y con ligeros ajustes de color:</p>
+      <ul id="photo-credits">
+        <li>Pizza amatriciana: «Amatriciana - The Oven», de Andy Li, dominio público (<a href="https://creativecommons.org/publicdomain/zero/1.0/deed.es" target="_blank" rel="noopener">CC0</a>) · <a href="https://commons.wikimedia.org/wiki/File:Amatriciana_-_The_Oven_2025-07-24.jpg" target="_blank" rel="noopener">ver original</a>.</li>
+        <li>Pizza carbonara: «Fatto a Mano - Guanciale Carbonara Pizza», de Andy Li, dominio público (<a href="https://creativecommons.org/publicdomain/zero/1.0/deed.es" target="_blank" rel="noopener">CC0</a>) · <a href="https://commons.wikimedia.org/wiki/File:Fatto_a_Mano_-_Panzanella_Salad_and_Guanciale_Carbonara_Pizza.jpg" target="_blank" rel="noopener">ver original</a>.</li>
+        <li>Amatriciana (pasta): «Bucatini all'amatriciana», de Popo le Chien, dominio público (<a href="https://creativecommons.org/publicdomain/zero/1.0/deed.es" target="_blank" rel="noopener">CC0</a>) · <a href="https://commons.wikimedia.org/wiki/File:Bucatini_allamatriciana.jpg" target="_blank" rel="noopener">ver original</a>.</li>
+        <li>Carbonara (pasta): «Spaghetti alla carbonara», de Luca Nebuloni, licencia <a href="https://creativecommons.org/licenses/by/2.0/deed.es" target="_blank" rel="noopener">CC BY 2.0</a> · <a href="https://commons.wikimedia.org/wiki/File:Spaghetti_alla_carbonara_(32998643591).jpg" target="_blank" rel="noopener">ver original</a>.</li>
+      </ul>
+    </article>
+
+    <article class="lg-panel" id="lg-privacidad" role="tabpanel" aria-label="Política de privacidad">
+      <h3>Política de privacidad</h3>
+      <p class="lg-date">Última actualización: noviembre de 2026</p>
+      <p>En il boccone cuidamos tus datos. Aquí te explicamos de forma clara qué datos tratamos, para qué y qué derechos tienes, según el Reglamento (UE) 2016/679 (RGPD) y la Ley Orgánica 3/2018 de Protección de Datos (LOPDGDD).</p>
+      <h4>1. Responsable del tratamiento</h4>
+      <p><span class="todo" title="Pendiente de completar">[nombre o razón social]</span>, NIF <span class="todo" title="Pendiente de completar">[pendiente]</span>, con nombre comercial il boccone y domicilio en Calle San Luis, 22, bajo, 39010 Santander (Cantabria). Email: <a href="mailto:ilboccone@ilboccone.es">ilboccone@ilboccone.es</a> · Teléfono: <a href="tel:+34942102768">942 10 27 68</a>.</p>
+      <h4>2. ¿Qué información recogemos?</h4>
+      <ul>
+        <li><b>Reservas:</b> nombre, teléfono, día, hora, número de personas y los comentarios que quieras añadir. Si nos indicas alergias o intolerancias, es un dato de salud que solo usamos con tu consentimiento expreso para preparar tu visita.</li>
+        <li><b>Pedidos para recoger:</b> tu nombre, los productos, el día y la hora de recogida, y tu número de WhatsApp al recibir el mensaje.</li>
+        <li><b>Consultas:</b> los datos que nos des al escribirnos por WhatsApp o email, o al llamarnos.</li>
+        <li><b>Navegación:</b> esta web no usa cookies ni herramientas de analítica o publicidad, y no crea perfiles. El servidor donde se aloja puede registrar datos técnicos básicos (como la dirección IP y la página visitada) por motivos de seguridad.</li>
+      </ul>
+      <p>No te pedimos contraseñas ni datos bancarios, y en esta web no se realizan pagos.</p>
+      <h4>3. ¿Cómo recogemos tu información?</h4>
+      <p>La web no envía tus datos a ningún servidor: los formularios de reserva y de pedido solo preparan un mensaje que tú decides enviar por WhatsApp o por email. Recibimos tus datos cuando nos envías ese mensaje, nos escribes o nos llamas.</p>
+      <p>Para tu comodidad, tu nombre, tu teléfono y el pedido que estás preparando se guardan solo en tu navegador, para que no tengas que escribirlos otra vez. Nosotros no tenemos acceso a esa información y puedes borrarla cuando quieras.</p>
+      <p><button type="button" class="lg-clear" data-clear-data>Borrar mis datos de este navegador</button></p>
+      <h4>4. ¿Para qué usamos tus datos?</h4>
+      <ul>
+        <li>Gestionar tu reserva o tu pedido: confirmarlo, cambiarlo o avisarte si hay cualquier incidencia.</li>
+        <li>Responder a tus consultas.</li>
+        <li>Tener en cuenta tus alergias o intolerancias, si nos las indicas.</li>
+        <li>Cumplir nuestras obligaciones legales, por ejemplo contables y fiscales.</li>
+      </ul>
+      <p>Solo te enviaremos novedades o promociones si nos das tu consentimiento expreso, y puedes retirarlo en cualquier momento.</p>
+      <h4>5. ¿Con qué base legal?</h4>
+      <ul>
+        <li>Reservas y pedidos: la aplicación de medidas precontractuales y la prestación del servicio que nos pides (art. 6.1.b RGPD).</li>
+        <li>Consultas y comunicaciones comerciales: tu consentimiento (art. 6.1.a RGPD).</li>
+        <li>Alergias e intolerancias: tu consentimiento explícito (art. 9.2.a RGPD).</li>
+        <li>Obligaciones contables y fiscales: el cumplimiento de la ley (art. 6.1.c RGPD).</li>
+      </ul>
+      <h4>6. ¿Con quién los compartimos?</h4>
+      <p>No vendemos ni cedemos tus datos a terceros, salvo obligación legal. Para comunicarnos contigo usamos estos proveedores:</p>
+      <ul>
+        <li><b>WhatsApp</b> (WhatsApp Ireland Ltd., grupo Meta), cuando nos escribes por WhatsApp. Puede implicar transferencias de datos a Estados Unidos, amparadas por el Marco de Privacidad de Datos UE-EE. UU. y por cláusulas contractuales tipo.</li>
+        <li>Nuestro proveedor de correo electrónico, cuando nos escribes por email.</li>
+        <li>El proveedor de alojamiento de esta web.</li>
+      </ul>
+      <h4>7. ¿Cuánto tiempo los guardamos?</h4>
+      <p>El tiempo necesario para gestionar tu reserva, tu pedido o tu consulta y, después, durante los plazos que exija la ley. Los datos sobre alergias se usan solo para ese servicio y no los conservamos después. Lo que se guarda en tu navegador permanece allí hasta que lo borres.</p>
+      <h4>8. Tus derechos</h4>
+      <p>Puedes ejercer tus derechos de acceso, rectificación, supresión, oposición, limitación del tratamiento y portabilidad, y retirar tu consentimiento en cualquier momento. Escríbenos a <a href="mailto:ilboccone@ilboccone.es?subject=Protecci%C3%B3n%20de%20datos">ilboccone@ilboccone.es</a> o por correo postal a Calle San Luis, 22, 39010 Santander, indicando «Protección de datos». Te responderemos en un plazo máximo de un mes.</p>
+      <p>Si crees que no hemos tratado bien tus datos, puedes reclamar ante la Agencia Española de Protección de Datos (<a href="https://www.aepd.es" target="_blank" rel="noopener">www.aepd.es</a>).</p>
+      <h4>9. Seguridad de tus datos</h4>
+      <p>Aplicamos medidas técnicas y organizativas para proteger tus datos frente a pérdidas, accesos no autorizados o usos indebidos:</p>
+      <ul>
+        <li>La web no guarda datos personales en servidores y no pide contraseñas ni datos de pago.</li>
+        <li>La web se sirve con conexión cifrada (HTTPS).</li>
+        <li>Solo el personal que gestiona las reservas y los pedidos accede a los mensajes que nos envías.</li>
+        <li>Nunca te pediremos datos bancarios ni contraseñas por WhatsApp, email o teléfono. Si recibes un mensaje así en nuestro nombre, no respondas y avísanos.</li>
+      </ul>
+      <h4>10. Menores de edad</h4>
+      <p>Si tienes menos de 14 años, necesitas el permiso de tus padres o tutores para enviarnos tus datos.</p>
+      <h4>11. Cambios en esta política</h4>
+      <p>Podemos actualizar esta política de privacidad en cualquier momento, por eso te recomendamos revisarla de vez en cuando. Los cambios se aplican desde que se publican en la web y, si son importantes, lo indicaremos de forma visible.</p>
+      <h4>12. Preguntas y contacto</h4>
+      <p>Si quieres acceder, corregir, modificar o eliminar cualquier dato personal que tengamos sobre ti, o tienes cualquier duda, escríbenos a <a href="mailto:ilboccone@ilboccone.es">ilboccone@ilboccone.es</a> o a Calle San Luis, 22, 39010 Santander (Cantabria).</p>
+    </article>
+
+    <article class="lg-panel" id="lg-cookies" role="tabpanel" aria-label="Política de cookies" hidden>
+      <h3>Política de cookies</h3>
+      <p class="lg-date">Última actualización: noviembre de 2026</p>
+      <h4>Esta web no usa cookies</h4>
+      <p>No utilizamos cookies propias ni de terceros: ni de analítica, ni de publicidad, ni de redes sociales. Por eso no te mostramos ningún aviso de cookies. Las tipografías y las imágenes se cargan desde la propia web, sin conectar con Google ni con otros servicios.</p>
+      <h4>Lo que sí se guarda en tu dispositivo</h4>
+      <p>Para que la web funcione como esperas, guardamos unos pocos datos en el almacenamiento local de tu navegador (localStorage). Nunca salen de tu dispositivo y son necesarios para el servicio que tú pides, por lo que no requieren consentimiento (art. 22.2 de la LSSI-CE):</p>
+      <table class="lg-table">
+        <thead><tr><th>Nombre</th><th>Para qué sirve</th><th>Duración</th></tr></thead>
+        <tbody>
+          <tr><td><code>ilb-cart</code></td><td>Recordar el pedido que estás preparando.</td><td>Hasta que lo borres</td></tr>
+          <tr><td><code>ilb-name</code></td><td>Rellenar tu nombre en reservas y pedidos.</td><td>Hasta que lo borres</td></tr>
+          <tr><td><code>ilb-phone</code></td><td>Rellenar tu teléfono en las reservas.</td><td>Hasta que lo borres</td></tr>
+        </tbody>
+      </table>
+      <p><button type="button" class="lg-clear" data-clear-data>Borrar mis datos de este navegador</button></p>
+      <h4>Enlaces a otros servicios</h4>
+      <p>Si pulsas un enlace a WhatsApp, Google Maps, Instagram, Facebook o Tripadvisor, sales de esta web y esos servicios pueden usar sus propias cookies, según sus políticas.</p>
+      <h4>Cómo borrar estos datos</h4>
+      <p>Además del botón anterior, puedes borrar los datos de esta web desde los ajustes de tu navegador, en el apartado de privacidad o de datos de sitios web.</p>
+    </article>
+
+    <article class="lg-panel" id="lg-condiciones" role="tabpanel" aria-label="Condiciones" hidden>
+      <h3>Condiciones de reservas, pedidos y eventos</h3>
+      <p class="lg-date">Última actualización: noviembre de 2026</p>
+      <h4>Reservas y pedidos desde esta web</h4>
+      <ul>
+        <li>La solicitud que envías desde la web todavía no es una reserva ni un pedido confirmado: te lo confirmamos por WhatsApp, teléfono o email lo antes posible.</li>
+        <li>Los pedidos para recoger se pagan en el restaurante al recogerlos.</li>
+        <li>Si no puedes venir, avísanos cuanto antes para que podamos liberar la mesa.</li>
+        <li>Si tienes alergias o intolerancias, indícalas al reservar o al hacer tu pedido.</li>
+      </ul>
+      <h4>Términos y condiciones · Eventos il boccone (Santander)</h4>
+      <p class="lg-date">Última actualización: mayo de 2026 · Calle San Luis 22, Santander, Cantabria</p>
+      <p><b>1. Objeto.</b> Estos términos y condiciones regulan las reservas, pagos, participación y cancelaciones de los eventos organizados por il boccone.</p>
+      <p><b>2. Reservas.</b></p>
+      <ul>
+        <li>La reserva queda confirmada únicamente tras realizar el pago completo o el depósito indicado en cada evento.</li>
+        <li>El aforo es limitado; las plazas se asignan por orden de pago.</li>
+      </ul>
+      <p><b>3. Pagos.</b></p>
+      <ul>
+        <li>Los pagos pueden realizarse mediante los métodos habilitados por el restaurante.</li>
+        <li>El importe abonado cubre la plaza, los materiales y los productos necesarios para el evento.</li>
+      </ul>
+      <p><b>4. Política de cancelación y reembolso (cliente).</b></p>
+      <p>4.1. Cancelaciones por parte del cliente:</p>
+      <ul>
+        <li>Más de 7 días antes del evento: reembolso del 100 % o cambio de fecha (según disponibilidad).</li>
+        <li>Entre 7 y 3 días antes: reembolso del 50 %.</li>
+        <li>Menos de 72 horas: no se realizan reembolsos.</li>
+        <li>No asistencia sin aviso: no se realiza reembolso.</li>
+      </ul>
+      <p>4.2. Cambios de fecha: se permite un único cambio de fecha, solicitado con un mínimo de 7 días de antelación y sujeto a disponibilidad.</p>
+      <p><b>5. Cancelación o modificación por parte de il boccone.</b> il boccone podrá cancelar o modificar un evento por causas justificadas (aforo insuficiente, problemas logísticos, enfermedad o fuerza mayor). En ese caso, el cliente podrá elegir entre:</p>
+      <ul>
+        <li>Reembolso del 100 %, o</li>
+        <li>Cambio a otra fecha o evento disponible.</li>
+      </ul>
+      <p><b>6. Uso de imagen.</b> Durante los eventos pueden tomarse fotografías o vídeos con fines promocionales. Si un cliente no desea aparecer, deberá comunicarlo antes del inicio del evento.</p>
+      <p><b>7. Responsabilidad del cliente.</b> El cliente se compromete a:</p>
+      <ul>
+        <li>Respetar las normas del establecimiento.</li>
+        <li>Hacer un uso adecuado de las instalaciones y los materiales.</li>
+        <li>Informar previamente sobre alergias o intolerancias.</li>
+      </ul>
+      <p>il boccone no se hace responsable de incidencias derivadas de alergias no comunicadas.</p>
+      <p><b>8. Alergias e intolerancias.</b> Se intentarán adaptar los menús siempre que sea posible. Algunas actividades gastronómicas pueden requerir ingredientes no sustituibles. La información debe comunicarse al realizar la reserva.</p>
+      <p><b>9. Protección de datos.</b> Los datos facilitados se tratarán conforme a la normativa vigente y se utilizarán únicamente para la gestión de reservas y comunicaciones relacionadas con los eventos. Más información en la <a href="#privacidad">política de privacidad</a>.</p>
+      <p><b>10. Aceptación.</b> La participación en cualquier evento implica la aceptación total de estos términos y condiciones.</p>
+    </article>
   </div>
 </dialog>
 
@@ -1351,6 +1595,7 @@ textarea.input{min-height:92px;resize:vertical}
     <label><span class="sr-only">Tu nombre</span><input class="input" id="pk-name" placeholder="Tu nombre" autocomplete="name"></label>
     <div class="total-row"><small>Total</small><span data-cart-total>0,00 €</span></div>
     <button class="btn btn-primary btn-block" type="submit" id="pk-send"><svg><use href="#i-wa"/></svg>Enviar pedido por WhatsApp</button>
+    <p class="legal-note">Tu pedido y tu nombre se envían por WhatsApp a il boccone solo para prepararlo. Se paga al recoger. <a href="#privacidad">Privacidad</a></p>
   </form>
 </aside>
 <div class="toast" id="toast" role="status"><svg><use href="#i-check"/></svg><span></span></div>
@@ -1381,6 +1626,7 @@ const NOCHES_DAYS = [1, 2, 4, 0];   // Noches Boccone: lunes, martes, jueves y d
    al = alérgenos que indica la carta · ok = etiquetas positivas
    tags: veg = vegetariano, hot = picante, fav = favorito
    price: null = consultar, 0 = cortesía de la casa
+   credit = autor y licencia de las fotos que no son del restaurante (se ve en la foto grande)
    ========================================================= */
 const IMG = 'img/carta/';
 const CATS = {
@@ -1397,8 +1643,8 @@ const MENU = [
   { id: 'burrata', cat: 'antipasti', name: 'Mozzarella burrata', desc: 'Burrata con rúcula y verduras al horno.', price: null, al: ['lactosa'], ok: ['sg'], tags: ['veg'] },
   { id: 'scamorza', cat: 'antipasti', name: 'Scamorza ahumada al horno', desc: 'Tarrina de queso scamorza derretido al horno, con anchoas o jamón de Parma.', price: 16, al: ['lactosa'], ok: ['sg'], fit: 'contain' },
   { id: 'capocollo', cat: 'antipasti', name: 'Capocollo (gabagool)', desc: 'Aguja de cerdo asada con especias.', price: 18 },
-  { id: 'carbonara', cat: 'pasta', name: 'Carbonara', desc: 'Guanciale, pecorino y huevo. Como en Roma.', price: 14.9, al: ['trigo', 'lactosa', 'huevo', 'cerdo'], tags: ['fav'], fit: 'contain' },
-  { id: 'amatriciana', cat: 'pasta', name: 'Amatriciana', desc: 'Tomate, guanciale y pecorino.', price: 14.9, al: ['trigo', 'lactosa', 'cerdo'] },
+  { id: 'carbonara', cat: 'pasta', name: 'Carbonara', desc: 'Guanciale, pecorino y huevo. Como en Roma.', price: 14.9, al: ['trigo', 'lactosa', 'huevo', 'cerdo'], tags: ['fav'], credit: 'Luca Nebuloni · CC BY 2.0' },
+  { id: 'amatriciana', cat: 'pasta', name: 'Amatriciana', desc: 'Tomate, guanciale y pecorino.', price: 14.9, al: ['trigo', 'lactosa', 'cerdo'], credit: 'Popo le Chien · CC0' },
   { id: 'lasagna', cat: 'pasta', name: 'Lasagna al pesto', desc: 'Dos láminas rellenas de pesto, carne, bechamel y Parmigiano Reggiano.', price: 16, al: ['trigo', 'huevo', 'lactosa', 'cerdo'], tags: ['fav'] },
   { id: 'risotto', cat: 'pasta', name: 'Risotto al Parmigiano Reggiano', desc: 'Arroz con azafrán y crema de Parmigiano Reggiano curado 24 meses.', price: 20, al: ['lactosa', 'trigo'], tags: ['veg'] },
   { id: 'margherita', cat: 'pizza', name: 'Margherita', desc: 'Tomate, mozzarella, albahaca y orégano.', price: 9.9, al: ['trigo', 'lactosa'], tags: ['veg', 'fav'] },
@@ -1407,8 +1653,8 @@ const MENU = [
   { id: 'emiliana', cat: 'pizza', name: 'Emiliana', desc: 'Tomate, mozzarella, mortadella con pistachos y salchicha.', price: 13.9 },
   { id: 'vegetariana', cat: 'pizza', name: 'Vegetariana', desc: 'Mozzarella, verduras al horno, aceitunas negras y orégano. Opción vegana sin queso.', price: 12.9, al: ['trigo', 'lactosa'], ok: ['vegan', 'sl'], tags: ['veg'] },
   { id: 'napolitana', cat: 'pizza', name: 'Napolitana', desc: 'Tomate, mozzarella, anchoas y Parmigiano Reggiano.', price: 12.9 },
-  { id: 'pz-amatriciana', cat: 'pizza', name: 'Pizza amatriciana', desc: 'Tomate, guanciale y pecorino.', price: 14.9, al: ['trigo', 'lactosa', 'cerdo'], img: 'amatriciana' },
-  { id: 'pz-carbonara', cat: 'pizza', name: 'Pizza carbonara', desc: 'Guanciale, pecorino y huevo.', price: 14.9, al: ['trigo', 'lactosa', 'huevo', 'cerdo'], img: 'carbonara', fit: 'contain' },
+  { id: 'pz-amatriciana', cat: 'pizza', name: 'Pizza amatriciana', desc: 'Tomate, guanciale y pecorino.', price: 14.9, al: ['trigo', 'lactosa', 'cerdo'], credit: 'Andy Li · CC0' },
+  { id: 'pz-carbonara', cat: 'pizza', name: 'Pizza carbonara', desc: 'Guanciale, pecorino y huevo.', price: 14.9, al: ['trigo', 'lactosa', 'huevo', 'cerdo'], credit: 'Andy Li · CC0' },
   { id: 'tiramisu', cat: 'dolci', name: 'Tiramisù', desc: 'Crema de mascarpone, huevo, bizcocho y café. También para llevar.', price: 6.5, tags: ['veg', 'fav'] },
   { id: 'ricotta', cat: 'dolci', name: 'Ricotta e cioccolato', desc: 'Galletas lengua de gato, crema de ricotta y chocolate.', price: 6, al: ['lactosa'], ok: ['sg'], tags: ['veg'] },
   { id: 'zabaione', cat: 'dolci', name: 'Helado de zabaione', desc: 'Crema de huevo y mistela.', price: 4, tags: ['veg'] },
@@ -1455,6 +1701,32 @@ const store = {
 };
 const ITEMS = {};
 [...MENU, ...PANETTONI].forEach(i => { ITEMS[i.id] = i; });
+// Bloquea el scroll de la página mientras hay algo abierto encima (menú, pedido, fotos, textos legales)
+let locks = 0;
+function lockScroll(on) {
+  locks = Math.max(0, locks + (on ? 1 : -1));
+  const v = locks ? 'hidden' : '';
+  document.documentElement.style.overflow = v; document.body.style.overflow = v;
+}
+// Lo que queda detrás de un panel abierto no se puede tocar ni enfocar
+const setInert = (sel, on) => $$(sel).forEach(el => { el.inert = on; });
+function openModal(d) {
+  if (d.open) return;
+  if (typeof d.showModal === 'function') d.showModal(); else d.setAttribute('open', '');
+  lockScroll(true);
+}
+function closeModal(d) {
+  if (!d.open) return;
+  if (typeof d.close === 'function') d.close(); else { d.removeAttribute('open'); d.dispatchEvent(new Event('close')); }
+}
+// En móvil abre WhatsApp en la misma pestaña (funciona también dentro de Instagram o Facebook);
+// en ordenador, en una pestaña nueva.
+const touchUI = matchMedia('(hover: none) and (pointer: coarse)').matches;
+function openExternal(url) {
+  if (touchUI) { location.href = url; return; }
+  const w = window.open(url, '_blank');
+  if (w) { try { w.opener = null; } catch (e) {} } else location.href = url;
+}
 const imgOf = it => IMG + (it.img || it.id) + '.jpg';
 const priceHTML = p => p === null ? '<span class="price soft">Consultar</span>' : p === 0 ? '<span class="price soft">Cortesía</span>' : `<span class="price">${money(p)}</span>`;
 const canBuy = it => typeof it.price === 'number' && it.price > 0;
@@ -1522,9 +1794,11 @@ function onScroll() {
 addEventListener('scroll', onScroll, { passive: true });
 const burger = $('.burger'), mm = $('#mobile-menu');
 function setMenu(open) {
+  if (mm.classList.contains('open') === open) return;
   mm.classList.toggle('open', open); nav.classList.toggle('menu-open', open);
   burger.setAttribute('aria-expanded', open); burger.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
-  mm.setAttribute('aria-hidden', !open); document.body.style.overflow = open ? 'hidden' : '';
+  mm.setAttribute('aria-hidden', !open); lockScroll(open);
+  setInert('main, footer, .bottombar, .fab', open);
 }
 burger.addEventListener('click', () => setMenu(!mm.classList.contains('open')));
 $$('#mobile-menu a').forEach(a => a.addEventListener('click', () => setMenu(false)));
@@ -1642,7 +1916,7 @@ function loop(t) {
 }
 pizzaEl.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') { hover = true; pull(true); } });
 pizzaEl.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse') { hover = false; pull(false); } });
-pizzaEl.addEventListener('click', e => { touched = true; if (e.pointerType !== 'mouse' || !hover) pull(target === 0); });
+pizzaEl.addEventListener('click', () => { touched = true; if (!hover) pull(target === 0); });
 pizzaEl.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); touched = true; pull(target === 0); } });
 const hero = $('#inicio');
 new IntersectionObserver(es => heroVisible = es[0].isIntersecting).observe(hero);
@@ -1817,6 +2091,8 @@ function renderQV() {
   const it = ITEMS[qvList[qvIdx]]; qvN = 1;
   $('#qv-photo').classList.toggle('contain', it.fit === 'contain');
   const img = $('#qv-img'); img.src = imgOf(it); img.alt = it.name; img.style.animation = 'none'; void img.offsetWidth; img.style.animation = '';
+  $('#qv-credit').hidden = !it.credit;
+  $('#qv-credit').textContent = it.credit ? 'Foto orientativa · ' + it.credit : '';
   $('#qv-cat').textContent = CATS[it.cat].label;
   $('#qv-name').textContent = it.name;
   $('#qv-desc').textContent = it.desc;
@@ -1831,20 +2107,37 @@ function renderQV() {
 function openQV(id, from) {
   qvList = listFor(from, id); qvIdx = Math.max(0, qvList.indexOf(id));
   renderQV();
-  if (!qv.open) { qv.showModal(); document.body.style.overflow = 'hidden'; }
+  openModal(qv);
 }
-qv.addEventListener('close', () => { document.body.style.overflow = ''; });
-qv.addEventListener('click', e => { if (e.target === qv) qv.close(); });
-$('#qv-close').addEventListener('click', () => qv.close());
+qv.addEventListener('close', () => lockScroll(false));
+qv.addEventListener('click', e => { if (e.target === qv) closeModal(qv); });
+$('#qv-close').addEventListener('click', () => closeModal(qv));
+// Desliza la foto a izquierda o derecha para pasar de plato
+const qvPhoto = $('#qv-photo'); let qsx = null, qsy = 0;
+qvPhoto.addEventListener('pointerdown', e => { qsx = e.clientX; qsy = e.clientY; });
+qvPhoto.addEventListener('pointercancel', () => { qsx = null; });
+qvPhoto.addEventListener('pointerup', e => {
+  if (qsx === null) return;
+  const dx = e.clientX - qsx, dy = e.clientY - qsy; qsx = null;
+  if (qvList.length > 1 && Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.3) $(dx < 0 ? '#qv-next' : '#qv-prev').click();
+});
 $('#qv-prev').addEventListener('click', () => { qvIdx = (qvIdx - 1 + qvList.length) % qvList.length; renderQV(); });
 $('#qv-next').addEventListener('click', () => { qvIdx = (qvIdx + 1) % qvList.length; renderQV(); });
 qv.addEventListener('keydown', e => { if (e.key === 'ArrowRight') $('#qv-next').click(); if (e.key === 'ArrowLeft') $('#qv-prev').click(); });
 $('#qv-minus').addEventListener('click', () => { qvN = Math.max(1, qvN - 1); $('#qv-n').textContent = qvN; });
 $('#qv-plus').addEventListener('click', () => { qvN = Math.min(20, qvN + 1); $('#qv-n').textContent = qvN; });
-$('#qv-add').addEventListener('click', () => { addItem(qvList[qvIdx], $('#qv-add'), qvN); qv.close(); });
+$('#qv-add').addEventListener('click', () => { addItem(qvList[qvIdx], $('#qv-add'), qvN); closeModal(qv); });
 document.addEventListener('click', e => {
   const v = e.target.closest('[data-view]');
-  if (v && !e.target.closest('[data-add]')) openQV(v.dataset.view, v);
+  if (v && !v.classList.contains('plate') && !e.target.closest('[data-add]')) openQV(v.dataset.view, v);
+});
+// Los platos flotantes de Noches Boccone: botones con su propio evento (Safari en iPhone no
+// avisa al documento de los toques sobre elementos que no son botones ni enlaces)
+$$('.plate[data-view]').forEach(p => {
+  p.setAttribute('role', 'button'); p.tabIndex = 0;
+  p.setAttribute('aria-label', 'Ver ' + ITEMS[p.dataset.view].name + ' en grande');
+  p.addEventListener('click', () => openQV(p.dataset.view, p));
+  p.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openQV(p.dataset.view, p); } });
 });
 
 /* =========================================================
@@ -1910,8 +2203,20 @@ $('#cart-body').addEventListener('click', e => {
   if (inc || dec) renderCart();
 });
 let lastFocus;
-function openCart() { lastFocus = document.activeElement; buildPickupDays(); drawer.classList.add('open'); scrim.classList.add('show'); drawer.setAttribute('aria-hidden', 'false'); document.body.style.overflow = 'hidden'; setTimeout(() => $('#drawer-close').focus(), 50); }
-function closeCart() { drawer.classList.remove('open'); scrim.classList.remove('show'); drawer.setAttribute('aria-hidden', 'true'); document.body.style.overflow = ''; if (lastFocus) lastFocus.focus(); }
+function openCart() {
+  if (drawer.classList.contains('open')) return;
+  setMenu(false);
+  lastFocus = document.activeElement; buildPickupDays();
+  drawer.classList.add('open'); scrim.classList.add('show'); drawer.setAttribute('aria-hidden', 'false');
+  lockScroll(true); setInert('main, footer, .nav, .mobile-menu, .bottombar, .fab', true);
+  setTimeout(() => $('#drawer-close').focus({ preventScroll: true }), 50);
+}
+function closeCart() {
+  if (!drawer.classList.contains('open')) return;
+  drawer.classList.remove('open'); scrim.classList.remove('show'); drawer.setAttribute('aria-hidden', 'true');
+  lockScroll(false); setInert('main, footer, .nav, .mobile-menu, .bottombar, .fab', false);
+  if (lastFocus) lastFocus.focus({ preventScroll: true });
+}
 fab.addEventListener('click', openCart);
 $$('[data-open-cart]').forEach(b => b.addEventListener('click', openCart));
 $('#drawer-close').addEventListener('click', closeCart);
@@ -1950,8 +2255,8 @@ $('#cart-form').addEventListener('submit', e => {
   store.set('ilb-name', name);
   const lines = Object.entries(cart).map(([k, q]) => `• ${q}× ${ITEMS[k].name} — ${money(ITEMS[k].price * q)}`);
   const msg = `¡Hola! Quiero hacer un pedido para recoger en il boccone:\n\n${lines.join('\n')}\n\nTotal: ${money(total())}\nRecogida: ${fmtLong(p.dt)}, ${fmtMin(m)}\nNombre: ${name}`;
-  window.open(waLink(msg), '_blank', 'noopener');
   toast('Abriendo WhatsApp con tu pedido…');
+  openExternal(waLink(msg));
 });
 $('#pk-name').addEventListener('input', e => e.target.classList.remove('err'));
 renderCart();
@@ -2054,6 +2359,7 @@ function buildReservation() {
   if (!res.time) { err.textContent = 'Elige una hora para tu reserva.'; timesEl.scrollIntoView({ block: 'center', behavior: 'smooth' }); return null; }
   if (!name.value.trim()) { err.textContent = 'Escribe tu nombre.'; name.classList.add('err'); name.focus(); return null; }
   if (phone.value.replace(/\D/g, '').length < 9) { err.textContent = 'Escribe un teléfono válido para confirmarte la reserva.'; phone.classList.add('err'); phone.focus(); return null; }
+  if (!$('#r-ok').checked) { err.textContent = 'Marca la casilla de privacidad para poder enviar la reserva.'; $('#r-ok-wrap').classList.add('err'); $('#r-ok').focus(); return null; }
   err.textContent = '';
   const when = cap(fmtLong(dayDate(madridNow(), res.off)));
   const notes = $('#r-notes').value.trim(), svc = res.service === 'lunch' ? 'comida' : 'cena';
@@ -2070,12 +2376,13 @@ function showSuccess(r) {
   $('#s-summary').innerHTML = r.rows.map(([k, v]) => `<div><dt>${k}</dt><dd>${esc(v)}</dd></div>`).join('');
   $('#res-form').hidden = true;
   $('#res-success').classList.add('show');
+  $('#res-success').closest('.card').scrollIntoView({ block: 'start', behavior: reduced ? 'auto' : 'smooth' });
 }
 $('#res-form').addEventListener('submit', e => {
   e.preventDefault();
   const r = buildReservation(); if (!r) return;
-  window.open(waLink(r.text), '_blank', 'noopener');
   showSuccess(r);
+  openExternal(waLink(r.text));
 });
 $('#r-mail').addEventListener('click', e => {
   e.preventDefault();
@@ -2085,6 +2392,7 @@ $('#r-mail').addEventListener('click', e => {
 });
 $('#s-again').addEventListener('click', () => { $('#res-success').classList.remove('show'); $('#res-form').hidden = false; res.time = ''; renderDates(); });
 ['#r-name', '#r-phone'].forEach(s => $(s).addEventListener('input', e => e.target.classList.remove('err')));
+$('#r-ok').addEventListener('change', () => { $('#r-ok-wrap').classList.remove('err'); if ($('#r-ok').checked && /privacidad/.test($('#form-err').textContent)) $('#form-err').textContent = ''; });
 
 /* =========================================================
    OPINIONES
@@ -2101,6 +2409,67 @@ const qStage = $('#quote-stage'); let sx = null;
 qStage.addEventListener('pointerdown', e => sx = e.clientX);
 qStage.addEventListener('pointerup', e => { if (sx !== null && Math.abs(e.clientX - sx) > 40) { showQ(qi + (e.clientX < sx ? 1 : -1)); autoQ(); } sx = null; });
 autoQ();
+
+/* =========================================================
+   TEXTOS LEGALES (aviso legal, privacidad, cookies, condiciones)
+   Se abren con enlaces #aviso-legal, #privacidad, #cookies y #condiciones
+   ========================================================= */
+const LEGAL = ['aviso-legal', 'privacidad', 'cookies', 'condiciones'];
+const legalDlg = $('#legal'), legalBody = $('#lg-body');
+let legalPushed = false;
+const legalId = () => decodeURIComponent(location.hash.slice(1));
+function legalTab(id) {
+  $$('.lg-tab', legalDlg).forEach(t => {
+    const on = t.dataset.lg === id;
+    t.setAttribute('aria-selected', on);
+    if (on) { const bar = t.parentElement; bar.scrollLeft = Math.max(0, t.offsetLeft - (bar.clientWidth - t.offsetWidth) / 2); }
+  });
+  $$('.lg-panel', legalDlg).forEach(pn => { pn.hidden = pn.id !== 'lg-' + id; });
+  legalBody.scrollTop = 0;
+}
+function showLegal(id, push) {
+  if (!LEGAL.includes(id)) id = 'privacidad';
+  legalTab(id);
+  if (!legalDlg.open) { openModal(legalDlg); legalBody.focus({ preventScroll: true }); }
+  try {
+    if (push) { history.pushState({ legal: id }, '', '#' + id); legalPushed = true; }
+    else if (legalId() !== id) history.replaceState(history.state, '', '#' + id);
+  } catch (e) {}
+}
+document.addEventListener('click', e => {
+  const a = e.target.closest('a[href^="#"]');
+  if (!a) return;
+  const id = a.getAttribute('href').slice(1);
+  if (!LEGAL.includes(id)) return;
+  e.preventDefault();
+  showLegal(id, !legalDlg.open);
+});
+$$('.lg-tab', legalDlg).forEach(t => t.addEventListener('click', () => showLegal(t.dataset.lg, false)));
+$('#legal-close').addEventListener('click', () => closeModal(legalDlg));
+legalDlg.addEventListener('click', e => { if (e.target === legalDlg) closeModal(legalDlg); });
+legalDlg.addEventListener('close', () => {
+  lockScroll(false);
+  if (!LEGAL.includes(legalId())) return;
+  try {
+    if (legalPushed) { legalPushed = false; history.back(); }
+    else history.replaceState(null, '', location.pathname + location.search);
+  } catch (e) {}
+});
+function syncLegal() {
+  const id = legalId();
+  if (LEGAL.includes(id)) showLegal(id, false);
+  else if (legalDlg.open) { legalPushed = false; closeModal(legalDlg); }
+}
+addEventListener('popstate', syncLegal);
+addEventListener('hashchange', syncLegal);
+if (LEGAL.includes(legalId())) showLegal(legalId(), false);
+// Botón «Borrar mis datos de este navegador»
+$$('[data-clear-data]').forEach(b => b.addEventListener('click', () => {
+  ['ilb-cart', 'ilb-name', 'ilb-phone'].forEach(k => { try { localStorage.removeItem(k); } catch (e) {} });
+  cart = {}; renderCart();
+  ['#pk-name', '#r-name', '#r-phone'].forEach(sel => { $(sel).value = ''; });
+  toast('Datos borrados de este navegador');
+}));
 
 document.addEventListener('visibilitychange', () => { if (!document.hidden) { renderStatus(); if (!$('#res-form').hidden) renderDates(); } });
 })();
