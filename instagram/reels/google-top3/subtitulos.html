@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<!-- Subtítulos superpuestos (fondo transparente) para las partes grabadas con cámara. -->
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:transparent}
+body{font-family:Inter,"Noto Color Emoji",sans-serif;color:#fff;-webkit-font-smoothing:antialiased;position:relative}
+em{font-style:normal;color:#ff7a1a}
+.caps{position:absolute;left:60px;right:60px;top:190px;height:320px}
+.cap{position:absolute;inset:0;display:grid;place-items:center;text-align:center;opacity:0}
+.cap span{display:inline-block;font-family:"Inter Display",Inter,sans-serif;font-weight:800;font-size:72px;line-height:1.1;letter-spacing:-.02em;text-wrap:balance;background:rgba(0,26,32,.78);border-radius:30px;padding:18px 30px;max-width:960px}
+.handle{position:absolute;left:0;right:0;top:540px;display:flex;justify-content:center;opacity:0}
+.handle div{display:flex;align-items:center;gap:14px;background:rgba(0,26,32,.78);border-radius:999px;padding:12px 26px;font-size:36px;font-weight:600}
+.handle img{height:40px}
+</style>
+</head>
+<body>
+<div class="caps" id="caps"></div>
+<div class="handle" id="handle"><div><img src="../../herramientas/assets/marca-blanca.png" alt="">@activonorte.media</div></div>
+<script>
+const clamp=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
+const p=(t,a,d)=>clamp((t-a)/d);
+const eo=x=>1-Math.pow(1-x,3);
+function setup(cfg){
+  window.CFG=cfg;
+  document.getElementById('caps').innerHTML=cfg.cues.map(c=>`<div class="cap"><span>${c.html}</span></div>`).join('');
+}
+function render(t){
+  const cfg=window.CFG;
+  document.querySelectorAll('.cap').forEach((el,i)=>{
+    const c=cfg.cues[i];
+    const a=c.from<=0?1:p(t,c.from,0.22), b=1-p(t,c.to-0.18,0.18);
+    el.style.opacity=Math.min(a,b);
+    el.style.transform=`translateY(${c.from<=0?0:(1-eo(p(t,c.from,0.3)))*24}px)`;
+  });
+  const h=document.getElementById('handle');
+  if(cfg.handle!=null){ h.style.opacity=p(t,cfg.handle,0.4); h.style.transform=`translateY(${(1-eo(p(t,cfg.handle,0.4)))*16}px)`; }
+}
+window.setup=setup; window.render=render;
+</script>
+</body>
+</html>

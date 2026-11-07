@@ -1,0 +1,18 @@
+{
+  "_ayuda": "Voz de la parte central (grabación aparte). Segundos dentro de voz/medio.m4a. Se usan la 1ª toma de «Si no sales…», la 2ª de «Da igual…» y la repetición limpia de «La persona…».",
+  "fuentes": {"m": "voz/medio.m4a"},
+  "inicio": 0.1,
+  "frases": [
+    {"id": "1a", "fuente": "m", "desde": 1.8272,  "hasta": 3.4949,  "pausa_despues": 0.18},
+    {"id": "1b", "fuente": "m", "desde": 4.2214,  "hasta": 6.0753,  "pausa_despues": 0.22},
+    {"id": "1c", "fuente": "m", "desde": 6.7809,  "hasta": 8.1708,  "pausa_despues": 0.45},
+    {"id": "2a", "fuente": "m", "desde": 17.9019, "hasta": 20.6705, "pausa_despues": 0.32},
+    {"id": "2b", "fuente": "m", "desde": 21.3806, "hasta": 23.2241, "pausa_despues": 0.40},
+    {"id": "3",  "fuente": "m", "desde": 60.0486, "hasta": 63.8592, "pausa_despues": 0.40},
+    {"id": "4a", "fuente": "m", "desde": 72.1464, "hasta": 74.123,  "pausa_despues": 0.22},
+    {"id": "4b", "fuente": "m", "desde": 75.5649, "hasta": 76.7624, "pausa_despues": 0.10},
+    {"id": "4c", "fuente": "m", "desde": 77.3819, "hasta": 79.82,   "pausa_despues": 0.0}
+  ],
+  "palabras": {"incognito": 2.8, "busca": 4.22, "o": 6.06, "tres": 18.84, "mapa": 20.32, "fuga": 21.82,
+               "mejor": 60.96, "clases": 62.36, "mudar": 73.3, "llamar": 75.78, "uno": 77.48}
+}
