@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
-import { ensureDemoSeeded, openTrip, tripStore } from './data/app'
+import { ensureDemoSeeded, isSyncConfigured, openTrip, tripStore } from './data/app'
+import { startFileSync } from './data/files'
 import { StorageFullError } from './data/repository'
 import { sessionStore } from './data/session'
 import { JoinRoute } from './features/onboarding/JoinRoute'
@@ -24,6 +25,7 @@ export function App() {
   useEffect(() => {
     let cancelled = false
     ;(async () => {
+      if (isSyncConfigured) startFileSync()
       try {
         await ensureDemoSeeded()
       } catch (err) {

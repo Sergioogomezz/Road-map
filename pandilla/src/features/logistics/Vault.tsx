@@ -2,6 +2,7 @@ import { CloudOff, Copy, ExternalLink, FileText, FolderLock, ShieldCheck } from 
 import { useEffect, useMemo, useState } from 'react'
 import { formatDayChip } from '../../domain/dates'
 import type { DocCategory, FileRef, TripDocument } from '../../domain/types'
+import { isSyncConfigured } from '../../data/app'
 import { formatBytes, hasFiles, storageEstimate } from '../../data/fileStore'
 import { useFileUrl } from '../../hooks/useFileUrl'
 import { useMembersById, useTrip } from '../../hooks/useTrip'
@@ -24,6 +25,8 @@ export function Vault() {
   const [usage, setUsage] = useState<number | null>(null)
   const sheet = useSheet<TripDocument>()
   const [viewer, setViewer] = useState<{ files: FileRef[]; index: number } | null>(null)
+  // Con sincronización, los archivos que falten se descargan al abrirlos.
+  const cloud = isSyncConfigured && !trip.meta.isDemo
 
   const allFileIds = useMemo(() => trip.documents.flatMap((d) => d.files.map((f) => f.id)), [trip.documents])
   useEffect(() => {
@@ -53,7 +56,10 @@ export function Vault() {
         <div className="text-sm">
           <p className="font-bold">Disponible sin cobertura</p>
           <p className="mt-0.5 opacity-85">
-            Códigos, enlaces y archivos se guardan en este móvil{usage !== null ? ` (${formatBytes(usage)} usados)` : ''}. Ábrelos en el aeropuerto aunque no haya datos.
+            {cloud
+              ? 'Todo se comparte con el grupo y se guarda en este móvil al abrirlo, para verlo en el aeropuerto aunque no haya datos.'
+              : 'Códigos, enlaces y archivos se guardan en este móvil. Ábrelos en el aeropuerto aunque no haya datos.'}
+            {usage !== null ? ` (${formatBytes(usage)} usados)` : ''}
           </p>
         </div>
       </div>
@@ -85,7 +91,7 @@ export function Vault() {
               {filter === 'todos' && <h3 className="mb-2 px-1 text-[13px] font-bold tracking-wide text-muted uppercase">{DOC_CATEGORIES[g.category].label}</h3>}
               <div className="flex flex-col gap-3">
                 {g.docs.map((d) => (
-                  <DocCard key={d.id} doc={d} available={available} onEdit={() => sheet.open(d)} onOpenFile={(index) => setViewer({ files: d.files, index })} />
+                  <DocCard key={d.id} doc={d} available={cloud ? null : available} onEdit={() => sheet.open(d)} onOpenFile={(index) => setViewer({ files: d.files, index })} />
                 ))}
               </div>
             </section>
@@ -97,12 +103,13 @@ export function Vault() {
       {sheet.state && (
         <DocumentSheet key={sheet.state.key} open={sheet.state.open} onClose={sheet.close} doc={sheet.state.target} defaultCategory={filter === 'todos' ? 'transporte' : filter} />
       )}
-      {viewer && <FileViewer files={viewer.files} index={viewer.index} onClose={() => setViewer(null)} />}
+      {viewer && <FileViewer tripId={trip.id} files={viewer.files} index={viewer.index} onClose={() => setViewer(null)} />}
     </div>
   )
 }
 
 function DocCard({ doc, available, onEdit, onOpenFile }: { doc: TripDocument; available: Set<string> | null; onEdit: () => void; onOpenFile: (index: number) => void }) {
+  const trip = useTrip()
   const byId = useMembersById()
   const toast = useToast()
   const meta = DOC_CATEGORIES[doc.category]
@@ -159,7 +166,7 @@ function DocCard({ doc, available, onEdit, onOpenFile }: { doc: TripDocument; av
       {doc.files.length > 0 && (
         <div className="no-scrollbar flex gap-2 overflow-x-auto border-t border-line bg-surface-2/50 px-4 py-3">
           {doc.files.map((f, i) => (
-            <FileThumb key={f.id} file={f} missing={available ? !available.has(f.id) : false} onOpen={() => onOpenFile(i)} />
+            <FileThumb key={f.id} tripId={trip.id} file={f} missing={available ? !available.has(f.id) : false} onOpen={() => onOpenFile(i)} />
           ))}
         </div>
       )}
@@ -167,16 +174,20 @@ function DocCard({ doc, available, onEdit, onOpenFile }: { doc: TripDocument; av
   )
 }
 
-export function FileThumb({ file, missing, onOpen }: { file: FileRef; missing?: boolean; onOpen: () => void }) {
+export function FileThumb({ tripId, file, missing, onOpen }: { tripId: string; file: FileRef; missing?: boolean; onOpen: () => void }) {
   const isImage = file.type.startsWith('image/')
-  const { url } = useFileUrl(isImage && !missing ? file.id : undefined)
-  if (missing) {
+  const { url, loading } = useFileUrl(isImage && !missing ? file.id : undefined, tripId)
+  const unavailable = missing || (isImage && !loading && !url)
+  if (unavailable) {
     return (
       <div className="flex h-20 w-28 shrink-0 flex-col items-center justify-center gap-1 rounded-2xl border border-dashed border-line-strong px-2 text-center text-[11px] text-muted" title={file.name}>
         <CloudOff className="size-4" />
-        No está en este móvil
+        {missing ? 'No está en este móvil' : 'No disponible ahora'}
       </div>
     )
+  }
+  if (isImage && loading) {
+    return <div className="h-20 w-28 shrink-0 animate-pulse rounded-2xl bg-surface-2" aria-label={`Cargando ${file.name}`} />
   }
   return (
     <button

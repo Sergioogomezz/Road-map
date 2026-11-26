@@ -28,6 +28,7 @@ import { ACTIVITY_TAGS } from '../meta'
 import { InviteSheet } from '../settings/InviteSheet'
 import { SettingsSheet } from '../settings/SettingsSheet'
 import { MapsButtons } from '../shared'
+import { SyncBadge } from '../SyncBadge'
 import { TaxiMode } from './TaxiMode'
 
 export function HomeScreen() {
@@ -74,6 +75,7 @@ export function HomeScreen() {
         </span>
         <div className="pt-safe flex items-center gap-2 pt-3">
           <span className="rounded-full bg-white/18 px-3 py-1 text-xs font-bold tracking-widest backdrop-blur">{trip.meta.code}</span>
+          <SyncBadge isDemo={Boolean(trip.meta.isDemo)} />
           <div className="flex-1" />
           <IconButton label="Invitar a la pandilla" className="bg-white/18 text-white hover:bg-white/25" onClick={() => setInviteOpen(true)}>
             <UserPlus className="size-5" />

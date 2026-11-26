@@ -1,4 +1,5 @@
 import type { Trip } from '../domain/types'
+import { normalizeCode } from '../domain/ids'
 import { normalizeTrip } from './tripModel'
 
 /**
@@ -60,4 +61,19 @@ export function appBaseUrl(): string {
 
 export function inviteUrl(code: string, snapshot?: string): string {
   return `${appBaseUrl()}#/unirse/${encodeURIComponent(code)}${snapshot ? `?d=${snapshot}` : ''}`
+}
+
+/**
+ * Acepta tanto un código («AURORA») como un enlace de invitación entero pegado
+ * (útil en iPhone, donde la app instalada no abre los enlaces de WhatsApp).
+ */
+export function parseInviteInput(raw: string): { code: string; snapshot: string | null } | null {
+  const text = raw.trim()
+  const link = text.match(/unirse\/([^?#\s/]+)(?:\?(?:[^#\s]*&)?d=([A-Za-z0-9_-]+))?/)
+  if (link) {
+    const code = normalizeCode(decodeURIComponent(link[1]))
+    return code ? { code, snapshot: link[2] ?? null } : null
+  }
+  const code = normalizeCode(text)
+  return code ? { code, snapshot: null } : null
 }
