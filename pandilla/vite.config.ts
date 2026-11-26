@@ -12,15 +12,19 @@ import { VitePWA } from 'vite-plugin-pwa'
 function supabaseEnv(mode: string) {
   const env = loadEnv(mode, '.', '')
   const pick = (...names: string[]) => names.map((n) => env[n]?.trim()).find(Boolean) ?? ''
-  const url = pick('VITE_SUPABASE_URL', 'NEXT_PUBLIC_SUPABASE_URL', 'SUPABASE_URL')
-  const key = pick(
-    'VITE_SUPABASE_ANON_KEY',
-    'VITE_SUPABASE_PUBLISHABLE_KEY',
-    'NEXT_PUBLIC_SUPABASE_ANON_KEY',
-    'NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY',
-    'SUPABASE_ANON_KEY',
-    'SUPABASE_PUBLISHABLE_KEY',
-  )
+  // Si la integración añade un prefijo (p. ej. STORAGE_SUPABASE_URL), lo buscamos por el final del nombre.
+  const bySuffix = (pattern: RegExp) => Object.keys(env).sort().filter((k) => pattern.test(k)).map((k) => env[k]?.trim()).find(Boolean) ?? ''
+  const url =
+    pick('VITE_SUPABASE_URL', 'NEXT_PUBLIC_SUPABASE_URL', 'SUPABASE_URL') || bySuffix(/(^|_)SUPABASE_URL$/)
+  const key =
+    pick(
+      'VITE_SUPABASE_ANON_KEY',
+      'VITE_SUPABASE_PUBLISHABLE_KEY',
+      'NEXT_PUBLIC_SUPABASE_ANON_KEY',
+      'NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY',
+      'SUPABASE_ANON_KEY',
+      'SUPABASE_PUBLISHABLE_KEY',
+    ) || bySuffix(/(^|_)SUPABASE_(ANON|PUBLISHABLE)_KEY$/)
   if (key.startsWith('sb_secret_') || jwtRole(key) === 'service_role') {
     throw new Error('La clave de Supabase configurada es secreta (service_role). Usa la clave pública: anon o publishable.')
   }
