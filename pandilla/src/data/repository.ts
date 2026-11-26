@@ -24,3 +24,10 @@ export class StorageFullError extends Error {
     this.name = 'StorageFullError'
   }
 }
+
+/** Almacén remoto de los archivos de la bóveda (opcional: solo con sincronización). */
+export interface RemoteFiles {
+  upload(tripId: ID, fileId: ID, blob: Blob): Promise<void>
+  download(tripId: ID, fileId: ID): Promise<Blob>
+  remove(tripId: ID, fileIds: ID[]): Promise<void>
+}

@@ -5,7 +5,8 @@ import { now, uid } from '../../domain/ids'
 import type { DocCategory, FileRef, TripDocument } from '../../domain/types'
 import { drop, put } from '../../data/actions'
 import { tripStore } from '../../data/app'
-import { deleteFiles, formatBytes, putFile, requestPersistence } from '../../data/fileStore'
+import { formatBytes, requestPersistence } from '../../data/fileStore'
+import { removeFiles, saveFile } from '../../data/files'
 import { useMe, useTrip, useUpdate } from '../../hooks/useTrip'
 import { Button } from '../../ui/Button'
 import { cn } from '../../ui/cn'
@@ -18,11 +19,11 @@ import { DOC_CATEGORIES, DOC_CATEGORY_LIST } from '../meta'
 const MAX_FILE = 25 * 1024 * 1024
 
 /** Borra archivos de un documento eliminado pasado un rato (por si se deshace). */
-function deleteFilesLater(ids: string[]) {
+function deleteFilesLater(tripId: string, ids: string[]) {
   window.setTimeout(() => {
     const trip = tripStore.getSnapshot()
     const stillUsed = new Set(trip?.documents.flatMap((d) => d.files.map((f) => f.id)) ?? [])
-    void deleteFiles(ids.filter((id) => !stillUsed.has(id)))
+    void removeFiles(tripId, ids.filter((id) => !stillUsed.has(id)))
   }, 8000)
 }
 
@@ -50,7 +51,7 @@ export function DocumentSheet({ open, onClose, doc, defaultCategory }: { open: b
   // Si se cierra sin guardar, se borran los archivos subidos en esta edición.
   useEffect(() => {
     if (open) return
-    if (!saved.current && added.current.length) void deleteFiles(added.current)
+    if (!saved.current && added.current.length) void removeFiles(trip.id, added.current)
     added.current = []
   }, [open])
 
@@ -65,7 +66,7 @@ export function DocumentSheet({ open, onClose, doc, defaultCategory }: { open: b
           continue
         }
         const id = uid('f')
-        await putFile(id, trip.id, file)
+        await saveFile(trip.id, id, file)
         added.current.push(id)
         refs.push({ id, name: file.name || 'foto.jpg', type: file.type || 'application/octet-stream', size: file.size, addedAt: now(), addedBy: me.id })
       }
@@ -103,7 +104,7 @@ export function DocumentSheet({ open, onClose, doc, defaultCategory }: { open: b
     saved.current = true
     update((t) => put(t, 'documents', draft))
     const removed = (doc?.files ?? []).filter((f) => !files.some((x) => x.id === f.id)).map((f) => f.id)
-    if (removed.length) void deleteFiles(removed)
+    if (removed.length) void removeFiles(trip.id, removed)
     toast(doc ? 'Guardado' : 'Guardado en la bóveda · disponible sin cobertura', { tone: 'success' })
     onClose()
   }
@@ -113,7 +114,7 @@ export function DocumentSheet({ open, onClose, doc, defaultCategory }: { open: b
     if (!(await confirm({ title: `¿Borrar «${doc.title}»?`, message: doc.files.length ? 'También se borrarán sus archivos de este móvil.' : undefined, confirmLabel: 'Borrar' }))) return
     saved.current = true
     update((t) => drop(t, 'documents', [doc.id]))
-    deleteFilesLater(doc.files.map((f) => f.id))
+    deleteFilesLater(trip.id, doc.files.map((f) => f.id))
     onClose()
     toast('Documento borrado', { action: { label: 'Deshacer', onClick: () => update((t) => put(t, 'documents', doc)) } })
   }

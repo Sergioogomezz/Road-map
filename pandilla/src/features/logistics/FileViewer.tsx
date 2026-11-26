@@ -9,12 +9,12 @@ import { cn } from '../../ui/cn'
 import { useFrameLayers } from '../../ui/Frame'
 
 /** Visor a pantalla completa de los archivos de la bóveda (funciona sin conexión). */
-export function FileViewer({ files, index: initial, onClose }: { files: FileRef[]; index: number; onClose: () => void }) {
+export function FileViewer({ tripId, files, index: initial, onClose }: { tripId: string; files: FileRef[]; index: number; onClose: () => void }) {
   const { overlay } = useFrameLayers()
   const [index, setIndex] = useState(initial)
   const [zoom, setZoom] = useState(false)
   const file = files[index]
-  const { url, loading } = useFileUrl(file?.id)
+  const { url, loading } = useFileUrl(file?.id, tripId)
   useWakeLock(true)
 
   useEffect(() => {
@@ -64,8 +64,8 @@ export function FileViewer({ files, index: initial, onClose }: { files: FileRef[
           </div>
         ) : !url ? (
           <div className="flex h-full flex-col items-center justify-center px-8 text-center text-white/70">
-            <p className="font-semibold text-white">Este archivo no está en este móvil</p>
-            <p className="mt-1 text-sm">Se subió desde otro dispositivo. Pide que te lo pasen o vuelve a subirlo.</p>
+            <p className="font-semibold text-white">Este archivo no está disponible ahora</p>
+            <p className="mt-1 text-sm">Se subió desde otro móvil. Con conexión se descarga solo; si no, pide que te lo pasen.</p>
           </div>
         ) : isImage ? (
           <div className={cn('flex min-h-full items-center justify-center bg-white', zoom ? 'w-[200%] p-0' : 'h-full p-3')} onDoubleClick={() => setZoom((z) => !z)}>

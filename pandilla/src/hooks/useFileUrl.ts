@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react'
-import { getFile } from '../data/fileStore'
+import { loadFile } from '../data/files'
 
-/** URL temporal (blob:) de un archivo de la bóveda. `null` = no está en este móvil. */
-export function useFileUrl(id: string | undefined): { url: string | null; blob: Blob | null; loading: boolean } {
+/**
+ * URL temporal (blob:) de un archivo de la bóveda. Si no está en el móvil y hay
+ * sincronización, se descarga. `null` = no disponible (otro móvil, sin conexión…).
+ */
+export function useFileUrl(id: string | undefined, tripId: string): { url: string | null; blob: Blob | null; loading: boolean } {
   const [state, setState] = useState<{ url: string | null; blob: Blob | null; loading: boolean }>({ url: null, blob: null, loading: Boolean(id) })
   useEffect(() => {
     if (!id) {
@@ -12,7 +15,7 @@ export function useFileUrl(id: string | undefined): { url: string | null; blob: 
     let url: string | null = null
     let cancelled = false
     setState((s) => ({ ...s, loading: true }))
-    getFile(id)
+    loadFile(tripId, id)
       .then((blob) => {
         if (cancelled) return
         url = blob ? URL.createObjectURL(blob) : null
@@ -23,6 +26,6 @@ export function useFileUrl(id: string | undefined): { url: string | null; blob: 
       cancelled = true
       if (url) URL.revokeObjectURL(url)
     }
-  }, [id])
+  }, [id, tripId])
   return state
 }

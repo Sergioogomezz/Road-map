@@ -25,6 +25,7 @@ import { normalizeTrip } from '../../data/tripModel'
 import { navigate } from '../../hooks/useHashRoute'
 import { useInstallPrompt } from '../../hooks/useInstallPrompt'
 import { useTheme, type ThemePref } from '../../hooks/useTheme'
+import { useSyncStatus } from '../../hooks/useSyncStatus'
 import { useMe, useTrip } from '../../hooks/useTrip'
 import { Avatar } from '../../ui/Avatar'
 import { cn } from '../../ui/cn'
@@ -47,6 +48,7 @@ export function SettingsSheet({ open, onClose }: { open: boolean; onClose: () =>
   const [sub, setSub] = useState<Sub>(null)
   const [storage, setStorage] = useState<{ usage: number; quota: number } | null>(null)
   const fileInput = useRef<HTMLInputElement>(null)
+  const sync = useSyncStatus()
 
   useEffect(() => {
     if (open) void storageEstimate().then(setStorage)
@@ -135,7 +137,14 @@ export function SettingsSheet({ open, onClose }: { open: boolean; onClose: () =>
             label={isSyncConfigured ? 'Sincronización en tiempo real' : 'Guardado en este móvil'}
             hint={
               isSyncConfigured
-                ? 'Conectado a Supabase'
+                ? trip.meta.isDemo
+                  ? 'El viaje de ejemplo no se comparte'
+                  : sync.message ||
+                    (sync.pending
+                      ? 'Hay cambios pendientes de subir'
+                      : sync.lastSyncAt
+                        ? `Todo al día · ${new Date(sync.lastSyncAt).toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })}`
+                        : 'Conectando con Supabase…')
                 : `Funciona sin conexión${storage ? ` · ${formatBytes(storage.usage)} usados` : ''}`
             }
           />

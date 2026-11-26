@@ -1,9 +1,9 @@
 import { ArrowLeft, ArrowRight, ChevronRight, Download, Plus, Share, Sparkles, UserPlus, Users, X } from 'lucide-react'
 import { useEffect, useRef, useState, type FormEvent } from 'react'
 import { addDays, formatRange, todayISO } from '../../domain/dates'
-import { normalizeCode } from '../../domain/ids'
 import type { Member, Trip, TripSummary } from '../../domain/types'
-import { createTrip, enterTrip, findTripByCode, getRepository, isSyncConfigured, joinAsNewMember, restoreDemo } from '../../data/app'
+import { createTrip, enterTrip, findTripByCode, getRepository, importTrip, isSyncConfigured, joinAsNewMember, restoreDemo } from '../../data/app'
+import { decodeTripSnapshot, parseInviteInput } from '../../data/share'
 import { useSession } from '../../hooks/useTrip'
 import { useInstallPrompt } from '../../hooks/useInstallPrompt'
 import { navigate } from '../../hooks/useHashRoute'
@@ -68,20 +68,27 @@ function Landing({ onPick, onCreate }: { onPick: (trip: Trip) => void; onCreate:
     else onPick(trip)
   }
 
+  const parsed = parseInviteInput(code)
+  const isLink = /unirse\//.test(code)
+
   const submit = async (e: FormEvent) => {
     e.preventDefault()
-    const clean = normalizeCode(code)
-    if (clean.length < 4) return
+    if (!parsed || parsed.code.length < 4) return
     setBusy(true)
     setError('')
     try {
-      const trip = await findTripByCode(clean)
+      let trip: Trip | null = null
+      if (parsed.snapshot) {
+        const decoded = await decodeTripSnapshot(parsed.snapshot)
+        if (decoded) trip = await importTrip(decoded)
+      }
+      trip ??= await findTripByCode(parsed.code)
       if (trip) onPick(trip)
       else
         setError(
           isSyncConfigured
             ? 'No existe ningún viaje con ese código. Revisa que esté bien escrito.'
-            : 'Ese viaje no está en este móvil. Pide a tu grupo el enlace de invitación: lleva el viaje dentro.',
+            : 'Ese viaje no está en este móvil. Pega aquí el enlace de invitación entero: lleva el viaje dentro.',
         )
     } finally {
       setBusy(false)
@@ -103,24 +110,26 @@ function Landing({ onPick, onCreate }: { onPick: (trip: Trip) => void; onCreate:
       <Card className="p-4">
         <form onSubmit={submit} className="flex flex-col gap-3">
           <label htmlFor="trip-code" className="px-1 text-[13px] font-semibold text-fg-2">
-            ¿Te han invitado? Entra con el código del viaje
+            ¿Te han invitado? Escribe el código o pega el enlace
           </label>
           <div className="flex gap-2">
             <TextInput
               id="trip-code"
               value={code}
               onChange={(e) => {
-                setCode(e.target.value.toUpperCase())
+                setCode(e.target.value)
                 setError('')
               }}
-              placeholder="Ej. AURORA"
+              placeholder="Código o enlace"
               autoCapitalize="characters"
               autoComplete="off"
               spellCheck={false}
-              maxLength={12}
-              className="font-display text-lg font-bold tracking-[0.2em] uppercase placeholder:tracking-normal placeholder:font-sans placeholder:font-normal placeholder:text-base"
+              className={cn(
+                'placeholder:font-sans placeholder:text-base placeholder:font-normal placeholder:tracking-normal placeholder:normal-case',
+                isLink ? 'text-sm' : 'font-display text-lg font-bold tracking-[0.2em] uppercase',
+              )}
             />
-            <Button type="submit" disabled={normalizeCode(code).length < 4 || busy} className="shrink-0 px-5" iconRight={<ArrowRight className="size-4" />}>
+            <Button type="submit" disabled={!parsed || parsed.code.length < 4 || busy} className="shrink-0 px-5" iconRight={<ArrowRight className="size-4" />}>
               Entrar
             </Button>
           </div>

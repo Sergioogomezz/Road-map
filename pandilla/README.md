@@ -78,30 +78,44 @@ móvil y, en escritorio, la app se muestra centrada como un móvil.
 
 ## Cómo se comparte un viaje
 
-**Sin servidor (por defecto)** todo se guarda en el móvil: el viaje en `localStorage` y los
-archivos de la bóveda en IndexedDB. El **enlace de invitación lleva dentro una copia comprimida
-del viaje** (en el `#fragmento`, que nunca se envía a ningún servidor), así que quien lo abre
-tiene el viaje al instante. Si alguien añade cosas, vuelve a compartir el enlace: al abrirlo se
-**fusiona** con lo que ya había sin perder nada. Los archivos de la bóveda no viajan en el enlace.
+**Con Supabase (recomendado)** todo lo que añade cualquiera aparece en los móviles de los demás
+en menos de un segundo: planes, votos, gastos, pagos, checklist, coches, frases, retos y también
+las **fotos y PDFs** de la bóveda. La app sigue funcionando sin cobertura: guarda primero en el
+móvil y sube los cambios al volver la conexión. Si el tiempo real se corta, la app vuelve a mirar
+la nube al abrirse, al volver a primer plano y cada 15 segundos. Los cambios de dos personas a la
+vez se fusionan sin perder ninguno. En Inicio, junto al código del viaje, se ve el estado:
+«En directo», «Sin conexión» o «Error al sincronizar» (en Ajustes aparece el motivo).
 
-**Con Supabase (opcional)** los cambios se sincronizan en tiempo real entre todos los móviles,
-y la app sigue funcionando sin cobertura: guarda primero en el móvil y sube los cambios al volver la conexión.
+**Sin servidor** todo se guarda solo en el móvil (`localStorage` + IndexedDB). El enlace de
+invitación lleva dentro una copia comprimida del viaje (en el `#fragmento`, que no se envía a
+ningún servidor); para ver lo que añaden los demás hay que volver a abrir un enlace suyo, y los
+archivos no viajan. En iPhone, la app instalada no abre los enlaces de WhatsApp: se puede
+**pegar el enlace entero** en el campo «Código o enlace» de la portada.
 
-## Conectar Supabase (tiempo real entre móviles)
+## Conectar Supabase (sincronización entre móviles)
 
-1. Crea un proyecto en [supabase.com](https://supabase.com).
-2. En **SQL Editor** ejecuta [`supabase/schema.sql`](supabase/schema.sql).
-3. Copia `.env.example` a `.env` y rellena `VITE_SUPABASE_URL` y `VITE_SUPABASE_ANON_KEY`
-   (Project Settings → API). En Vercel/Netlify, ponlas como variables de entorno.
-4. Vuelve a compilar (`npm run build`). Sin esas variables, el código de Supabase ni siquiera
-   entra en el paquete.
+Desde el móvil se hace en unos 10 minutos:
 
-El adaptador (`src/data/supabaseRepository.ts`) está probado con una simulación de la tabla
-(subida, búsqueda por código, conflictos de versión entre dos móviles), **no contra un proyecto
-real**: conviene hacer una prueba con dos móviles antes de usarlo en un viaje. Seguridad: el
-esquema sigue el modelo «quien tiene el código entra», cualquiera con la clave pública del
-proyecto puede leer y escribir viajes. Para un grupo de amigos es suficiente; para algo
-público, añade Supabase Auth y restringe las políticas. El viaje de ejemplo nunca se sube.
+1. **Vercel → tu proyecto → Storage (o Integrations) → Supabase → Add / Create.** Crea un
+   proyecto de Supabase gratis y añade sus claves al proyecto de Vercel. La app acepta los
+   nombres que pone esa integración (`NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`,
+   `SUPABASE_URL`, `SUPABASE_ANON_KEY`, sus variantes `…PUBLISHABLE_KEY`) y también
+   `VITE_SUPABASE_URL` / `VITE_SUPABASE_ANON_KEY` si las pones a mano (Supabase → Project Settings → API).
+   Solo se usa la clave **pública**; si por error se configura la secreta (`service_role`), la
+   compilación se detiene con un aviso.
+2. **Supabase → SQL Editor → New query**: pega [`supabase/schema.sql`](supabase/schema.sql) y pulsa **Run**.
+   Crea la tabla de viajes, activa los avisos en tiempo real y el espacio para las fotos y PDFs.
+   Se puede ejecutar varias veces sin problema.
+3. **Vercel → Deployments → ⋯ → Redeploy** (las claves solo se aplican en una publicación nueva).
+
+Los viajes que ya existían en los móviles se suben solos la primera vez que se abren. El viaje
+de ejemplo nunca se sube.
+
+Seguridad: el esquema sigue el modelo «quien tiene el código entra»: cualquiera con la clave
+pública del proyecto puede leer y escribir viajes. Para un grupo de amigos es suficiente; para
+algo público habría que añadir Supabase Auth y restringir las políticas.
+
+En local: copia `.env.example` a `.env`, rellena las dos variables y `npm run dev`.
 
 ## Publicarla
 
@@ -122,7 +136,8 @@ src/
   data/          Persistencia y estado
     repository.ts          Interfaz TripRepository (el "puerto")
     localRepository.ts     localStorage + sincronización entre pestañas
-    supabaseRepository.ts  Supabase en tiempo real (opcional, carga diferida)
+    supabaseRepository.ts  Supabase en tiempo real + archivos en Storage (opcional, carga diferida)
+    files.ts               Archivos de la bóveda: móvil + nube, con cola de subidas
     merge.ts               Fusión de copias sin conflictos (entidad a entidad)
     actions.ts             Mutaciones puras Trip → Trip
     store.ts               Estado del viaje abierto (useSyncExternalStore)
@@ -147,7 +162,7 @@ src/
 ## Pruebas
 
 ```bash
-npm test          # 30 pruebas: repartos, conversión, saldos, transferencias mínimas, fusión y sincronización
+npm test          # 33 pruebas: repartos, conversión, saldos, transferencias mínimas, fusión, sincronización y enlaces
 npm run typecheck
 ```
 
@@ -156,10 +171,16 @@ escritorio: altas, ediciones, borrados con deshacer, arrastrar para reordenar, v
 gastos en coronas con importes exactos, saldar, bóveda con archivos, checklist, coches, frases,
 bingo, tema oscuro, crear un viaje, invitar a otro móvil por enlace y uso **sin conexión**.
 
+La sincronización se ha probado con **dos móviles contra un Supabase real** levantado en local
+con las imágenes oficiales (Postgres, PostgREST, Realtime y Storage) y este mismo `schema.sql`:
+unirse por código, gastos, planes y frases que llegan al otro móvil en menos de un segundo,
+cambios simultáneos sin pérdidas, fotos compartidas, cambios hechos sin cobertura que se suben al
+volver, respaldo cuando se cae el tiempo real y re-subida automática de un viaje que falta en la nube.
+
 ## Limitaciones conocidas
 
-- Sin Supabase, los cambios no llegan solos a los demás: hay que reenviar el enlace.
-- Los archivos de la bóveda se quedan en el móvil donde se subieron.
+- Sin Supabase, los cambios no llegan solos a los demás y los archivos se quedan en cada móvil.
+- Con Supabase, quien tenga la clave pública del proyecto puede leer los viajes (ver «Seguridad»).
 - Los tipos de cambio de serie son aproximados; se actualizan con «Actualizar con los tipos del BCE».
 - Las horas del itinerario se interpretan con la hora del móvil (al viajar, el móvil cambia de zona solo).
 - No hay notificaciones push.

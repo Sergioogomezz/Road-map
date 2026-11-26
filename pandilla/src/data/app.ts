@@ -9,7 +9,7 @@ import { addMember } from './actions'
 import { deleteTripFiles, putFile, requestPersistence } from './fileStore'
 import { LocalTripRepository } from './localRepository'
 import { mergeTrips } from './merge'
-import type { TripRepository } from './repository'
+import type { RemoteFiles, TripRepository } from './repository'
 import { DEMO_TRIP_ID, buildDemoTrip } from './seed'
 import { sessionStore } from './session'
 import { TripStore } from './store'
@@ -17,25 +17,39 @@ import { emptyTrip } from './tripModel'
 
 const SEEDED_KEY = 'pandilla:seeded'
 
-let repoPromise: Promise<TripRepository> | null = null
+interface Services {
+  repo: TripRepository
+  files: RemoteFiles | null
+}
 
-async function createRepository(): Promise<TripRepository> {
+let servicesPromise: Promise<Services> | null = null
+
+async function createServices(): Promise<Services> {
   const url = import.meta.env.VITE_SUPABASE_URL
   const key = import.meta.env.VITE_SUPABASE_ANON_KEY
   if (url && key) {
     try {
-      const { createSupabaseRepository } = await import('./supabaseRepository')
-      return await createSupabaseRepository(url, key)
+      const { createSupabaseServices } = await import('./supabaseRepository')
+      return await createSupabaseServices(url, key)
     } catch (err) {
       console.warn('No se pudo iniciar Supabase; se usa el almacenamiento local.', err)
     }
   }
-  return new LocalTripRepository()
+  return { repo: new LocalTripRepository(), files: null }
+}
+
+function getServices(): Promise<Services> {
+  servicesPromise ??= createServices()
+  return servicesPromise
 }
 
 export function getRepository(): Promise<TripRepository> {
-  repoPromise ??= createRepository()
-  return repoPromise
+  return getServices().then((s) => s.repo)
+}
+
+/** Archivos en la nube (null si no hay sincronización). */
+export function getRemoteFiles(): Promise<RemoteFiles | null> {
+  return getServices().then((s) => s.files)
 }
 
 export const tripStore = new TripStore(getRepository)

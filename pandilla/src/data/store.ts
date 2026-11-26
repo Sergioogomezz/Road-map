@@ -86,9 +86,11 @@ export class TripStore {
   private receive(remote: Trip) {
     if (!this.trip || remote.id !== this.trip.id) return
     const merged = mergeTrips(this.trip, remote)
+    const mergedJson = JSON.stringify(merged)
+    if (mergedJson === JSON.stringify(this.trip)) return // nada nuevo
     this.trip = merged
     this.emit()
-    if (JSON.stringify(merged) !== JSON.stringify(remote)) this.persist(merged)
+    if (mergedJson !== JSON.stringify(remote)) this.persist(merged)
   }
 
   /** Espera a que terminen los guardados pendientes. */
